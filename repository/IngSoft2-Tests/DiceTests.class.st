@@ -25,30 +25,43 @@ DiceTests >> testDiceCanBeCreated [
 ]
 
 { #category : 'tests' }
+DiceTests >> testWhenTheDiceOf20SidesIsRolledThenReturnsNumberBetween1And20 [
+
+	|numberOfSides dice result |
+	numberOfSides := 20.
+	dice := Dice withSides: numberOfSides.
+	result := dice roll.
+	self assert: (result between: 1 and: numberOfSides)
+]
+
+{ #category : 'tests' }
 DiceTests >> testWhenTheDiceOf3SidesIsRolledThenReturnsNumberBetween1And3 [
 
-	| dice result |
-	dice := Dice withSides: 3.
+	| numberOfSides dice result |
+	numberOfSides := 3.
+	dice := Dice withSides: numberOfSides.
 	result := dice roll.
-	self assert: (result between: 1 and: 3)
+	self assert: (result between: 1 and: numberOfSides)
 ]
 
 { #category : 'tests' }
 DiceTests >> testWhenTheDiceOf4SidesIsRolledThenReturnsNumberBetween1And4 [
 
-	| dice result |
-	dice := Dice withSides: 4.
+	| numberOfSides dice result |
+	numberOfSides := 4.
+	dice := Dice withSides: numberOfSides.
 	result := dice roll.
-	self assert: (result between: 1 and: 4)
+	self assert: (result between: 1 and: numberOfSides)
 ]
 
 { #category : 'tests' }
 DiceTests >> testWhenTheDiceOf6SidesIsRolledThenReturnsNumberBetween1And6 [
 
-	| dice result |
-	dice := Dice withSides: 6.
+	|numberOfSides dice result |
+	numberOfSides := 6.
+	dice := Dice withSides: numberOfSides.
 	result := dice roll.
-	self assert: (result between: 1 and: 6)
+	self assert: (result between: 1 and: numberOfSides)
 ]
 
 { #category : 'errors' }
