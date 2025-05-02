@@ -9,14 +9,24 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Dice class >> withSides: aNumberOfSides [ 
-	^self new initializeWithSides: aNumberOfSides.
+Dice class >> sidesMustBePositiveInteger: aNumberOfSides [
+
+	((aNumberOfSides isInteger not) or: [aNumberOfSides negative]) ifTrue: [
+		Error signal: 'The number of sides shoud be a positive integer.' ]
+]
+
+{ #category : 'as yet unclassified' }
+Dice class >> withSides: aNumberOfSides [
+
+	self sidesMustBePositiveInteger: aNumberOfSides.
+	^ self new initializeWithSides: aNumberOfSides
 ]
 
 { #category : 'initialization' }
-Dice >> initializeWithSides: aNumberOfSides [ 
-	numberOfSides := aNumberOfSides .
-	^self
+Dice >> initializeWithSides: aNumberOfSides [
+
+	numberOfSides := aNumberOfSides.
+	^ self
 ]
 
 { #category : 'as yet unclassified' }
