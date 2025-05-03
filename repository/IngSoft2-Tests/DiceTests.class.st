@@ -72,7 +72,7 @@ DiceTests >> testWhenOneDiceIsRolledTwiceThenReturnsTwoResultsBetween1AndNumberO
 { #category : 'tests' }
 DiceTests >> testWhenTheDiceOf20SidesIsRolledThenReturnsNumberBetween1And20 [
 
-	|numberOfSides dice result |
+	| numberOfSides dice result |
 	numberOfSides := 20.
 	dice := Dice withSides: numberOfSides.
 	result := dice roll.
@@ -102,7 +102,7 @@ DiceTests >> testWhenTheDiceOf4SidesIsRolledThenReturnsNumberBetween1And4 [
 { #category : 'tests' }
 DiceTests >> testWhenTheDiceOf6SidesIsRolledThenReturnsNumberBetween1And6 [
 
-	|numberOfSides dice result |
+	| numberOfSides dice result |
 	numberOfSides := 6.
 	dice := Dice withSides: numberOfSides.
 	result := dice roll.
@@ -113,18 +113,18 @@ DiceTests >> testWhenTheDiceOf6SidesIsRolledThenReturnsNumberBetween1And6 [
 DiceTests >> testWhenTheDiceOfNegativeSidesIsRolledThenCreationFails [
 
 	self
-        should: [ Dice withSides: -1 ]
-        raise: Error
-        withMessageText: 'The number of sides shoud be a positive integer.'
+		should: [ Dice withSides: -1 ]
+		raise: Error
+		withMessageText: 'The number of sides shoud be a positive integer.'
 ]
 
 { #category : 'errors' }
 DiceTests >> testWhenTheDiceOfStringNumberSidesIsRolledThenCreationFails [
 
 	self
-        should: [ Dice withSides: 'a' ]
-        raise: Error
-        withMessageText: 'The number of sides shoud be a positive integer.'
+		should: [ Dice withSides: 'a' ]
+		raise: Error
+		withMessageText: 'The number of sides shoud be a positive integer.'
 ]
 
 { #category : 'tests' }
