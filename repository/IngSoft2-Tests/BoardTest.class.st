@@ -42,3 +42,12 @@ BoardTest >> testWhenBoardIsCreatedWithNegativeSizeThenIsNotValid [
 		raise: Error
 		withMessageText: 'Board Size must be a positive interger'
 ]
+
+{ #category : 'tests' }
+BoardTest >> testWhenBoardIsCreatedWithNoSizeThenIsInValid [
+
+	self
+		should: [ Board new boardSize ]
+		raise: Error
+
+]

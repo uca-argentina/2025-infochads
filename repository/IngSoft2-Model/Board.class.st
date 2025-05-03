@@ -15,6 +15,7 @@ Board class >> withBoardSize: aNumber [
 
 { #category : 'accessing' }
 Board >> boardSize [
+	boardSize ifNil:[Error signal: 'Board size not initialized'].
 	^ boardSize
 ]
 
