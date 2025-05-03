@@ -27,27 +27,33 @@ DiceTests >> testDiceCanBeCreated [
 { #category : 'tests' }
 DiceTests >> testWhenMultipleDicesOf6SidesAreRolledThenRetunsNumbersBetween1And6 [
 
-	| dice1 dice2 result1 result2 |
+	| dice1 dice2 dice3 result1 result2 result3 |
 	dice1 := Dice withSides: 6.
 	dice2 := Dice withSides: 6.
+	dice3 := Dice withSides: 6.
 	result1 := dice1 roll.
 	result2 := dice2 roll.
+	result3 := dice3 roll.
 
 	self assert: (result1 between: 1 and: 6).
-	self assert: (result2 between: 1 and: 6)
+	self assert: (result2 between: 1 and: 6).
+	self assert: (result3 between: 1 and: 6)
 ]
 
 { #category : 'tests' }
-DiceTests >> testWhenMultipleDicesOfDiferentNumberOfSidesAreRolledThenRetunsNumbersBetween1And6 [
+DiceTests >> testWhenMultipleDicesOfDiferentNumberOfSidesAreRolledThenRetunsNumbersBetween1AndCorrespondingNumberOfSides [
 
-	| diceD6 diceD20 resultD6 resultD20 |
+	| diceD6 diceD20 resultD6 resultD20 diceD8 resultD8 |
 	diceD6 := Dice withSides: 6.
 	diceD20 := Dice withSides: 20.
+	diceD8 := Dice withSides: 8.
 	resultD6 := diceD6 roll.
 	resultD20 := diceD20 roll.
+	resultD8 := diceD8 roll.
 
 	self assert: (resultD6 between: 1 and: 6).
-	self assert: (resultD20 between: 1 and: 20)
+	self assert: (resultD20 between: 1 and: 20).
+	self assert: (resultD8 between: 1 and: 8)
 ]
 
 { #category : 'tests' }
@@ -119,4 +125,17 @@ DiceTests >> testWhenTheDiceOfStringNumberSidesIsRolledThenCreationFails [
         should: [ Dice withSides: 'a' ]
         raise: Error
         withMessageText: 'The number of sides shoud be a positive integer.'
+]
+
+{ #category : 'tests' }
+DiceTests >> testWhenTwoDicesOf6SidesAreRolledThenRetunsNumbersBetween1And6 [
+
+	| dice1 dice2 result1 result2 |
+	dice1 := Dice withSides: 6.
+	dice2 := Dice withSides: 6.
+	result1 := dice1 roll.
+	result2 := dice2 roll.
+
+	self assert: (result1 between: 1 and: 6).
+	self assert: (result2 between: 1 and: 6)
 ]
