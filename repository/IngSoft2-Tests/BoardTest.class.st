@@ -18,25 +18,23 @@ BoardTest >> should: anError raise: anErrorClass withMessageText: anErrorMessage
 
 { #category : 'tests' }
 BoardTest >> testWhenBoardIsCreated [
-	
-	|aBoard|
-	aBoard := Board new.
-	self assert: aBoard notNil.
 
+	| aBoard |
+	aBoard := Board new.
+	self assert: aBoard notNil
 ]
 
 { #category : 'tests' }
 BoardTest >> testWhenBoardIsCreatedWithCertainSize [
-	
-	|aBoard|
-	aBoard := Board withBoardSize: 13.
-	self assert: aBoard boardSize equals:13
 
+	| aBoard |
+	aBoard := Board withBoardSize: 13.
+	self assert: aBoard boardSize equals: 13
 ]
 
 { #category : 'tests' }
 BoardTest >> testWhenBoardIsCreatedWithNegativeSizeThenIsNotValid [
-	
+
 	self
 		should: [ Board withBoardSize: -5 ]
 		raise: Error
@@ -46,8 +44,5 @@ BoardTest >> testWhenBoardIsCreatedWithNegativeSizeThenIsNotValid [
 { #category : 'tests' }
 BoardTest >> testWhenBoardIsCreatedWithNoSizeThenIsInValid [
 
-	self
-		should: [ Board new boardSize ]
-		raise: Error
-
+	self should: [ Board new boardSize ] raise: Error
 ]
