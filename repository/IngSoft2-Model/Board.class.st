@@ -11,6 +11,7 @@ Class {
 { #category : 'as yet unclassified' }
 Board class >> withBoardSize: aNumber [ 
 	^self new initializeWithBoardSize: aNumber.
+	
 ]
 
 { #category : 'accessing' }
@@ -20,10 +21,17 @@ Board >> boardSize [
 ]
 
 { #category : 'initialization' }
-Board >> initializeWithBoardSize: aNumber [ 
-	(aNumber isNil or: [aNumber <=0])
-		ifTrue: [ Error signal: 'Board Size must be a positive interger' ].
-	boardSize := aNumber.
-	^self
+Board >> initializeWithBoardSize: aNumber [
 
+	(aNumber isNil or: [ aNumber <= 0 ]) ifTrue: [
+		Error signal: 'Board Size must be a positive interger' ].
+	boardSize := aNumber.
+	^ self
+]
+
+{ #category : 'path commands' }
+Board >> positionAnalize: aPosition [
+ 	(aPosition > boardSize) ifTrue:[
+		Error signal: 'Dice roll should be below or equals board size.'].
+		^true
 ]
