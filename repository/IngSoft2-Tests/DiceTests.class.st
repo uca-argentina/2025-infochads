@@ -115,7 +115,7 @@ DiceTests >> testWhenTheDiceOfNegativeSidesIsRolledThenCreationFails [
 	self
 		should: [ Dice withSides: -1 ]
 		raise: Error
-		withMessageText: 'The number of sides shoud be a positive integer.'
+		withMessageText: 'The number of sides should be a positive integer.'
 ]
 
 { #category : 'errors' }
@@ -124,7 +124,7 @@ DiceTests >> testWhenTheDiceOfStringNumberSidesIsRolledThenCreationFails [
 	self
 		should: [ Dice withSides: 'a' ]
 		raise: Error
-		withMessageText: 'The number of sides shoud be a positive integer.'
+		withMessageText: 'The number of sides should be a positive integer.'
 ]
 
 { #category : 'tests' }

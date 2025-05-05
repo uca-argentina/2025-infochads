@@ -12,15 +12,35 @@ Class {
 { #category : 'as yet unclassified' }
 Board class >> boardSizeMustBePositiveInteger: boardSize [
 
-	((boardSize isInteger not) or: [boardSize negative]) ifTrue: [
+	(boardSize isInteger not or: [ boardSize negative ]) ifTrue: [
 		Error signal: 'Board Size must be a positive interger' ]
+]
+
+{ #category : 'as yet unclassified' }
+Board class >> numberOfSpaceShipsMustBeAtLeastOne: aNumberOfSpaceShips [
+
+	aNumberOfSpaceShips <= 0 ifTrue: [
+		Error signal: 'The number of space ships must be at least 1.' ]
+]
+
+{ #category : 'as yet unclassified' }
+Board class >> numberOfSpaceShipsMustBePositiveInteger: boardSize [
+
+	(boardSize isInteger not or: [ boardSize negative ]) ifTrue: [
+		Error signal:
+			'The number of space ships should be a positive integer.' ]
 ]
 
 { #category : 'as yet unclassified' }
 Board class >> withSize: aBoardSize withNumberOfSpaceShips: aNumberOfSpaceShips [
 
 	self boardSizeMustBePositiveInteger: aBoardSize.
-	^ self new initializeWithSize: aBoardSize andNumberOfSpaceShips: aNumberOfSpaceShips
+	self numberOfSpaceShipsMustBePositiveInteger: aNumberOfSpaceShips.
+	self numberOfSpaceShipsMustBeAtLeastOne: aNumberOfSpaceShips.
+
+	^ self new
+		  initializeWithSize: aBoardSize
+		  andNumberOfSpaceShips: aNumberOfSpaceShips
 ]
 
 { #category : 'accessing' }
