@@ -19,8 +19,8 @@ DiceTests >> should: anErrorBlock raise: anErrorClass withMessageText: errorMess
 { #category : 'tests' }
 DiceTests >> testDiceCanBeCreated [
 
-	| dice |
-	dice := Dice new.
+	| aDice |
+	aDice := Dice new.
 	self assert: Dice notNil
 ]
 

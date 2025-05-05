@@ -20,7 +20,7 @@ BoardAndDiceTests >> testWhenDiceReturnsNumberBelowDiceSidesThenIsValid [
 
 	| numberOfSides aDice result aBoard boardSize |
 	boardSize := 10.
-	aBoard := Board withBoardSize: boardSize.
+	aBoard := Board withSize: boardSize withNumberOfSpaceShips: 1.
 	numberOfSides := 6.
 	aDice := Dice withSides: numberOfSides.
 	result := aDice roll.
@@ -33,7 +33,7 @@ BoardAndDiceTests >> testWhenDiceRollExceedBoardSizeThenIsNotValid [
 
 	| aBoard aDiceRoll boardSize |
 	boardSize := 10.
-	aBoard := Board withBoardSize: boardSize.
+	aBoard := Board withSize: boardSize withNumberOfSpaceShips: 1.
 
 	aDiceRoll := 12.
 
@@ -48,7 +48,7 @@ BoardAndDiceTests >> testWhenDiceRollLandsOnLastPositionThenIsValid [
 
 	| aBoard aDiceRoll boardSize |
 	boardSize := 10.
-	aBoard := Board withBoardSize: boardSize.
+	aBoard := Board withSize: boardSize withNumberOfSpaceShips: 1.
 
 	aDiceRoll := 10.
 
