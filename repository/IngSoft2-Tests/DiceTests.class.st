@@ -59,11 +59,11 @@ DiceTests >> testWhenMultipleDicesOfDiferentNumberOfSidesAreRolledThenRetunsNumb
 { #category : 'tests' }
 DiceTests >> testWhenOneDiceIsRolledTwiceThenReturnsTwoResultsBetween1AndNumberOfSides [
 
-	| dice result1 result2 numberOfSides |
+	| aDice result1 result2 numberOfSides |
 	numberOfSides := 6.
-	dice := Dice withSides: numberOfSides.
-	result1 := dice roll.
-	result2 := dice roll.
+	aDice := Dice withSides: numberOfSides.
+	result1 := aDice roll.
+	result2 := aDice roll.
 
 	self assert: (result1 between: 1 and: numberOfSides).
 	self assert: (result2 between: 1 and: numberOfSides)
@@ -72,40 +72,40 @@ DiceTests >> testWhenOneDiceIsRolledTwiceThenReturnsTwoResultsBetween1AndNumberO
 { #category : 'tests' }
 DiceTests >> testWhenTheDiceOf20SidesIsRolledThenReturnsNumberBetween1And20 [
 
-	| numberOfSides dice result |
+	| numberOfSides aDice result |
 	numberOfSides := 20.
-	dice := Dice withSides: numberOfSides.
-	result := dice roll.
+	aDice := Dice withSides: numberOfSides.
+	result := aDice roll.
 	self assert: (result between: 1 and: numberOfSides)
 ]
 
 { #category : 'tests' }
 DiceTests >> testWhenTheDiceOf3SidesIsRolledThenReturnsNumberBetween1And3 [
 
-	| numberOfSides dice result |
+	| numberOfSides aDice result |
 	numberOfSides := 3.
-	dice := Dice withSides: numberOfSides.
-	result := dice roll.
+	aDice := Dice withSides: numberOfSides.
+	result := aDice roll.
 	self assert: (result between: 1 and: numberOfSides)
 ]
 
 { #category : 'tests' }
 DiceTests >> testWhenTheDiceOf4SidesIsRolledThenReturnsNumberBetween1And4 [
 
-	| numberOfSides dice result |
+	| numberOfSides aDice result |
 	numberOfSides := 4.
-	dice := Dice withSides: numberOfSides.
-	result := dice roll.
+	aDice := Dice withSides: numberOfSides.
+	result := aDice roll.
 	self assert: (result between: 1 and: numberOfSides)
 ]
 
 { #category : 'tests' }
 DiceTests >> testWhenTheDiceOf6SidesIsRolledThenReturnsNumberBetween1And6 [
 
-	| numberOfSides dice result |
+	| numberOfSides aDice result |
 	numberOfSides := 6.
-	dice := Dice withSides: numberOfSides.
-	result := dice roll.
+	aDice := Dice withSides: numberOfSides.
+	result := aDice roll.
 	self assert: (result between: 1 and: numberOfSides)
 ]
 

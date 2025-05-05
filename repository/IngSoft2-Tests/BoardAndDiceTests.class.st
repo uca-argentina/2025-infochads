@@ -24,6 +24,7 @@ BoardAndDiceTests >> testWhenDiceReturnsNumberBelowDiceSidesThenIsValid [
 	numberOfSides := 6.
 	aDice := Dice withSides: numberOfSides.
 	result := aDice roll.
+	
 	self assert: result < boardSize
 ]
 
