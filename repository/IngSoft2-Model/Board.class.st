@@ -57,6 +57,14 @@ Board >> initializeWithSize: aBoardSize andNumberOfSpaceShips: aNumberOfSpaceShi
 	^ self
 ]
 
+{ #category : 'as yet unclassified' }
+Board >> moveSpaceShip: spaceShipID numberOfPositions: diceRoll [
+
+	spaceShipPositions
+		at: spaceShipID
+		put: (spaceShipPositions at: spaceShipID) + diceRoll
+]
+
 { #category : 'path commands' }
 Board >> positionAnalize: aPosition [
 

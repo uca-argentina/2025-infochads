@@ -1,12 +1,12 @@
 Class {
-	#name : 'SpaceShipTests',
+	#name : 'SpaceShipCreationTests',
 	#superclass : 'TestCase',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
 { #category : 'asserting' }
-SpaceShipTests >> should: anError raise: anErrorClass withMessageText: anErrorMessage [ 
+SpaceShipCreationTests >> should: anError raise: anErrorClass withMessageText: anErrorMessage [ 
 	 self
         should: anError 
         raise: anErrorClass
@@ -17,7 +17,7 @@ SpaceShipTests >> should: anError raise: anErrorClass withMessageText: anErrorMe
 ]
 
 { #category : 'tests' }
-SpaceShipTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPositionsAre0 [
+SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPositionsAre0 [
 
 	| aBoard |
 	aBoard := Board withSize: 13 withNumberOfSpaceShips: 3.
@@ -27,7 +27,7 @@ SpaceShipTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPositionsAre
 ]
 
 { #category : 'tests' }
-SpaceShipTests >> testWhenNumberOfSpaceShipsIsAStringThenCreationFails [
+SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsAStringThenCreationFails [
 
 		self
 		should: [ Board withSize: 13 withNumberOfSpaceShips: '10' ]
@@ -37,7 +37,7 @@ SpaceShipTests >> testWhenNumberOfSpaceShipsIsAStringThenCreationFails [
 ]
 
 { #category : 'tests' }
-SpaceShipTests >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
+SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
 
 		self
 		should: [ Board withSize: 13 withNumberOfSpaceShips: 0 ]
@@ -47,7 +47,7 @@ SpaceShipTests >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
 ]
 
 { #category : 'tests' }
-SpaceShipTests >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails [
+SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails [
 
 		self
 		should: [ Board withSize: 13 withNumberOfSpaceShips: -1 ]
@@ -57,7 +57,7 @@ SpaceShipTests >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails [
 ]
 
 { #category : 'tests' }
-SpaceShipTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs0 [
+SpaceShipCreationTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs0 [
 
 	| aBoard |
 	aBoard := Board withSize: 13 withNumberOfSpaceShips: 1.
@@ -65,7 +65,7 @@ SpaceShipTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs0 [
 ]
 
 { #category : 'tests' }
-SpaceShipTests >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositionsAre0 [
+SpaceShipCreationTests >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositionsAre0 [
 
 	| aBoard |
 	aBoard := Board withSize: 13 withNumberOfSpaceShips: 2.
