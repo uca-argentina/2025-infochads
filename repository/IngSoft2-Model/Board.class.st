@@ -3,7 +3,7 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'boardSize',
-		'spaceShipPositions'
+		'pieces'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -45,14 +45,16 @@ Board class >> withSize: aBoardSize withNumberOfSpaceShips: aNumberOfSpaceShips 
 
 { #category : 'accessing' }
 Board >> boardSize [
-	boardSize ifNil:[Error signal: 'Board size not initialized'].
+
+	boardSize ifNil: [ Error signal: 'Board size not initialized' ].
 	^ boardSize
 ]
 
 { #category : 'initialization' }
 Board >> initializeWithSize: aBoardSize andNumberOfSpaceShips: aNumberOfSpaceShips [
 
-	spaceShipPositions := self startingPositions: aNumberOfSpaceShips.
+	pieces := PieceMovement withPieces: aNumberOfSpaceShips.
+	
 	boardSize := aBoardSize.
 	^ self
 ]
@@ -60,9 +62,7 @@ Board >> initializeWithSize: aBoardSize andNumberOfSpaceShips: aNumberOfSpaceShi
 { #category : 'as yet unclassified' }
 Board >> moveSpaceShip: spaceShipID numberOfPositions: diceRoll [
 
-	spaceShipPositions
-		at: spaceShipID
-		put: (spaceShipPositions at: spaceShipID) + diceRoll
+	pieces move: spaceShipID thisManySteps: diceRoll
 ]
 
 { #category : 'path commands' }
@@ -76,16 +76,5 @@ Board >> positionAnalize: aPosition [
 { #category : 'as yet unclassified' }
 Board >> positionOfSpaceShip: numberOfSpaceShip [
 
-	^ spaceShipPositions at: numberOfSpaceShip
-]
-
-{ #category : 'initialization' }
-Board >> startingPositions: aNumberOfSpaceShips [
-
-	| initialPositions |
-	initialPositions := OrderedCollection new.
-	1 to: aNumberOfSpaceShips do: [ :position |
-	initialPositions add: 0 ].
-
-	^ initialPositions
+	^ (pieces positions)  at: numberOfSpaceShip
 ]

@@ -6,14 +6,13 @@ Class {
 }
 
 { #category : 'asserting' }
-SpaceShipCreationTests >> should: anError raise: anErrorClass withMessageText: anErrorMessage [ 
-	 self
-        should: anError 
-        raise: anErrorClass
-        withExceptionDo: [ :error |
-            self assert: (error messageText) equals:
-                anErrorMessage ]
+SpaceShipCreationTests >> should: anErrorBlock raise: anErrorClass withMessageText: anErrorMessage [
 
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+		self assert: error messageText equals: anErrorMessage ]
 ]
 
 { #category : 'tests' }
