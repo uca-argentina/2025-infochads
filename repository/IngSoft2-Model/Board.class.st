@@ -62,6 +62,7 @@ Board >> initializeWithSize: aBoardSize andNumberOfSpaceShips: aNumberOfSpaceShi
 { #category : 'as yet unclassified' }
 Board >> moveSpaceShip: spaceShipID numberOfPositions: diceRoll [
 
+	self validateID: spaceShipID.
 	pieces move: spaceShipID thisManySteps: diceRoll
 ]
 
@@ -77,4 +78,13 @@ Board >> positionAnalize: aPosition [
 Board >> positionOfSpaceShip: numberOfSpaceShip [
 
 	^ (pieces positions)  at: numberOfSpaceShip
+]
+
+{ #category : 'as yet unclassified' }
+Board >> validateID: spaceShipID [
+
+	(spaceShipID < 1 or: [ spaceShipID > pieces positions size ]) ifTrue: [
+		Error signal:
+			'Invalid spaceship ID. There are only ' , pieces positions size asString
+			, ' spaceships.' ]
 ]
