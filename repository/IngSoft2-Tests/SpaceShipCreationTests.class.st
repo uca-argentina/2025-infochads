@@ -18,18 +18,20 @@ SpaceShipCreationTests >> should: anErrorBlock raise: anErrorClass withMessageTe
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPositionsAre0 [
 
-	| aBoard |
-	aBoard := Board withSize: 13 withNumberOfSpaceShips: 3.
-	self assert: (aBoard positionOfSpaceShip: 3) equals: 0.
-	self assert: (aBoard positionOfSpaceShip: 2) equals: 0.
-	self assert: (aBoard positionOfSpaceShip: 1) equals: 0
+	| aGame aBoardSize aNumberOfSpaceShips |
+	aBoardSize := 10.
+	aNumberOfSpaceShips := 3.
+	aGame := Game withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 0.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 0.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 0
 ]
 
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsAStringThenCreationFails [
 
 		self
-		should: [ Board withSize: 13 withNumberOfSpaceShips: '10' ]
+		should: [ Game withBoardSize: 13 withSpaceShips: '10']
 		raise: Error
 		withMessageText: 'The number of space ships should be a positive integer.'
 
@@ -39,7 +41,7 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsAStringThenCreationFails [
 SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
 
 		self
-		should: [ Board withSize: 13 withNumberOfSpaceShips: 0 ]
+		should: [ Game withBoardSize: 13 withSpaceShips: 0 ]
 		raise: Error
 		withMessageText: 'The number of space ships must be at least 1.'
 
@@ -49,7 +51,7 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
 SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails [
 
 		self
-		should: [ Board withSize: 13 withNumberOfSpaceShips: -1 ]
+		should: [ Game withBoardSize: 13 withSpaceShips: -1 ]
 		raise: Error
 		withMessageText: 'The number of space ships should be a positive integer.'
 
@@ -58,16 +60,16 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails 
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs0 [
 
-	| aBoard |
-	aBoard := Board withSize: 13 withNumberOfSpaceShips: 1.
-	self assert: (aBoard positionOfSpaceShip:1)  equals: 0
+	| aGame |
+	aGame := Game withBoardSize: 13 withSpaceShips: 1.
+	self assert: (aGame positionOfSpaceShip:1)  equals: 0
 ]
 
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositionsAre0 [
 
-	| aBoard |
-	aBoard := Board withSize: 13 withNumberOfSpaceShips: 2.
-	self assert: (aBoard positionOfSpaceShip: 2) equals: 0.
-	self assert: (aBoard positionOfSpaceShip: 1) equals: 0.
+	| aGame |
+	aGame := Game withBoardSize: 13 withSpaceShips: 2.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 0.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 0.
 ]

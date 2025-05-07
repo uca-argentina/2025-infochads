@@ -28,7 +28,7 @@ BoardTest >> testWhenBoardIsCreated [
 BoardTest >> testWhenBoardIsCreatedWithCertainSize [
 
 	| aBoard |
-	aBoard := Board withSize: 13 withNumberOfSpaceShips: 1.
+	aBoard := Board withSize: 13.
 	self assert: aBoard boardSize equals: 13
 ]
 
@@ -36,7 +36,7 @@ BoardTest >> testWhenBoardIsCreatedWithCertainSize [
 BoardTest >> testWhenBoardIsCreatedWithNegativeSizeThenIsNotValid [
 
 	self
-		should: [ Board withSize: -5  withNumberOfSpaceShips: 1]
+		should: [ Board withSize: -5]
 		raise: Error
 		withMessageText: 'Board Size must be a positive interger'
 ]

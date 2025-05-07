@@ -19,80 +19,83 @@ SpaceShipMovementTests >> should: anErrorBlock raise: anErrorClass withMessageTe
 { #category : 'tests' }
 SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls1ThenMoveSpaceShip1And2ToPosition1 [
 
-	| gameBoard aDiceRoll1 aDiceRoll2 boardSize numberOfSpaceShips |
+	| aGame aDiceRoll1 aDiceRoll2 boardSize numberOfSpaceShips |
 	boardSize := 10.
 	numberOfSpaceShips := 2.
-	gameBoard := Board
-		             withSize: boardSize
-		             withNumberOfSpaceShips: numberOfSpaceShips.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
+
 	aDiceRoll1 := 1.
 	aDiceRoll2 := 1.
-	gameBoard moveSpaceShip: 1 numberOfPositions: aDiceRoll1.
-	gameBoard moveSpaceShip: 2 numberOfPositions: aDiceRoll2.
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll1.
+	aGame moveSpaceShip: 2 numberOfPositions: aDiceRoll2.
 
-	self assert: (gameBoard positionOfSpaceShip: 1) equals: 1.
-	self assert: (gameBoard positionOfSpaceShip: 2) equals: 1.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 1
 ]
 
 { #category : 'tests' }
 SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls2ThenMoveSpaceShipToPosition3 [
 
-	| gameBoard aDiceRoll1 aDiceRoll2 boardSize numberOfSpaceShips |
+	| aGame aDiceRoll1 aDiceRoll2 boardSize numberOfSpaceShips |
 	boardSize := 10.
 	numberOfSpaceShips := 1.
-	gameBoard := Board
-		             withSize: boardSize
-		             withNumberOfSpaceShips: numberOfSpaceShips.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
 	aDiceRoll1 := 1.
 	aDiceRoll2 := 2.
-	gameBoard moveSpaceShip: 1 numberOfPositions: aDiceRoll1.
-	gameBoard moveSpaceShip: 1 numberOfPositions: aDiceRoll2.
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll1.
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll2.
 
-	self assert: (gameBoard positionOfSpaceShip: 1) equals: 3
+	self assert: (aGame positionOfSpaceShip: 1) equals: 3
 ]
 
 { #category : 'tests' }
 SpaceShipMovementTests >> testWhenDiceRoll5ThenMovesSpaceShipToPosition5 [
 
-	| gameBoard aDiceRoll boardSize numberOfSpaceShips |
+	| aGame aDiceRoll boardSize numberOfSpaceShips |
 	boardSize := 10.
 	numberOfSpaceShips := 1.
-	gameBoard := Board
-		             withSize: boardSize
-		             withNumberOfSpaceShips: numberOfSpaceShips.
-	aDiceRoll := 5.
-	gameBoard moveSpaceShip: 1 numberOfPositions: aDiceRoll.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
 
-	self assert: (gameBoard positionOfSpaceShip: 1) equals: 5
+	aDiceRoll := 5.
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
+
+	self assert: (aGame positionOfSpaceShip: 1) equals: 5
 ]
 
 { #category : 'tests' }
 SpaceShipMovementTests >> testWhenDiceRolls6ThenMoveSpaceShipToPosition6 [
 
-	| gameBoard aDiceRoll boardSize numberOfSpaceShips |
+	| aGame aDiceRoll boardSize numberOfSpaceShips |
 	boardSize := 10.
 	numberOfSpaceShips := 1.
-	gameBoard := Board
-		             withSize: boardSize
-		             withNumberOfSpaceShips: numberOfSpaceShips.
-	aDiceRoll := 6.
-	gameBoard moveSpaceShip: 1 numberOfPositions: aDiceRoll.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
 
-	self assert: (gameBoard positionOfSpaceShip: 1) equals: 6
+	aDiceRoll := 6.
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
+
+	self assert: (aGame positionOfSpaceShip: 1) equals: 6
 ]
 
 { #category : 'tests' }
 SpaceShipMovementTests >> testWhenIntendedToMoveSpaceShip3WhenOnly2AreOnGameThenCreationFails [
 
-	| gameBoard aDiceRoll1 boardSize numberOfSpaceShips |
+	| aGame aDiceRoll boardSize numberOfSpaceShips |
 	boardSize := 10.
 	numberOfSpaceShips := 2.
-	gameBoard := Board
-		             withSize: boardSize
-		             withNumberOfSpaceShips: numberOfSpaceShips.
-	aDiceRoll1 := 1.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
+	aDiceRoll := 1.
 	self
-		should: [ gameBoard moveSpaceShip: 3 numberOfPositions: aDiceRoll1 ]
+		should: [ aGame moveSpaceShip: 3 numberOfPositions: aDiceRoll. ]
 		raise: Error
 		withMessageText:
 		'Invalid spaceship ID. There are only 2 spaceships.'

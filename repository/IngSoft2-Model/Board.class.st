@@ -2,8 +2,7 @@ Class {
 	#name : 'Board',
 	#superclass : 'Object',
 	#instVars : [
-		'boardSize',
-		'pieces'
+		'boardSize'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -17,30 +16,19 @@ Board class >> boardSizeMustBePositiveInteger: boardSize [
 ]
 
 { #category : 'as yet unclassified' }
-Board class >> numberOfSpaceShipsMustBeAtLeastOne: aNumberOfSpaceShips [
-
-	aNumberOfSpaceShips <= 0 ifTrue: [
-		Error signal: 'The number of space ships must be at least 1.' ]
-]
-
-{ #category : 'as yet unclassified' }
-Board class >> numberOfSpaceShipsMustBePositiveInteger: boardSize [
-
-	(boardSize isInteger not or: [ boardSize negative ]) ifTrue: [
-		Error signal:
-			'The number of space ships should be a positive integer.' ]
-]
-
-{ #category : 'as yet unclassified' }
-Board class >> withSize: aBoardSize withNumberOfSpaceShips: aNumberOfSpaceShips [
+Board class >> withSize: aBoardSize [
 
 	self boardSizeMustBePositiveInteger: aBoardSize.
-	self numberOfSpaceShipsMustBePositiveInteger: aNumberOfSpaceShips.
-	self numberOfSpaceShipsMustBeAtLeastOne: aNumberOfSpaceShips.
 
-	^ self new
-		  initializeWithSize: aBoardSize
-		  andNumberOfSpaceShips: aNumberOfSpaceShips
+	^ self new initializeWithSize: aBoardSize
+]
+
+{ #category : 'path commands' }
+Board >> analizeBoardSizeLimits: aPosition [
+
+	aPosition > boardSize ifTrue: [
+		Error signal: 'Dice roll should be below or equals board size.' ].
+	^ true
 ]
 
 { #category : 'accessing' }
@@ -51,40 +39,16 @@ Board >> boardSize [
 ]
 
 { #category : 'initialization' }
-Board >> initializeWithSize: aBoardSize andNumberOfSpaceShips: aNumberOfSpaceShips [
+Board >> initializeWithSize: aBoardSize [
 
-	pieces := PieceMovement withPieces: aNumberOfSpaceShips.
-	
 	boardSize := aBoardSize.
 	^ self
 ]
 
-{ #category : 'as yet unclassified' }
-Board >> moveSpaceShip: spaceShipID numberOfPositions: diceRoll [
-
-	self validateID: spaceShipID.
-	pieces move: spaceShipID thisManySteps: diceRoll
-]
-
 { #category : 'path commands' }
-Board >> positionAnalize: aPosition [
+Board >> moveTo: newPosition [
 
-	aPosition > boardSize ifTrue: [
-		Error signal: 'Dice roll should be below or equals board size.' ].
-	^ true
-]
+	self analizeBoardSizeLimits: newPosition.
 
-{ #category : 'as yet unclassified' }
-Board >> positionOfSpaceShip: numberOfSpaceShip [
-
-	^ (pieces positions)  at: numberOfSpaceShip
-]
-
-{ #category : 'as yet unclassified' }
-Board >> validateID: spaceShipID [
-
-	(spaceShipID < 1 or: [ spaceShipID > pieces positions size ]) ifTrue: [
-		Error signal:
-			'Invalid spaceship ID. There are only ' , pieces positions size asString
-			, ' spaceships.' ]
+	^ newPosition
 ]

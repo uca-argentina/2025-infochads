@@ -20,11 +20,11 @@ BoardAndDiceTests >> testWhenDiceReturnsNumberBelowDiceSidesThenIsValid [
 
 	| numberOfSides aDice result aBoard boardSize |
 	boardSize := 10.
-	aBoard := Board withSize: boardSize withNumberOfSpaceShips: 1.
+	aBoard := Board withSize: boardSize.
 	numberOfSides := 6.
 	aDice := Dice withSides: numberOfSides.
 	result := aDice roll.
-	
+
 	self assert: result < boardSize
 ]
 
@@ -33,12 +33,12 @@ BoardAndDiceTests >> testWhenDiceRollExceedBoardSizeThenIsNotValid [
 
 	| aBoard aDiceRoll boardSize |
 	boardSize := 10.
-	aBoard := Board withSize: boardSize withNumberOfSpaceShips: 1.
+	aBoard := Board withSize: boardSize.
 
 	aDiceRoll := 12.
 
 	self
-		should: [ aBoard positionAnalize: aDiceRoll ]
+		should: [ aBoard analizeBoardSizeLimits: aDiceRoll ]
 		raise: Error
 		withMessageText: 'Dice roll should be below or equals board size.' 
 ]
@@ -48,7 +48,7 @@ BoardAndDiceTests >> testWhenDiceRollLandsOnLastPositionThenIsValid [
 
 	| aBoard aDiceRoll boardSize |
 	boardSize := 10.
-	aBoard := Board withSize: boardSize withNumberOfSpaceShips: 1.
+	aBoard := Board withSize: boardSize.
 
 	aDiceRoll := 10.
 
