@@ -31,7 +31,7 @@ Game >> moveSpaceShip: aSpaceShipID numberOfPositions: positionToMove [
 	| posiblePosition realPosition |
 	posiblePosition := spaceShips
 		                   withID: aSpaceShipID
-		                   getAddedPosition: positionToMove.
+		                   createPositionPosition: positionToMove.
 	realPosition := aBoard moveTo: posiblePosition.
 	spaceShips move: aSpaceShipID toPosition: realPosition
 ]

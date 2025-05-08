@@ -70,7 +70,7 @@ RacePosition >> validateID: spaceShipID [
 ]
 
 { #category : 'as yet unclassified' }
-RacePosition >> withID: aSpaceShipID getAddedPosition: positionsForward [
+RacePosition >> withID: aSpaceShipID createPositionPosition: positionsForward [
 
 	self validateID: aSpaceShipID.
 	^ (spaceShips at: aSpaceShipID) + positionsForward

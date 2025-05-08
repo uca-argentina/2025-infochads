@@ -36,6 +36,26 @@ SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls1ThenMoveSpaceShip1And
 ]
 
 { #category : 'tests' }
+SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls2AndDice3Rolls3ThenMoveSpaceShipToPosition6 [
+
+	| aGame aDiceRoll1 aDiceRoll2 aDiceRoll3 boardSize numberOfSpaceShips |
+	boardSize := 10.
+	numberOfSpaceShips := 1.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
+		
+	aDiceRoll1 := 1.
+	aDiceRoll2 := 2.
+	aDiceRoll3 := 3.
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll1.
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll2.
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll3.
+
+	self assert: (aGame positionOfSpaceShip: 1) equals: 6
+]
+
+{ #category : 'tests' }
 SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls2ThenMoveSpaceShipToPosition3 [
 
 	| aGame aDiceRoll1 aDiceRoll2 boardSize numberOfSpaceShips |
@@ -44,6 +64,7 @@ SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls2ThenMoveSpaceShipToPo
 	aGame := Game
 		         withBoardSize: boardSize
 		         withSpaceShips: numberOfSpaceShips.
+		
 	aDiceRoll1 := 1.
 	aDiceRoll2 := 2.
 	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll1.
@@ -53,7 +74,7 @@ SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls2ThenMoveSpaceShipToPo
 ]
 
 { #category : 'tests' }
-SpaceShipMovementTests >> testWhenDiceRoll5ThenMovesSpaceShipToPosition5 [
+SpaceShipMovementTests >> testWhenDiceRolls5ThenMovesSpaceShipToPosition5 [
 
 	| aGame aDiceRoll boardSize numberOfSpaceShips |
 	boardSize := 10.
