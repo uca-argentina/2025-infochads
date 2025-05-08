@@ -12,7 +12,7 @@ Class {
 Dice class >> sidesMustBePositiveInteger: aNumberOfSides [
 
 	((aNumberOfSides isInteger not) or: [aNumberOfSides negative]) ifTrue: [
-		Error signal: 'The number of sides shoud be a positive integer.' ]
+		Error signal: 'The number of sides should be a positive integer.' ]
 ]
 
 { #category : 'as yet unclassified' }
