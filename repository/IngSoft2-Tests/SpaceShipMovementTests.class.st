@@ -110,14 +110,14 @@ SpaceShipMovementTests >> testWhenIntendedToMoveSpaceShip3WhenOnly2AreOnGameThen
 
 	| aGame aDiceRoll boardSize numberOfSpaceShips |
 	boardSize := 10.
-	numberOfSpaceShips := 2.
+	numberOfSpaceShips := 1.
 	aGame := Game
 		         withBoardSize: boardSize
 		         withSpaceShips: numberOfSpaceShips.
 	aDiceRoll := 1.
 	self
-		should: [ aGame moveSpaceShip: 3 numberOfPositions: aDiceRoll. ]
+		should: [ aGame moveSpaceShip: 2 numberOfPositions: aDiceRoll. ]
 		raise: Error
 		withMessageText:
-		'Invalid spaceship ID. There are only 2 spaceships.'
+		'Invalid spaceship ID. There are only 1 spaceships.'
 ]
