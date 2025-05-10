@@ -35,9 +35,9 @@ RacePosition class >> withPieces: aNumberOfSpaceShips [
 { #category : 'as yet unclassified' }
 RacePosition >> calculateNextShipToMove: spaceShipID [
 
-	^ spaceShipID + 1 > spaceShips size
-		ifTrue: [ 1 ]
-		ifFalse: [ spaceShipID + 1 ]
+	nextSpaceShipToMove := spaceShipID + 1.
+	nextSpaceShipToMove > spaceShips size ifTrue: [
+		nextSpaceShipToMove := 1 ]
 ]
 
 { #category : 'initialization' }
@@ -66,7 +66,7 @@ RacePosition >> spaceShipToMove: spaceShipID [
 	spaceShipID ~= nextSpaceShipToMove ifTrue: [
 		Error signal:
 			'Its space ship ' , nextSpaceShipToMove asString , ' turn to move.' ].
-	nextSpaceShipToMove := self calculateNextShipToMove: spaceShipID
+	self calculateNextShipToMove: spaceShipID
 ]
 
 { #category : 'initialization' }
