@@ -25,6 +25,12 @@ Game >> checkForWinner [
 			'Space ship ' , (spaceShips getWinner: aBoard boardSize) asString , ' has already won.' ]
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> givePosition: aSpaceShipID [
+
+	^ spaceShips positions at: aSpaceShipID
+]
+
 { #category : 'initialization' }
 Game >> initializeWithBoardSize: aBoardSize andNumberOfSpaceShips: aNumberOfSpaceShips [
 

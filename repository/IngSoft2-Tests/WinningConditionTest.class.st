@@ -16,6 +16,27 @@ WinningConditionTest >> should: anErrorBlock raise: anErrorClass withMessageText
 ]
 
 { #category : 'tests' }
+WinningConditionTest >> testWhenARoundHasPassedAndSpaceShip1WinsTheGameIsOver [
+
+	| aGame aDiceRoll boardSize numberOfSpaceShips aDiceRoll2 |
+	boardSize := 10.
+	numberOfSpaceShips := 3.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
+
+	aDiceRoll := 7.
+	aDiceRoll2 := 3.
+
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
+	aGame moveSpaceShip: 2 numberOfPositions: aDiceRoll.
+	aGame moveSpaceShip: 3 numberOfPositions: aDiceRoll2.
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll2.
+
+	self assert: aGame isOver
+]
+
+{ #category : 'tests' }
 WinningConditionTest >> testWhenGameIsOverSpaceShip2CanNotPlay [
 
 	| aGame aDiceRoll aDiceRoll2 boardSize numberOfSpaceShips |
@@ -88,6 +109,26 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndGameIsntOverThenGameContinues 
 ]
 
 { #category : 'tests' }
+WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsGameOverThenInformsSpaceShip1Position [
+
+	| aGame aDiceRoll boardSize numberOfSpaceShips aDiceRoll2 |
+	boardSize := 10.
+	numberOfSpaceShips := 2.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
+
+	aDiceRoll := 10.
+	aDiceRoll2 := 3.
+
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll2.
+	aGame moveSpaceShip: 2 numberOfPositions: aDiceRoll.
+	
+	self assert: aGame isOver.
+	self assert: (aGame givePosition: 1) equals: 3.
+]
+
+{ #category : 'tests' }
 WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsThenGameIsOver [
 
 	| aGame aDiceRoll boardSize numberOfSpaceShips aDiceRoll2 |
@@ -104,6 +145,26 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsThenGameIsOver [
 	aGame moveSpaceShip: 2 numberOfPositions: aDiceRoll2.
 
 	self assert: aGame isOver
+]
+
+{ #category : 'tests' }
+WinningConditionTest >> testWhenSpaceShip1WinsAndInformsSpaceShip1_2And3Positions [
+
+	| aGame aDiceRoll boardSize numberOfSpaceShips |
+	boardSize := 10.
+	numberOfSpaceShips := 3.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
+
+	aDiceRoll := 10.
+
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
+
+	self assert: aGame isOver.
+	self assert: (aGame givePosition: 1) equals: 10.
+	self assert: (aGame givePosition: 2) equals: 0.
+	self assert: (aGame givePosition: 3) equals: 0
 ]
 
 { #category : 'tests' }
