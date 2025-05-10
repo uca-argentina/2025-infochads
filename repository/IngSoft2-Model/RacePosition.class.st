@@ -2,7 +2,8 @@ Class {
 	#name : 'RacePosition',
 	#superclass : 'Object',
 	#instVars : [
-		'spaceShips'
+		'spaceShips',
+		'nextSpaceShipToMove'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -31,10 +32,19 @@ RacePosition class >> withPieces: aNumberOfSpaceShips [
 	^ self new initializeWithNumberOfSpaceShips: aNumberOfSpaceShips
 ]
 
+{ #category : 'as yet unclassified' }
+RacePosition >> calculateNextShipToMove: spaceShipID [
+
+	nextSpaceShipToMove := spaceShipID + 1.
+	nextSpaceShipToMove > spaceShips size ifTrue: [
+		nextSpaceShipToMove := 1 ]
+]
+
 { #category : 'initialization' }
 RacePosition >> initializeWithNumberOfSpaceShips: aNumberOfSpaceShips [
 
 	spaceShips := self startingPositions: aNumberOfSpaceShips.
+	nextSpaceShipToMove := 1.
 	^ self
 ]
 
@@ -48,6 +58,15 @@ RacePosition >> move: aSpaceShipID toPosition: newPosition [
 RacePosition >> positions [
 
 	^ spaceShips
+]
+
+{ #category : 'as yet unclassified' }
+RacePosition >> spaceShipToMove: spaceShipID [
+
+	spaceShipID ~= nextSpaceShipToMove ifTrue: [
+		Error signal:
+			'Its space ship ' , nextSpaceShipToMove asString , ' turn to move.' ].
+	self calculateNextShipToMove: spaceShipID
 ]
 
 { #category : 'initialization' }
@@ -73,5 +92,7 @@ RacePosition >> validateID: spaceShipID [
 RacePosition >> withID: aSpaceShipID createPositionPosition: positionsForward [
 
 	self validateID: aSpaceShipID.
+	self spaceShipToMove: aSpaceShipID.
+
 	^ (spaceShips at: aSpaceShipID) + positionsForward
 ]
