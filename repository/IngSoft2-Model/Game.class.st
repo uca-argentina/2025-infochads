@@ -17,6 +17,20 @@ Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips [
 		  andNumberOfSpaceShips: aNumberOfSpaceShips
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> checkForWinner [
+
+	self isGameOver ifTrue: [
+		Error signal:
+			'Space ship ' , (spaceShips getWinner: aBoard boardSize) asString , ' has already won.' ]
+]
+
+{ #category : 'as yet unclassified' }
+Game >> givePosition: aSpaceShipID [
+
+	^ spaceShips positions at: aSpaceShipID
+]
+
 { #category : 'initialization' }
 Game >> initializeWithBoardSize: aBoardSize andNumberOfSpaceShips: aNumberOfSpaceShips [
 
@@ -25,15 +39,28 @@ Game >> initializeWithBoardSize: aBoardSize andNumberOfSpaceShips: aNumberOfSpac
 	^ self
 ]
 
+{ #category : 'testing' }
+Game >> isGameOver [
+
+	^ spaceShips isAtFinishLine: aBoard boardSize
+]
+
+{ #category : 'testing' }
+Game >> isOver [
+	^ self isGameOver 
+]
+
 { #category : 'as yet unclassified' }
 Game >> moveSpaceShip: aSpaceShipID numberOfPositions: positionToMove [
 
 	| posiblePosition realPosition |
+	self checkForWinner. 
 	posiblePosition := spaceShips
 		                   withID: aSpaceShipID
 		                   createPositionPosition: positionToMove.
 	realPosition := aBoard moveTo: posiblePosition.
-	spaceShips move: aSpaceShipID toPosition: realPosition
+	spaceShips move: aSpaceShipID toPosition: realPosition.
+	
 ]
 
 { #category : 'as yet unclassified' }

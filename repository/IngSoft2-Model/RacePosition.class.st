@@ -40,12 +40,24 @@ RacePosition >> calculateNextShipToMove: spaceShipID [
 		nextSpaceShipToMove := 1 ]
 ]
 
+{ #category : 'as yet unclassified' }
+RacePosition >> getWinner: aFinishLine [
+	
+	^spaceShips indexOf: aFinishLine
+]
+
 { #category : 'initialization' }
 RacePosition >> initializeWithNumberOfSpaceShips: aNumberOfSpaceShips [
 
 	spaceShips := self startingPositions: aNumberOfSpaceShips.
 	nextSpaceShipToMove := 1.
 	^ self
+]
+
+{ #category : 'testing' }
+RacePosition >> isAtFinishLine: finishLine [
+
+	^ spaceShips anySatisfy: [ :aShip | aShip = finishLine ]
 ]
 
 { #category : 'as yet unclassified' }
