@@ -60,6 +60,23 @@ WinningConditionTest >> testWhenAfterARoundSpaceShip1WinsGameIsOverThenInformsSp
 ]
 
 { #category : 'tests' }
+WinningConditionTest >> testWhenDiceRollIsHigherThanBoardSizeThenSpaceShipMovesToTheFinishLineTheGameIsOver [
+
+	| aGame aDiceRoll boardSize numberOfSpaceShips |
+	boardSize := 10.
+	numberOfSpaceShips := 3.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
+
+	aDiceRoll := 12.
+
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
+
+	self assert: aGame isOver
+]
+
+{ #category : 'tests' }
 WinningConditionTest >> testWhenGameIsOverSpaceShip2CanNotPlay [
 
 	| aGame aDiceRoll aDiceRoll2 boardSize numberOfSpaceShips |

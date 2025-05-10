@@ -29,21 +29,6 @@ BoardAndDiceTests >> testWhenDiceReturnsNumberBelowDiceSidesThenIsValid [
 ]
 
 { #category : 'tests' }
-BoardAndDiceTests >> testWhenDiceRollExceedBoardSizeThenIsNotValid [
-
-	| aBoard aDiceRoll boardSize |
-	boardSize := 10.
-	aBoard := Board withSize: boardSize.
-
-	aDiceRoll := 12.
-
-	self
-		should: [ aBoard analizeBoardSizeLimits: aDiceRoll ]
-		raise: Error
-		withMessageText: 'Dice roll should be below or equals board size.' 
-]
-
-{ #category : 'tests' }
 BoardAndDiceTests >> testWhenDiceRollLandsOnLastPositionThenIsValid [
 
 	| aBoard aDiceRoll boardSize |

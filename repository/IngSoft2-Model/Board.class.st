@@ -23,12 +23,13 @@ Board class >> withSize: aBoardSize [
 	^ self new initializeWithSize: aBoardSize
 ]
 
-{ #category : 'path commands' }
-Board >> analizeBoardSizeLimits: aPosition [
+{ #category : 'as yet unclassified' }
+Board >> boardLimitAdjustment: newPosition [
 
-	aPosition > boardSize ifTrue: [
-		Error signal: 'Dice roll should be below or equals board size.' ].
-	^ true
+	| aPosition |
+	aPosition := newPosition.
+	newPosition > boardSize ifTrue: [ aPosition := boardSize ].
+	^ aPosition
 ]
 
 { #category : 'accessing' }
@@ -48,7 +49,7 @@ Board >> initializeWithSize: aBoardSize [
 { #category : 'path commands' }
 Board >> moveTo: newPosition [
 
-	self analizeBoardSizeLimits: newPosition.
-
-	^ newPosition
+	| aNewPosition |
+	aNewPosition := self boardLimitAdjustment: newPosition.
+	^ aNewPosition
 ]
