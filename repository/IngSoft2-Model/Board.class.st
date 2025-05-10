@@ -46,8 +46,9 @@ Board >> checkForWormHole: aPosition [
 	| aNewPosition |
 	aNewPosition := aPosition.
 
-	aNewPosition := (wormHole anySatisfy: [ :aHole | aHole = aPosition ])
-		                ifTrue: [ (wormHole copyWithout: aPosition ) first].
+	(wormHole anySatisfy: [ :aHole | aHole = aPosition ]) ifTrue: [
+		aNewPosition := (wormHole copyWithout: aPosition) first ].
+
 	^ aNewPosition
 ]
 
@@ -55,6 +56,7 @@ Board >> checkForWormHole: aPosition [
 Board >> initializeWithSize: aBoardSize [
 
 	boardSize := aBoardSize.
+	wormHole := #(  ).
 	^ self
 ]
 

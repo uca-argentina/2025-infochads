@@ -7,32 +7,28 @@ Class {
 
 { #category : 'tests' }
 WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnFirstWormHoleThenTeleportsToSecondWormHoleThenIsValid [
+
 	| aGame aWormHole aDiceRoll |
-	
-	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 1	.
-			
-	aWormHole:={3. 7}.
-	aGame allocatedWormHole:aWormHole.
+	aGame := Game withBoardSize: 10 withSpaceShips: 1.
+
+	aWormHole := { 3. 7 }.
+	aGame allocatedWormHole: aWormHole.
 	aDiceRoll := 3.
 	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
-	
-	self assert:(aGame positionOfSpaceShip: 1) equals: 7.
+
+	self assert: (aGame positionOfSpaceShip: 1) equals: 7
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnSecondWormHoleThenTeleportsToFirstWormHoleThenIsValid [ 
+WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnSecondWormHoleThenTeleportsToFirstWormHoleThenIsValid [
+
 	| aGame aWormHole aDiceRoll |
-	
-	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 1	.
-			
-	aWormHole:={3. 7}.
-	aGame allocatedWormHole:aWormHole.
+	aGame := Game withBoardSize: 10 withSpaceShips: 1.
+
+	aWormHole := { 3. 7 }.
+	aGame allocatedWormHole: aWormHole.
 	aDiceRoll := 7.
 	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
-	
-	self assert:(aGame positionOfSpaceShip: 1) equals: 3.
+
+	self assert: (aGame positionOfSpaceShip: 1) equals: 3
 ]
