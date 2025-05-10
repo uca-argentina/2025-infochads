@@ -2,7 +2,8 @@ Class {
 	#name : 'Board',
 	#superclass : 'Object',
 	#instVars : [
-		'boardSize'
+		'boardSize',
+		'wormHole'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -39,6 +40,17 @@ Board >> boardSize [
 	^ boardSize
 ]
 
+{ #category : 'as yet unclassified' }
+Board >> checkForWormHole: aPosition [
+
+	| aNewPosition |
+	aNewPosition := aPosition.
+
+	aNewPosition := (wormHole anySatisfy: [ :aHole | aHole = aPosition ])
+		                ifTrue: [ (wormHole copyWithout: aPosition ) first].
+	^ aNewPosition
+]
+
 { #category : 'initialization' }
 Board >> initializeWithSize: aBoardSize [
 
@@ -51,5 +63,11 @@ Board >> moveTo: newPosition [
 
 	| aNewPosition |
 	aNewPosition := self boardLimitAdjustment: newPosition.
+	aNewPosition := self checkForWormHole: aNewPosition .
 	^ aNewPosition
+]
+
+{ #category : 'as yet unclassified' }
+Board >> placeWormHole: aWormHole [ 
+	wormHole := aWormHole.
 ]

@@ -18,17 +18,16 @@ Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips [
 ]
 
 { #category : 'as yet unclassified' }
+Game >> allocatedWormHole: aWormHole [
+	aBoard placeWormHole: aWormHole . 
+]
+
+{ #category : 'as yet unclassified' }
 Game >> checkForWinner [
 
 	self isGameOver ifTrue: [
 		Error signal:
 			'Space ship ' , (spaceShips getWinner: aBoard boardSize) asString , ' has already won.' ]
-]
-
-{ #category : 'as yet unclassified' }
-Game >> givePosition: aSpaceShipID [
-
-	^ spaceShips positions at: aSpaceShipID
 ]
 
 { #category : 'initialization' }
