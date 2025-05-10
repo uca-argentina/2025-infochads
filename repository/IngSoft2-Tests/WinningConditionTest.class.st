@@ -37,6 +37,29 @@ WinningConditionTest >> testWhenARoundHasPassedAndSpaceShip1WinsTheGameIsOver [
 ]
 
 { #category : 'tests' }
+WinningConditionTest >> testWhenAfterARoundSpaceShip1WinsGameIsOverThenInformsSpaceShip2And3Position [
+
+	| aGame aDiceRoll boardSize numberOfSpaceShips aDiceRoll2 |
+	boardSize := 10.
+	numberOfSpaceShips := 3.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
+
+	aDiceRoll := 7.
+	aDiceRoll2 := 3.
+
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll2.
+	aGame moveSpaceShip: 2 numberOfPositions: aDiceRoll2.
+	aGame moveSpaceShip: 3 numberOfPositions: aDiceRoll.
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
+
+	self assert: aGame isOver.
+	self assert: (aGame givePosition: 2) equals: 3.
+	self assert: (aGame givePosition: 3) equals: 7
+]
+
+{ #category : 'tests' }
 WinningConditionTest >> testWhenGameIsOverSpaceShip2CanNotPlay [
 
 	| aGame aDiceRoll aDiceRoll2 boardSize numberOfSpaceShips |
@@ -188,4 +211,26 @@ WinningConditionTest >> testWhenSpaceShip3WinsAndSpaceShip1CanNotPlay [
 		should: [ aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll ]
 		raise: Error
 		withMessageText: 'Space ship 3 has already won.'
+]
+
+{ #category : 'tests' }
+WinningConditionTest >> testWhenSpaceShip3WinsGameIsOverThenInformsSpaceShip1And2Positions [
+
+	| aGame aDiceRoll boardSize numberOfSpaceShips aDiceRoll2 |
+	boardSize := 10.
+	numberOfSpaceShips := 3.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
+
+	aDiceRoll := 10.
+	aDiceRoll2 := 3.
+
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll2.
+	aGame moveSpaceShip: 2 numberOfPositions: aDiceRoll2.
+	aGame moveSpaceShip: 3 numberOfPositions: aDiceRoll.
+
+	self assert: aGame isOver.
+	self assert: (aGame givePosition: 1) equals: 3.
+	self assert: (aGame givePosition: 2) equals: 3
 ]
