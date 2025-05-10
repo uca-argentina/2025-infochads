@@ -84,3 +84,66 @@ TurnsTests >> testWhenSpaceShip2IsToPlayAndSpaceShip2PlaysThenIsValid [
 	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
 	self assert: (aGame positionOfSpaceShip: 2) equals: 2.
 ]
+
+{ #category : 'tests' }
+TurnsTests >> testWhenSpaceShip2IsToPlayAndSpaceShip3PlaysThenCreationFails [
+
+	| aGame aDiceRoll boardSize numberOfSpaceShips |
+	boardSize := 10.
+	numberOfSpaceShips := 3.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
+
+	aDiceRoll := 2.
+
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
+
+	self
+		should: [ aGame moveSpaceShip: 3 numberOfPositions: aDiceRoll ]
+		raise: Error
+		withMessageText: 'Its space ship 2 turn to move.'
+]
+
+{ #category : 'tests' }
+TurnsTests >> testWhenSpaceShip3IsToPlayAndSpaceShip3PlaysThenIsValid [ 
+
+	| aGame aDiceRoll boardSize numberOfSpaceShips |
+	boardSize := 10.
+	numberOfSpaceShips := 3.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
+
+	aDiceRoll := 2.
+
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
+	aGame moveSpaceShip: 2 numberOfPositions: aDiceRoll.
+	aGame moveSpaceShip: 3 numberOfPositions: aDiceRoll.
+
+	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 2
+]
+
+{ #category : 'tests' }
+TurnsTests >> testWhenTheFirstRoundIsPlayedThenSpaceShip1IsToPlayThenIsValid [
+
+	| aGame aDiceRoll boardSize numberOfSpaceShips |
+	boardSize := 10.
+	numberOfSpaceShips := 3.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
+
+	aDiceRoll := 2.
+
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
+	aGame moveSpaceShip: 2 numberOfPositions: aDiceRoll.
+	aGame moveSpaceShip: 3 numberOfPositions: aDiceRoll.
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll. 
+
+	self assert: (aGame positionOfSpaceShip: 1) equals: 4.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 2
+]
