@@ -5,6 +5,37 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+WinningConditionTest >> should: anErrorBlock raise: anErrorClass withMessageText: anErrorMessage [
+
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+		self assert: error messageText equals: anErrorMessage ]
+]
+
+{ #category : 'tests' }
+WinningConditionTest >> testWhenGameIsOverSpaceShip2CanNotPlay [
+
+	| aGame aDiceRoll aDiceRoll2 boardSize numberOfSpaceShips |
+	boardSize := 10.
+	numberOfSpaceShips := 3.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
+
+	aDiceRoll := 10.
+	aDiceRoll2 := 1.
+
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
+
+	self
+		should: [ aGame moveSpaceShip: 2 numberOfPositions: aDiceRoll2 ]
+		raise: Error
+		withMessageText: 'Space ship 1 has already won.'
+]
+
 { #category : 'tests' }
 WinningConditionTest >> testWhenGameNotifiesAWinnerThenItsOver [
 
@@ -54,4 +85,46 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndGameIsntOverThenGameContinues 
 	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
 
 	self deny: aGame isOver
+]
+
+{ #category : 'tests' }
+WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsThenGameIsOver [
+
+	| aGame aDiceRoll boardSize numberOfSpaceShips aDiceRoll2 |
+	boardSize := 10.
+	numberOfSpaceShips := 3.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
+
+	aDiceRoll := 5.
+	aDiceRoll2 := 10.
+
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
+	aGame moveSpaceShip: 2 numberOfPositions: aDiceRoll2.
+
+	self assert: aGame isOver
+]
+
+{ #category : 'tests' }
+WinningConditionTest >> testWhenSpaceShip3WinsAndSpaceShip1CanNotPlay [
+
+	| aGame aDiceRoll boardSize numberOfSpaceShips aDiceRoll2 |
+	boardSize := 10.
+	numberOfSpaceShips := 3.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
+
+	aDiceRoll := 5.
+	aDiceRoll2 := 10.
+
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
+	aGame moveSpaceShip: 2 numberOfPositions: aDiceRoll.
+	aGame moveSpaceShip: 3 numberOfPositions: aDiceRoll2.
+
+	self
+		should: [ aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll ]
+		raise: Error
+		withMessageText: 'Space ship 3 has already won.'
 ]
