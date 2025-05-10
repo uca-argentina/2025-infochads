@@ -71,5 +71,18 @@ Board >> moveTo: newPosition [
 
 { #category : 'as yet unclassified' }
 Board >> placeWormHole: aWormHole [ 
+	| entry exit |
+	
+	entry := aWormHole first.
+	exit := aWormHole second.
+	
+	entry >= exit ifTrue: [ 
+		self error: 'First WormHole should be lower than second one.' ].
+	
+	exit > boardSize ifTrue: [
+		self error: 'WormHole exit must be within board limits.'
+	].
+	
 	wormHole := aWormHole.
+	
 ]

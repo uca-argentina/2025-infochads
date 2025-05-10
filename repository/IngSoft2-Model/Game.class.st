@@ -19,6 +19,7 @@ Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips [
 
 { #category : 'as yet unclassified' }
 Game >> allocatedWormHole: aWormHole [
+	
 	aBoard placeWormHole: aWormHole . 
 ]
 
