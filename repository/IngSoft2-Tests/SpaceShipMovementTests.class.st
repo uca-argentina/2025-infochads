@@ -17,6 +17,22 @@ SpaceShipMovementTests >> should: anErrorBlock raise: anErrorClass withMessageTe
 ]
 
 { #category : 'tests' }
+SpaceShipMovementTests >> testWhenASetOfDiceWithAD6AndD8TossThenSpaceShip1MovesToPositionBetween1And14 [
+
+	| aGame aDiceRoll boardSize numberOfSpaceShips |
+	boardSize := 10.
+	numberOfSpaceShips := 1.
+	aGame := Game
+		         withBoardSize: boardSize
+		         withSpaceShips: numberOfSpaceShips.
+
+	aDiceRoll := 6.
+	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
+
+	self assert: (aGame positionOfSpaceShip: 1) equals: 6
+]
+
+{ #category : 'tests' }
 SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls1ThenMoveSpaceShip1And2ToPosition1 [
 
 	| aGame aDiceRoll1 aDiceRoll2 boardSize numberOfSpaceShips |
@@ -87,22 +103,6 @@ SpaceShipMovementTests >> testWhenDiceRolls5ThenMovesSpaceShipToPosition5 [
 	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
 
 	self assert: (aGame positionOfSpaceShip: 1) equals: 5
-]
-
-{ #category : 'tests' }
-SpaceShipMovementTests >> testWhenDiceRolls6ThenMoveSpaceShipToPosition6 [
-
-	| aGame aDiceRoll boardSize numberOfSpaceShips |
-	boardSize := 10.
-	numberOfSpaceShips := 1.
-	aGame := Game
-		         withBoardSize: boardSize
-		         withSpaceShips: numberOfSpaceShips.
-
-	aDiceRoll := 6.
-	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
-
-	self assert: (aGame positionOfSpaceShip: 1) equals: 6
 ]
 
 { #category : 'tests' }
