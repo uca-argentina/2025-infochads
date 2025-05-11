@@ -2,7 +2,8 @@ Class {
 	#name : 'Board',
 	#superclass : 'Object',
 	#instVars : [
-		'boardSize'
+		'boardSize',
+		'wormHole'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -39,10 +40,23 @@ Board >> boardSize [
 	^ boardSize
 ]
 
+{ #category : 'as yet unclassified' }
+Board >> checkForWormHole: aPosition [
+
+	| aNewPosition |
+	aNewPosition := aPosition.
+
+	(wormHole anySatisfy: [ :aHole | aHole = aPosition ]) ifTrue: [
+		aNewPosition := (wormHole copyWithout: aPosition) first ].
+
+	^ aNewPosition
+]
+
 { #category : 'initialization' }
 Board >> initializeWithSize: aBoardSize [
 
 	boardSize := aBoardSize.
+	wormHole := #(  ).
 	^ self
 ]
 
@@ -51,5 +65,42 @@ Board >> moveTo: newPosition [
 
 	| aNewPosition |
 	aNewPosition := self boardLimitAdjustment: newPosition.
+	aNewPosition := self checkForWormHole: aNewPosition .
 	^ aNewPosition
+]
+
+{ #category : 'as yet unclassified' }
+Board >> placeWormHole: aWormHole [
+
+	
+	self wormHoleExitMustBePositiveInteger: aWormHole first.
+	self wormHoleExitMustBePositiveInteger: aWormHole second.
+	
+	
+	self wormHoleMustBeWithinLimits: aWormHole.
+	
+	self wormHoleExitMustNotBeEntry: aWormHole.
+	
+	wormHole := aWormHole
+]
+
+{ #category : 'as yet unclassified' }
+Board >> wormHoleExitMustBePositiveInteger: aWormHoleExit [
+
+	(aWormHoleExit isInteger) ifFalse: [
+		Error signal: 'WormHole must be a pair of integers.' ]
+]
+
+{ #category : 'as yet unclassified' }
+Board >> wormHoleExitMustNotBeEntry: aWormHole [
+
+	(aWormHole first = aWormHole second) ifTrue: [
+		Error signal: 'The WormHole Entry cannot be the exit.' ]
+]
+
+{ #category : 'as yet unclassified' }
+Board >> wormHoleMustBeWithinLimits: aWormHole [
+
+	(aWormHole anySatisfy: [ :hole | hole >= boardSize or: hole <= 0] ) ifTrue: [
+		self error: 'WormHole exit must be within board limits.' ]
 ]

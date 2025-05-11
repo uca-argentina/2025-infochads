@@ -55,8 +55,8 @@ WinningConditionTest >> testWhenAfterARoundSpaceShip1WinsGameIsOverThenInformsSp
 	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
 
 	self assert: aGame isOver.
-	self assert: (aGame givePosition: 2) equals: 3.
-	self assert: (aGame givePosition: 3) equals: 7
+	self assert: (aGame positionOfSpaceShip: 2) equals: 3.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 7
 ]
 
 { #category : 'tests' }
@@ -165,7 +165,7 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsGameOverThenInfo
 	aGame moveSpaceShip: 2 numberOfPositions: aDiceRoll.
 	
 	self assert: aGame isOver.
-	self assert: (aGame givePosition: 1) equals: 3.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 3.
 ]
 
 { #category : 'tests' }
@@ -202,9 +202,9 @@ WinningConditionTest >> testWhenSpaceShip1WinsAndInformsSpaceShip1_2And3Position
 	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
 
 	self assert: aGame isOver.
-	self assert: (aGame givePosition: 1) equals: 10.
-	self assert: (aGame givePosition: 2) equals: 0.
-	self assert: (aGame givePosition: 3) equals: 0
+	self assert: (aGame positionOfSpaceShip: 1) equals: 10.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 0.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 0
 ]
 
 { #category : 'tests' }
@@ -248,6 +248,6 @@ WinningConditionTest >> testWhenSpaceShip3WinsGameIsOverThenInformsSpaceShip1And
 	aGame moveSpaceShip: 3 numberOfPositions: aDiceRoll.
 
 	self assert: aGame isOver.
-	self assert: (aGame givePosition: 1) equals: 3.
-	self assert: (aGame givePosition: 2) equals: 3
+	self assert: (aGame positionOfSpaceShip: 1) equals: 3.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 3
 ]
