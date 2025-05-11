@@ -12,7 +12,7 @@ DiceSetTests >> testWhenASackOfDicesWithOneD6AndOneD8IsTossedThenResultBetween1A
 	diceSet := DiceSet new initializeWith.
 	diceSet add: (Dice withSides: 6).
 	diceSet add: (Dice withSides: 8).
-	self assert: (diceSet toss between: 1 and: 12)
+	self assert: (diceSet toss between: 1 and: 14)
 ]
 
 { #category : 'tests' }
