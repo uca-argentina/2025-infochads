@@ -76,7 +76,7 @@ DiceSetTests >> testWhenASetOfDiceWithAD6TossAfter1RoundThenSpaceShip1MovesToPos
 	aGame moveSpaceShip: 2 numberOfPositions: diceSet toss.
 	aGame moveSpaceShip: 1 numberOfPositions: diceSet toss.
 		
-	self assert: ((aGame positionOfSpaceShip: 2) between: 2 and: 12).
+	self assert: ((aGame positionOfSpaceShip: 1) between: 2 and: 12).
 ]
 
 { #category : 'tests' }
