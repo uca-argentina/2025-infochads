@@ -44,6 +44,32 @@ WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnSecondWormHoleThenTeleportsToFi
 ]
 
 { #category : 'tests' }
+WormHoleTest >> testWhenEntryHoleIsNegativeThenIsInvalid [
+
+	| aGame aWormHole  |
+	aGame := Game withBoardSize: 10 withSpaceShips: 1.
+
+	aWormHole := { -1. 7 }.
+	self
+		should: [ aGame allocatedWormHole: aWormHole ]
+		raise: Error
+		withMessageText: 'WormHole exit must be within board limits.'
+]
+
+{ #category : 'tests' }
+WormHoleTest >> testWhenEntryHoleIsZeroThenIsInvalid [
+
+	| aGame aWormHole  |
+	aGame := Game withBoardSize: 10 withSpaceShips: 1.
+
+	aWormHole := { 0. 7 }.
+	self
+		should: [ aGame allocatedWormHole: aWormHole ]
+		raise: Error
+		withMessageText: 'WormHole exit must be within board limits.'
+]
+
+{ #category : 'tests' }
 WormHoleTest >> testWhenEntryWormHoleIsEqualsToExitWormHoleThenIsInvalid [
 
 	| aGame aWormHole  |
@@ -54,7 +80,20 @@ WormHoleTest >> testWhenEntryWormHoleIsEqualsToExitWormHoleThenIsInvalid [
 	self
 		should: [ aGame allocatedWormHole: aWormHole ]
 		raise: Error
-		withMessageText: 'First WormHole should be lower than second one.'
+		withMessageText: 'The WormHole Entry cannot be the exit.'
+]
+
+{ #category : 'tests' }
+WormHoleTest >> testWhenExitHoleIsEqualToBoardSizeThenIsInvalid [
+
+	| aGame aWormHole  |
+	aGame := Game withBoardSize: 10 withSpaceShips: 1.
+
+	aWormHole := { 3. 10 }.
+	self
+		should: [ aGame allocatedWormHole: aWormHole ]
+		raise: Error
+		withMessageText: 'WormHole exit must be within board limits.'
 ]
 
 { #category : 'tests' }
@@ -71,16 +110,16 @@ WormHoleTest >> testWhenExitHoleIsHigherThanABoardSizeThenIsInvalid [
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testWhenExitWormHoleIsLowerThanEntryWormHoleThenIsInvalid [
+WormHoleTest >> testWhenWormHoleIsNotAnIntThenIsInvalid [
 
 	| aGame aWormHole  |
 	aGame := Game withBoardSize: 10 withSpaceShips: 1.
 
-	aWormHole := { 5.  2}.
+	aWormHole := '2->5'.
 	
 
 	self
 		should: [ aGame allocatedWormHole: aWormHole ]
 		raise: Error
-		withMessageText: 'First WormHole should be lower than second one.'
+		withMessageText: 'WormHole must be a pair of integers.'
 ]

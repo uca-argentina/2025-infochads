@@ -70,19 +70,37 @@ Board >> moveTo: newPosition [
 ]
 
 { #category : 'as yet unclassified' }
-Board >> placeWormHole: aWormHole [ 
-	| entry exit |
+Board >> placeWormHole: aWormHole [
+
 	
-	entry := aWormHole first.
-	exit := aWormHole second.
+	self wormHoleExitMustBePositiveInteger: aWormHole first.
+	self wormHoleExitMustBePositiveInteger: aWormHole second.
 	
-	entry >= exit ifTrue: [ 
-		self error: 'First WormHole should be lower than second one.' ].
 	
-	exit > boardSize ifTrue: [
-		self error: 'WormHole exit must be within board limits.'
-	].
+	self wormHoleMustBeWithinLimits: aWormHole.
 	
-	wormHole := aWormHole.
+	self wormHoleExitMustNotBeEntry: aWormHole.
 	
+	wormHole := aWormHole
+]
+
+{ #category : 'as yet unclassified' }
+Board >> wormHoleExitMustBePositiveInteger: aWormHoleExit [
+
+	(aWormHoleExit isInteger) ifFalse: [
+		Error signal: 'WormHole must be a pair of integers.' ]
+]
+
+{ #category : 'as yet unclassified' }
+Board >> wormHoleExitMustNotBeEntry: aWormHole [
+
+	(aWormHole first = aWormHole second) ifTrue: [
+		Error signal: 'The WormHole Entry cannot be the exit.' ]
+]
+
+{ #category : 'as yet unclassified' }
+Board >> wormHoleMustBeWithinLimits: aWormHole [
+
+	(aWormHole anySatisfy: [ :hole | hole >= boardSize or: hole <= 0] ) ifTrue: [
+		self error: 'WormHole exit must be within board limits.' ]
 ]
