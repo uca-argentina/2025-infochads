@@ -64,6 +64,22 @@ DiceSetTests >> testWhenASetOfDiceWithAD6AndD8TossThenSpaceShip1MovesToPositionB
 ]
 
 { #category : 'tests' }
+DiceSetTests >> testWhenASetOfDiceWithAD6TossAfter1RoundThenSpaceShip1MovesToPositionBetween2And12 [
+
+	| aGame diceSet |
+	diceSet := DiceSet new initializeWith.
+	diceSet add: (Dice withSides: 6).
+
+	aGame := Game withBoardSize: 20 withSpaceShips: 2.
+
+	aGame moveSpaceShip: 1 numberOfPositions: diceSet toss.
+	aGame moveSpaceShip: 2 numberOfPositions: diceSet toss.
+	aGame moveSpaceShip: 1 numberOfPositions: diceSet toss.
+		
+	self assert: ((aGame positionOfSpaceShip: 2) between: 2 and: 12).
+]
+
+{ #category : 'tests' }
 DiceSetTests >> testWhenASetOfDiceWithAD6TossThenSpaceShip1MovesToPositionBetween1And6 [
 
 	| aGame diceSet |
@@ -74,5 +90,20 @@ DiceSetTests >> testWhenASetOfDiceWithAD6TossThenSpaceShip1MovesToPositionBetwee
 
 	aGame moveSpaceShip: 1 numberOfPositions: diceSet toss.
 
+	self assert: ((aGame positionOfSpaceShip: 1) between: 1 and: 6).
+]
+
+{ #category : 'tests' }
+DiceSetTests >> testWhenASetOfDiceWithAD6TossThenSpaceShip2MovesToPositionBetween1And6 [
+
+	| aGame diceSet |
+	diceSet := DiceSet new initializeWith.
+	diceSet add: (Dice withSides: 6).
+
+	aGame := Game withBoardSize: 10 withSpaceShips: 1.
+
+	aGame moveSpaceShip: 1 numberOfPositions: diceSet toss.
+
+	
 	self assert: ((aGame positionOfSpaceShip: 1) between: 1 and: 6).
 ]
