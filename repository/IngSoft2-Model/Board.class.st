@@ -67,15 +67,6 @@ Board >> initializeWithSize: aBoardSize [
 	^ self
 ]
 
-{ #category : 'path commands' }
-Board >> moveTo: newPosition [
-
-	| aNewPosition |
-	aNewPosition := self boardLimitAdjustment: newPosition.
-	aNewPosition := self checkForWormHole: aNewPosition.
-	^ aNewPosition
-]
-
 { #category : 'as yet unclassified' }
 Board >> placeWormHole: aWormHole [
 
@@ -86,6 +77,15 @@ Board >> placeWormHole: aWormHole [
 	self wormHoleExitMustNotBeEntry: aWormHole.
 
 	wormHole := aWormHole
+]
+
+{ #category : 'path commands' }
+Board >> spaceShipWillMoveTo: posibleNextPosition [
+
+	| aNewPosition |
+	aNewPosition := self boardLimitAdjustment: posibleNextPosition.
+	aNewPosition := self checkForWormHole: aNewPosition.
+	^ aNewPosition
 ]
 
 { #category : 'as yet unclassified' }

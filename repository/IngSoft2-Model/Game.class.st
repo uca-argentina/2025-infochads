@@ -18,12 +18,6 @@ Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> allocatedWormHole: aWormHole [
-	
-	aBoard placeWormHole: aWormHole . 
-]
-
-{ #category : 'as yet unclassified' }
 Game >> checkForWinner [
 
 	self isGameOver ifTrue: [
@@ -51,16 +45,22 @@ Game >> isOver [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> moveSpaceShip: aSpaceShipID numberOfPositions: positionToMove [
+Game >> moveSpaceShip: aSpaceShipID numberOfPositions: positionsToSum [
 
-	| posiblePosition realPosition |
-	self checkForWinner. 
-	posiblePosition := spaceShips
-		                   withID: aSpaceShipID
-		                   createPositionPosition: positionToMove.
-	realPosition := aBoard moveTo: posiblePosition.
-	spaceShips move: aSpaceShipID toPosition: realPosition.
+	| posibleNextPosition realNextPosition |
+	self checkForWinner.
+	posibleNextPosition := spaceShips
+		                       withID: aSpaceShipID
+		                       wouldMoveForward: positionsToSum.
+	realNextPosition := aBoard spaceShipWillMoveTo: posibleNextPosition.
+
+	spaceShips move: aSpaceShipID toPosition: realNextPosition
+]
+
+{ #category : 'as yet unclassified' }
+Game >> placeWormHole: aWormHole [
 	
+	aBoard placeWormHole: aWormHole . 
 ]
 
 { #category : 'as yet unclassified' }

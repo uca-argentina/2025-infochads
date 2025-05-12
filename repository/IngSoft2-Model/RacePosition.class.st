@@ -33,14 +33,6 @@ RacePosition class >> withPieces: aNumberOfSpaceShips [
 ]
 
 { #category : 'as yet unclassified' }
-RacePosition >> calculateNextShipToMove: spaceShipID [
-
-	nextSpaceShipToMove := spaceShipID + 1.
-	nextSpaceShipToMove > spaceShips size ifTrue: [
-		nextSpaceShipToMove := 1 ]
-]
-
-{ #category : 'as yet unclassified' }
 RacePosition >> getWinner: aFinishLine [
 	
 	^spaceShips indexOf: aFinishLine
@@ -78,7 +70,7 @@ RacePosition >> spaceShipToMove: spaceShipID [
 	spaceShipID ~= nextSpaceShipToMove ifTrue: [
 		Error signal:
 			'Its space ship ' , nextSpaceShipToMove asString , ' turn to move.' ].
-	self calculateNextShipToMove: spaceShipID
+	self updateNextShipToMove: spaceShipID
 ]
 
 { #category : 'initialization' }
@@ -92,6 +84,14 @@ RacePosition >> startingPositions: aNumberOfSpaceShips [
 ]
 
 { #category : 'as yet unclassified' }
+RacePosition >> updateNextShipToMove: spaceShipID [
+
+	nextSpaceShipToMove := spaceShipID + 1.
+	nextSpaceShipToMove > spaceShips size ifTrue: [
+		nextSpaceShipToMove := 1 ]
+]
+
+{ #category : 'as yet unclassified' }
 RacePosition >> validateID: spaceShipID [
 
 	(spaceShipID < 1 or: [ spaceShipID > spaceShips size ]) ifTrue: [
@@ -101,10 +101,10 @@ RacePosition >> validateID: spaceShipID [
 ]
 
 { #category : 'as yet unclassified' }
-RacePosition >> withID: aSpaceShipID createPositionPosition: positionsForward [
+RacePosition >> withID: aSpaceShipID wouldMoveForward: positionsToSum [
 
 	self validateID: aSpaceShipID.
 	self spaceShipToMove: aSpaceShipID.
 
-	^ (spaceShips at: aSpaceShipID) + positionsForward
+	^ (spaceShips at: aSpaceShipID) + positionsToSum
 ]
