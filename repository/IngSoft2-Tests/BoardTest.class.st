@@ -25,6 +25,24 @@ BoardTest >> testWhenBoardIsCreated [
 ]
 
 { #category : 'tests' }
+BoardTest >> testWhenBoardIsCreatedWithASizeZeroThenIsNotValid [
+
+	self
+		should: [ Board withSize: 0]
+		raise: Error
+		withMessageText: 'Board Size must be over 0.'
+]
+
+{ #category : 'tests' }
+BoardTest >> testWhenBoardIsCreatedWithAStringSizeThenIsNotValid [
+
+	self
+		should: [ Board withSize: '3' ]
+		raise: Error
+		withMessageText: 'Board Size must be a positive interger.'
+]
+
+{ #category : 'tests' }
 BoardTest >> testWhenBoardIsCreatedWithCertainSize [
 
 	| aBoard |
@@ -38,7 +56,7 @@ BoardTest >> testWhenBoardIsCreatedWithNegativeSizeThenIsNotValid [
 	self
 		should: [ Board withSize: -5]
 		raise: Error
-		withMessageText: 'Board Size must be a positive interger'
+		withMessageText: 'Board Size must be over 0.'
 ]
 
 { #category : 'tests' }

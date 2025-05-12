@@ -5,16 +5,6 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'asserting' }
-BoardAndDiceTests >> should: anError raise: anErrorClass withMessageText: anErrorMessage [ 
-	 self
-        should: anError 
-        raise: anErrorClass
-        withExceptionDo: [ :error |
-            self assert: (error messageText) equals:
-                anErrorMessage ]
-]
-
 { #category : 'tests' }
 BoardAndDiceTests >> testWhenDiceReturnsNumberBelowDiceSidesThenIsValid [
 

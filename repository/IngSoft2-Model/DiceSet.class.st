@@ -9,8 +9,9 @@ Class {
 }
 
 { #category : 'adding' }
-DiceSet >> add: aDice [ 
-	sackOfDices add: aDice.
+DiceSet >> add: aDice [
+
+	sackOfDices add: aDice
 ]
 
 { #category : 'initialization' }
@@ -21,5 +22,6 @@ DiceSet >> initializeWith [
 
 { #category : 'as yet unclassified' }
 DiceSet >> toss [
-	^ sackOfDices inject: 0 into: [:result :dice | result + dice roll ].
+
+	^ sackOfDices inject: 0 into: [ :result :dice | result + dice roll ]
 ]

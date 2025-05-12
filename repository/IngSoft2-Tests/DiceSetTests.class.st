@@ -45,7 +45,7 @@ DiceSetTests >> testWhenASetOfDiceWith2D6TossThenSpaceShip1MovesToPositionBetwee
 
 	aGame moveSpaceShip: 1 numberOfPositions: diceSet toss.
 
-	self assert: ((aGame positionOfSpaceShip: 1) between: 1 and: 12).
+	self assert: ((aGame positionOfSpaceShip: 1) between: 1 and: 12)
 ]
 
 { #category : 'tests' }
@@ -90,7 +90,7 @@ DiceSetTests >> testWhenASetOfDiceWithAD6TossThenSpaceShip1MovesToPositionBetwee
 
 	aGame moveSpaceShip: 1 numberOfPositions: diceSet toss.
 
-	self assert: ((aGame positionOfSpaceShip: 1) between: 1 and: 6).
+	self assert: ((aGame positionOfSpaceShip: 1) between: 1 and: 6)
 ]
 
 { #category : 'tests' }

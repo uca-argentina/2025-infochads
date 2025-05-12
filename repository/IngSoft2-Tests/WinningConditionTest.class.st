@@ -112,7 +112,7 @@ WinningConditionTest >> testWhenGameNotifiesAWinnerThenItsOver [
 
 	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
 
-	self assert: (aGame isOver)
+	self assert: aGame isOver
 ]
 
 { #category : 'tests' }
@@ -163,9 +163,9 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsGameOverThenInfo
 
 	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll2.
 	aGame moveSpaceShip: 2 numberOfPositions: aDiceRoll.
-	
+
 	self assert: aGame isOver.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 3.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 3
 ]
 
 { #category : 'tests' }
