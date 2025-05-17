@@ -20,7 +20,9 @@ RiggedDice >> initializeWith: aSetOfMovements [
 RiggedDice >> toss [
 
 	| movement |
-	movement := setOfMovements at: turn.
-	turn := turn + 1.
-	^ movement
+	turn <= setOfMovements size ifTrue: [
+		movement := setOfMovements at: turn.
+		turn := turn + 1.
+		^ movement ].
+	^ 0
 ]

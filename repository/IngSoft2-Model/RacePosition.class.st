@@ -2,8 +2,7 @@ Class {
 	#name : 'RacePosition',
 	#superclass : 'Object',
 	#instVars : [
-		'spaceShips',
-		'nextSpaceShipToMove'
+		'spaceShips'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -42,7 +41,6 @@ RacePosition >> getWinner: aFinishLine [
 RacePosition >> initializeWithNumberOfSpaceShips: aNumberOfSpaceShips [
 
 	spaceShips := self startingPositions: aNumberOfSpaceShips.
-	nextSpaceShipToMove := 1.
 	^ self
 ]
 
@@ -64,15 +62,6 @@ RacePosition >> positions [
 	^ spaceShips
 ]
 
-{ #category : 'as yet unclassified' }
-RacePosition >> spaceShipToMove: spaceShipID [
-
-	spaceShipID ~= nextSpaceShipToMove ifTrue: [
-		Error signal:
-			'Its space ship ' , nextSpaceShipToMove asString , ' turn to move.' ].
-	self updateNextShipToMove: spaceShipID
-]
-
 { #category : 'initialization' }
 RacePosition >> startingPositions: aNumberOfSpaceShips [
 
@@ -81,14 +70,6 @@ RacePosition >> startingPositions: aNumberOfSpaceShips [
 	1 to: aNumberOfSpaceShips do: [ :position | initialPositions add: 0 ].
 
 	^ initialPositions
-]
-
-{ #category : 'as yet unclassified' }
-RacePosition >> updateNextShipToMove: spaceShipID [
-
-	nextSpaceShipToMove := spaceShipID + 1.
-	nextSpaceShipToMove > spaceShips size ifTrue: [
-		nextSpaceShipToMove := 1 ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -104,7 +85,6 @@ RacePosition >> validateID: spaceShipID [
 RacePosition >> withID: aSpaceShipID wouldMoveForward: positionsToSum [
 
 	self validateID: aSpaceShipID.
-	self spaceShipToMove: aSpaceShipID.
 
 	^ (spaceShips at: aSpaceShipID) + positionsToSum
 ]

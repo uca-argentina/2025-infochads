@@ -18,18 +18,16 @@ TurnsTests >> should: anErrorBlock raise: anErrorClass withMessageText: anErrorM
 { #category : 'tests' }
 TurnsTests >> testWhenSpaceShip1IsTheOnlyPlayerThenCanPlayAlone [
 
-	| aGame aDiceRoll boardSize numberOfSpaceShips |
-	boardSize := 10.
-	numberOfSpaceShips := 1.
+	| aGame diceSet |
+	diceSet := DiceSet new initializeWith.
+	diceSet add: (Dice withSides: 6).
 	aGame := Game
-		         withBoardSize: boardSize
-		         withSpaceShips: numberOfSpaceShips.
-
-	aDiceRoll := 2.
-
-	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
-	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 4
+		         withBoardSize: 10
+		         withSpaceShips: 1
+		         withDiceSet: diceSet
+		         withWormHole: {  }.
+	aGame start.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 10
 ]
 
 { #category : 'tests' }

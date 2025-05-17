@@ -23,12 +23,11 @@ Board class >> boardSizeMustBePositiveOverZero: aBoardSize [
 ]
 
 { #category : 'as yet unclassified' }
-Board class >> withSize: aBoardSize [
+Board class >> withSize: aBoardSize andWormHolePosition: aWormHolePosition [
 
 	self boardSizeMustBePositiveInteger: aBoardSize.
 	self boardSizeMustBePositiveOverZero: aBoardSize.
-
-	^ self new initializeWithSize: aBoardSize
+	^ self new initializeWithSize: aBoardSize andWormHolePosition: aWormHolePosition
 ]
 
 { #category : 'as yet unclassified' }
@@ -58,9 +57,9 @@ Board >> checkForWormHole: aPosition [
 ]
 
 { #category : 'initialization' }
-Board >> initializeWithSize: aBoardSize [
+Board >> initializeWithSize: aBoardSize andWormHolePosition: aWormHolePosition [
 
-	wormHole := WormHole new.
+	wormHole := WormHole withGates: aWormHolePosition.
 	boardSize := aBoardSize.
 	^ self
 ]

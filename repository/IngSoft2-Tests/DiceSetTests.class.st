@@ -8,9 +8,9 @@ Class {
 { #category : 'tests' }
 DiceSetTests >> testWhenADiceSetIsRiggedWithNextMovementAs1ThenTheNextMovementIs1 [
 
-	| diceSet aSetOfMovements movement |
-	aSetOfMovements := OrderedCollection with: 1.
-	diceSet := RiggedDice new initializeWith: aSetOfMovements.
+	| diceSet movement |
+
+	diceSet := RiggedDice new initializeWith: {1}.
 	movement := diceSet toss.
 	self assert: movement equals: 1
 ]
@@ -18,9 +18,9 @@ DiceSetTests >> testWhenADiceSetIsRiggedWithNextMovementAs1ThenTheNextMovementIs
 { #category : 'tests' }
 DiceSetTests >> testWhenARiggedDiceWithNextMovements1And2ThenThoseAreTheNextMovements [
 
-	| diceSet aSetOfMovements movement1  movement2 |
-	aSetOfMovements := OrderedCollection with: 1 with: 2.
-	diceSet := RiggedDice new initializeWith: aSetOfMovements.
+	| diceSet movement1  movement2 |
+	
+	diceSet := RiggedDice new initializeWith: {1. 2}.
 	movement1 := diceSet toss.
 	movement2 := diceSet toss.
 	self assert: movement1 equals: 1.
