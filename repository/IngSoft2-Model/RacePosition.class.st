@@ -31,12 +31,6 @@ RacePosition class >> withPieces: aNumberOfSpaceShips [
 	^ self new initializeWithNumberOfSpaceShips: aNumberOfSpaceShips
 ]
 
-{ #category : 'as yet unclassified' }
-RacePosition >> getWinner: aFinishLine [
-	
-	^spaceShips indexOf: aFinishLine
-]
-
 { #category : 'initialization' }
 RacePosition >> initializeWithNumberOfSpaceShips: aNumberOfSpaceShips [
 

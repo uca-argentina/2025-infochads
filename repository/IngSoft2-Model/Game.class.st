@@ -22,14 +22,6 @@ Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips with
 		  AndWormHole: aWormHolePosition
 ]
 
-{ #category : 'as yet unclassified' }
-Game >> checkForWinner [
-
-	self isGameOver ifTrue: [
-		Error signal:
-			'Space ship ' , (spaceShips getWinner: aBoard boardSize) asString , ' has already won.' ]
-]
-
 { #category : 'initialization' }
 Game >> initializeWithBoardSize: aBoardSize AndNumberOfSpaceShips: aNumberOfSpaceShips AndDiceSet: aDiceSet AndWormHole: aWormHolePosition [
 
@@ -53,21 +45,22 @@ Game >> isOver [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> moveSpaceShip: aSpaceShipID numberOfPositions: positionsToSum [
+Game >> positionOfSpaceShip: aSpaceShipID [
+
+	^ spaceShips positions at: aSpaceShipID
+]
+
+{ #category : 'as yet unclassified' }
+Game >> spaceShip: aSpaceShipID hasRolled: diceRoll [
 
 	| posibleNextPosition realNextPosition |
 	posibleNextPosition := spaceShips
 		                       withID: aSpaceShipID
-		                       wouldMoveForward: positionsToSum.
+		                       wouldMoveForward: diceRoll.
+
 	realNextPosition := aBoard spaceShipWillMoveTo: posibleNextPosition.
 
 	spaceShips move: aSpaceShipID toPosition: realNextPosition
-]
-
-{ #category : 'as yet unclassified' }
-Game >> positionOfSpaceShip: aSpaceShipID [
-
-	^ spaceShips positions at: aSpaceShipID
 ]
 
 { #category : 'accessing' }
@@ -76,7 +69,7 @@ Game >> start [
 	| diceRoll |
 	diceRoll := diceSet toss.
 	[ (self isGameOver) or: (diceRoll = 0)] whileFalse: [
-		self moveSpaceShip: nextSpaceShipToMove numberOfPositions: diceRoll.
+		self spaceShip: nextSpaceShipToMove hasRolled: diceRoll.
 		self updateNextShipToMove: nextSpaceShipToMove.
 		diceRoll := diceSet toss ]
 ]
