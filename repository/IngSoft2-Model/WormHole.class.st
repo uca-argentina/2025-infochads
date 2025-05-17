@@ -11,6 +11,7 @@ Class {
 { #category : 'as yet unclassified' }
 WormHole class >> withGates: aWormHolePositions [
 
+	self wormHoleMustBeAnArray: aWormHolePositions.
 	aWormHolePositions ifNotEmpty: [
 		self wormHoleExitMustBePositiveInteger: aWormHolePositions first.
 		self wormHoleExitMustBePositiveInteger: aWormHolePositions second.
@@ -22,7 +23,7 @@ WormHole class >> withGates: aWormHolePositions [
 { #category : 'as yet unclassified' }
 WormHole class >> wormHoleExitMustBePositiveInteger: aWormHoleExit [
 
-	aWormHoleExit isInteger ifFalse: [
+	(aWormHoleExit isInteger and: aWormHoleExit > 0) ifFalse: [
 		Error signal: 'WormHole must be a pair of integers.' ]
 ]
 
@@ -34,9 +35,25 @@ WormHole class >> wormHoleExitMustNotBeEntry: aWormHole [
 ]
 
 { #category : 'as yet unclassified' }
+WormHole class >> wormHoleMustBeAnArray: aWormHolePositions [
+
+	(aWormHolePositions isKindOf: Array) ifFalse: [
+		Error signal:
+			'The Worm Hole Position Must have at least 2 positions.' ]
+]
+
+{ #category : 'as yet unclassified' }
 WormHole >> intializeWithGates: aWormHolePositions [
 
 	wormHolePositions := aWormHolePositions
+]
+
+{ #category : 'as yet unclassified' }
+WormHole >> mustBeWithInLimits: aBoardSize [
+
+	(wormHolePositions anySatisfy: [ :hole |
+		 hole >= aBoardSize or: hole <= 0 ]) ifTrue: [
+		Error signal: 'WormHole exit must be within board limits.']
 ]
 
 { #category : 'as yet unclassified' }

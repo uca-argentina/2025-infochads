@@ -18,20 +18,15 @@ WinningConditionTest >> should: anErrorBlock raise: anErrorClass withMessageText
 { #category : 'tests' }
 WinningConditionTest >> testWhenARoundHasPassedAndSpaceShip1WinsTheGameIsOver [
 
-	| aGame aDiceRoll boardSize numberOfSpaceShips aDiceRoll2 |
-	boardSize := 10.
-	numberOfSpaceShips := 3.
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 1. 1. 1. 9 }.
 	aGame := Game
-		         withBoardSize: boardSize
-		         withSpaceShips: numberOfSpaceShips.
+		         withBoardSize: 10
+		         withSpaceShips: 3
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }.
 
-	aDiceRoll := 7.
-	aDiceRoll2 := 3.
-
-	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
-	aGame moveSpaceShip: 2 numberOfPositions: aDiceRoll.
-	aGame moveSpaceShip: 3 numberOfPositions: aDiceRoll2.
-	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll2.
+	aGame start.
 
 	self assert: aGame isOver
 ]
