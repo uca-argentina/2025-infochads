@@ -58,13 +58,13 @@ Game >> moveSpaceShip: aSpaceShipID numberOfPositions: positionsToSum [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> placeWormHole: aWormHole [
-	
-	aBoard placeWormHole: aWormHole . 
-]
-
-{ #category : 'as yet unclassified' }
 Game >> positionOfSpaceShip: aSpaceShipID [
 
 	^ spaceShips positions at: aSpaceShipID
+]
+
+{ #category : 'as yet unclassified' }
+Game >> withWormHole: aWormHole [
+	
+	aBoard withWormHole: aWormHole . 
 ]
