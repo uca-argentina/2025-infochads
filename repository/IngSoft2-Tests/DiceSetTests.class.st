@@ -6,6 +6,28 @@ Class {
 }
 
 { #category : 'tests' }
+DiceSetTests >> testWhenADiceSetIsRiggedWithNextMovementAs1ThenTheNextMovementIs1 [
+
+	| diceSet aSetOfMovements movement |
+	aSetOfMovements := OrderedCollection with: 1.
+	diceSet := RiggedDice new initializeWith: aSetOfMovements.
+	movement := diceSet toss.
+	self assert: movement equals: 1
+]
+
+{ #category : 'tests' }
+DiceSetTests >> testWhenARiggedDiceWithNextMovements1And2ThenThoseAreTheNextMovements [
+
+	| diceSet aSetOfMovements movement1  movement2 |
+	aSetOfMovements := OrderedCollection with: 1 with: 2.
+	diceSet := RiggedDice new initializeWith: aSetOfMovements.
+	movement1 := diceSet toss.
+	movement2 := diceSet toss.
+	self assert: movement1 equals: 1.
+	self assert: movement2 equals: 2
+]
+
+{ #category : 'tests' }
 DiceSetTests >> testWhenASackOfDicesWithOneD6AndOneD8IsTossedThenResultBetween1And14 [
 
 	| diceSet |
@@ -106,4 +128,18 @@ DiceSetTests >> testWhenASetOfDiceWithAD6TossThenSpaceShip2MovesToPositionBetwee
 
 	
 	self assert: ((aGame positionOfSpaceShip: 1) between: 1 and: 6).
+]
+
+{ #category : 'tests' }
+DiceSetTests >> testWhenRiggedDiceWithNumberOfMovementsThenTheyWillBeMoved [
+
+	| diceSet aSetOfMovements movement1 movement2 movement3 |
+	aSetOfMovements := OrderedCollection withAll: #( 1 2 3 ).
+	diceSet := RiggedDice new initializeWith: aSetOfMovements.
+	movement1 := diceSet toss.
+	movement2 := diceSet toss.
+	movement3 := diceSet toss.
+	self assert: movement1 equals: 1.
+	self assert: movement2 equals: 2.
+	self assert: movement3 equals: 3
 ]
