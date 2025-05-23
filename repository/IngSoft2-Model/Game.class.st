@@ -65,7 +65,8 @@ Game >> isGameOver [
 
 { #category : 'testing' }
 Game >> isOver [
-	^ self isGameOver 
+
+	^ self isGameOver
 ]
 
 { #category : 'as yet unclassified' }
@@ -81,8 +82,10 @@ Game >> lookForBattle: aSpaceShip [
 
 	opponentShip isNil ifTrue: [ ^ self ].
 
+	[
 	attackDiceRoll1 := diceSet toss.
 	attackDiceRoll2 := diceSet toss.
+	attackDiceRoll1 = attackDiceRoll2 ] whileTrue.
 
 	attackDiceRoll1 > attackDiceRoll2
 		ifTrue: [
