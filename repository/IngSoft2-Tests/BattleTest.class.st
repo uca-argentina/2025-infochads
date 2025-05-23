@@ -1,0 +1,81 @@
+Class {
+	#name : 'BattleTest',
+	#superclass : 'TestCase',
+	#category : 'IngSoft2-Tests',
+	#package : 'IngSoft2-Tests'
+}
+
+{ #category : 'tests' }
+BattleTest >> testWhen [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 5. 1. 5. 2. 1 }.
+	aGame := Game
+		         withBoardSize: 10
+		         withSpaceShips: 3
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }.
+
+	aGame start.
+
+	self assert: (aGame positionOfSpaceShip: 1) equals: 5.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
+		self assert: (aGame positionOfSpaceShip: 3) equals: 0.
+	
+]
+
+{ #category : 'tests' }
+BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2ReturnsToStart [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 5. 5. 2. 1 }.
+	aGame := Game
+		         withBoardSize: 10
+		         withSpaceShips: 2
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }.
+
+	aGame start.
+
+	self assert: (aGame positionOfSpaceShip: 1) equals: 5.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 0
+	
+]
+
+{ #category : 'tests' }
+BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip3ReturnsToStart [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 5. 1. 5. 2. 1 }.
+	aGame := Game
+		         withBoardSize: 10
+		         withSpaceShips: 3
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }.
+
+	aGame start.
+
+	self assert: (aGame positionOfSpaceShip: 1) equals: 5.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
+		self assert: (aGame positionOfSpaceShip: 3) equals: 0.
+	
+]
+
+{ #category : 'tests' }
+BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip1ReturnsToStart [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 5. 5. 1. 2 }.
+	aGame := Game
+		         withBoardSize: 10
+		         withSpaceShips: 2
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }.
+
+	aGame start.
+
+	self assert: (aGame positionOfSpaceShip: 1) equals: 0.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 5
+	
+	
+]

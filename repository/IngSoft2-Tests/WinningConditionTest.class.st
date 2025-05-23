@@ -9,7 +9,7 @@ Class {
 WinningConditionTest >> testWhenARoundHasPassedAndSpaceShip1WinsTheGameIsOver [
 
 	| aGame aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 1. 1. 1. 9 }.
+	aDiceSet := RiggedDice new initializeWith: { 1. 2. 3. 9 }.
 	aGame := Game
 		         withBoardSize: 10
 		         withSpaceShips: 3

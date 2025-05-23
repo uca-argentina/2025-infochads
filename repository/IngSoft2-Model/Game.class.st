@@ -71,7 +71,32 @@ Game >> start [
 	[ (self isGameOver) or: (diceRoll = 0)] whileFalse: [
 		self spaceShip: nextSpaceShipToMove hasRolled: diceRoll.
 		self updateNextShipToMove: nextSpaceShipToMove.
+		self thereIsBattle.
 		diceRoll := diceSet toss ]
+]
+
+{ #category : 'as yet unclassified' }
+Game >> thereIsBattle [
+
+	| aDiceRoll aDiceRoll2 shipsPositions encounteredShips ship1 ship2 shipsNotInStart |
+	shipsPositions := spaceShips positions.
+	
+	shipsNotInStart := shipsPositions select: [:pos | pos ~= 0].
+
+	encounteredShips := (1 to: shipsPositions size) select: [:i |
+    (shipsPositions at: i) ~= 0 and: [ (shipsNotInStart occurrencesOf: (shipsPositions at: i)) > 1 ]
+].
+
+	(encounteredShips size = 2) ifTrue: [
+		aDiceRoll := diceSet toss.
+		aDiceRoll2 := diceSet toss.
+		
+		ship1 := encounteredShips at: 1.
+   		ship2 := encounteredShips at: 2.
+
+		aDiceRoll > aDiceRoll2
+			ifTrue: [ spaceShips move: ship2 toPosition: 0 ]
+			ifFalse: [ spaceShips move: ship1 toPosition: 0 ] ]
 ]
 
 { #category : 'as yet unclassified' }
