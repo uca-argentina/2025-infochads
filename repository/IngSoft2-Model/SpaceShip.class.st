@@ -12,12 +12,6 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-SpaceShip >> consumeShield [
-
-	shield := shield - 1
-]
-
-{ #category : 'as yet unclassified' }
 SpaceShip >> getID [
 
 	^ spaceShipID
@@ -63,6 +57,13 @@ SpaceShip >> initializeWithShield: aNumberOfShields andInitialPosition: aPositio
 	position := aPosition.
 	temporaryPosition := aPosition.
 	^ self
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> lostBattle [
+
+	self updatePosition: 0.
+	shield := shield -1
 ]
 
 { #category : 'as yet unclassified' }

@@ -40,10 +40,18 @@ Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips with
 		  AndWormHole: aWormHolePosition
 ]
 
-{ #category : 'added' }
-Game >> getSpaceShips [
+{ #category : 'as yet unclassified' }
+Game >> battleBetween: attacker and: defendant [
 
-	^ spaceShips
+	| attackDiceRoll1 attackDiceRoll2 |
+	[
+	attackDiceRoll1 := diceSet toss.
+	attackDiceRoll2 := diceSet toss.
+	attackDiceRoll1 = attackDiceRoll2 ] whileTrue.
+
+	attackDiceRoll1 > attackDiceRoll2
+		ifTrue: [ attacker lostBattle ]
+		ifFalse: [ defendant lostBattle ]
 ]
 
 { #category : 'initialization' }
@@ -72,7 +80,7 @@ Game >> isOver [
 { #category : 'as yet unclassified' }
 Game >> lookForBattle: aSpaceShip [
 
-	| opponentShip attackDiceRoll1 attackDiceRoll2 otherShips |
+	| opponentShip otherShips |
 	otherShips := spaceShips select: [ :ship | ship ~= aSpaceShip ].
 
 	opponentShip := otherShips
@@ -80,20 +88,8 @@ Game >> lookForBattle: aSpaceShip [
 		                ship getPosition = aSpaceShip getPosition ]
 		                ifNone: [ nil ].
 
-	opponentShip isNil ifTrue: [ ^ self ].
-
-	[
-	attackDiceRoll1 := diceSet toss.
-	attackDiceRoll2 := diceSet toss.
-	attackDiceRoll1 = attackDiceRoll2 ] whileTrue.
-
-	attackDiceRoll1 > attackDiceRoll2
-		ifTrue: [
-			aSpaceShip updatePosition: 0.
-			aSpaceShip consumeShield ]
-		ifFalse: [
-			opponentShip updatePosition: 0.
-			opponentShip consumeShield ]
+	opponentShip isNil ifFalse: [
+		self battleBetween: aSpaceShip and: opponentShip ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -121,7 +117,7 @@ Game >> start [
 		diceRoll := diceSet toss ]
 ]
 
-{ #category : 'added' }
+{ #category : 'whats left of race positions' }
 Game >> startingPositions: aNumberOfSpaceShips [
 
 	| initialPositions |
