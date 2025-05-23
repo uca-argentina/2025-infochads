@@ -18,10 +18,14 @@ SpaceShipCreationTests >> should: anErrorBlock raise: anErrorClass withMessageTe
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPositionsAre0 [
 
-	| aGame aBoardSize aNumberOfSpaceShips |
-	aBoardSize := 10.
-	aNumberOfSpaceShips := 3.
-	aGame := Game withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips.
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: {  }.
+	aGame := Game
+		         withBoardSize: 10
+		         withSpaceShips: 3
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }.
+
 	self assert: (aGame positionOfSpaceShip: 3) equals: 0.
 	self assert: (aGame positionOfSpaceShip: 2) equals: 0.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 0
@@ -30,46 +34,78 @@ SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPosi
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsAStringThenCreationFails [
 
-		self
-		should: [ Game withBoardSize: 13 withSpaceShips: '10']
+	| aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: {  }.
+	self
+		should: [
+			Game
+				withBoardSize: 10
+				withSpaceShips: '3'
+				withDiceSet: aDiceSet
+				withWormHole: {  } ]
 		raise: Error
-		withMessageText: 'The number of space ships should be a positive integer.'
-
+		withMessageText:
+		'The number of space ships should be a positive integer.'
 ]
 
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
 
-		self
-		should: [ Game withBoardSize: 13 withSpaceShips: 0 ]
+	| aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: {  }.
+	self
+		should: [
+			Game
+				withBoardSize: 10
+				withSpaceShips: 0
+				withDiceSet: aDiceSet
+				withWormHole: {  } ]
 		raise: Error
 		withMessageText: 'The number of space ships must be at least 1.'
-
 ]
 
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails [
 
-		self
-		should: [ Game withBoardSize: 13 withSpaceShips: -1 ]
+		| aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: {  }.
+	self
+		should: [
+			Game
+				withBoardSize: 10
+				withSpaceShips: -1
+				withDiceSet: aDiceSet
+				withWormHole: {  } ]
 		raise: Error
-		withMessageText: 'The number of space ships should be a positive integer.'
+		withMessageText:'The number of space ships should be a positive integer.'
 
 ]
 
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs0 [
 
-	| aGame |
-	aGame := Game withBoardSize: 13 withSpaceShips: 1.
-	self assert: (aGame positionOfSpaceShip:1)  equals: 0
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: {  }.
+	aGame := Game
+		         withBoardSize: 10
+		         withSpaceShips: 1
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }.
+
+	self assert: (aGame positionOfSpaceShip: 1) equals: 0
 ]
 
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositionsAre0 [
 
-	| aGame |
-	aGame := Game withBoardSize: 13 withSpaceShips: 2.
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: {  }.
+	aGame := Game
+		         withBoardSize: 10
+		         withSpaceShips: 2
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }.
+
 	self assert: (aGame positionOfSpaceShip: 2) equals: 0.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 0.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 0
 ]

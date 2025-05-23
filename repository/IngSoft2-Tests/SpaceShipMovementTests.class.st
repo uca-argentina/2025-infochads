@@ -19,15 +19,15 @@ SpaceShipMovementTests >> should: anErrorBlock raise: anErrorClass withMessageTe
 { #category : 'tests' }
 SpaceShipMovementTests >> testWhenASetOfDiceWithAD6AndD8TossThenSpaceShip1MovesToPositionBetween1And14 [
 
-	| aGame aDiceRoll boardSize numberOfSpaceShips |
-	boardSize := 10.
-	numberOfSpaceShips := 1.
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 6 }.
 	aGame := Game
-		         withBoardSize: boardSize
-		         withSpaceShips: numberOfSpaceShips.
+		         withBoardSize: 10
+		         withSpaceShips: 1
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }.
 
-	aDiceRoll := 6.
-	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
+	aGame start.
 
 	self assert: (aGame positionOfSpaceShip: 1) equals: 6
 ]
@@ -35,17 +35,15 @@ SpaceShipMovementTests >> testWhenASetOfDiceWithAD6AndD8TossThenSpaceShip1MovesT
 { #category : 'tests' }
 SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls1ThenMoveSpaceShip1And2ToPosition1 [
 
-	| aGame aDiceRoll1 aDiceRoll2 boardSize numberOfSpaceShips |
-	boardSize := 10.
-	numberOfSpaceShips := 2.
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 1. 1 }.
 	aGame := Game
-		         withBoardSize: boardSize
-		         withSpaceShips: numberOfSpaceShips.
+		         withBoardSize: 10
+		         withSpaceShips: 2
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }.
 
-	aDiceRoll1 := 1.
-	aDiceRoll2 := 1.
-	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll1.
-	aGame moveSpaceShip: 2 numberOfPositions: aDiceRoll2.
+	aGame start.
 
 	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
 	self assert: (aGame positionOfSpaceShip: 2) equals: 1
@@ -54,19 +52,15 @@ SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls1ThenMoveSpaceShip1And
 { #category : 'tests' }
 SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls2AndDice3Rolls3ThenMoveSpaceShipToPosition6 [
 
-	| aGame aDiceRoll1 aDiceRoll2 aDiceRoll3 boardSize numberOfSpaceShips |
-	boardSize := 10.
-	numberOfSpaceShips := 1.
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 1. 2. 3 }.
 	aGame := Game
-		         withBoardSize: boardSize
-		         withSpaceShips: numberOfSpaceShips.
-		
-	aDiceRoll1 := 1.
-	aDiceRoll2 := 2.
-	aDiceRoll3 := 3.
-	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll1.
-	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll2.
-	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll3.
+		         withBoardSize: 10
+		         withSpaceShips: 1
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }.
+
+	aGame start.
 
 	self assert: (aGame positionOfSpaceShip: 1) equals: 6
 ]
@@ -74,17 +68,15 @@ SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls2AndDice3Rolls3ThenMov
 { #category : 'tests' }
 SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls2ThenMoveSpaceShipToPosition3 [
 
-	| aGame aDiceRoll1 aDiceRoll2 boardSize numberOfSpaceShips |
-	boardSize := 10.
-	numberOfSpaceShips := 1.
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 1. 2 }.
 	aGame := Game
-		         withBoardSize: boardSize
-		         withSpaceShips: numberOfSpaceShips.
-		
-	aDiceRoll1 := 1.
-	aDiceRoll2 := 2.
-	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll1.
-	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll2.
+		         withBoardSize: 10
+		         withSpaceShips: 1
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }.
+
+	aGame start.
 
 	self assert: (aGame positionOfSpaceShip: 1) equals: 3
 ]
@@ -92,32 +84,15 @@ SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls2ThenMoveSpaceShipToPo
 { #category : 'tests' }
 SpaceShipMovementTests >> testWhenDiceRolls5ThenMovesSpaceShipToPosition5 [
 
-	| aGame aDiceRoll boardSize numberOfSpaceShips |
-	boardSize := 10.
-	numberOfSpaceShips := 1.
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 5 }.
 	aGame := Game
-		         withBoardSize: boardSize
-		         withSpaceShips: numberOfSpaceShips.
+		         withBoardSize: 10
+		         withSpaceShips: 1
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }.
 
-	aDiceRoll := 5.
-	aGame moveSpaceShip: 1 numberOfPositions: aDiceRoll.
+	aGame start.
 
 	self assert: (aGame positionOfSpaceShip: 1) equals: 5
-]
-
-{ #category : 'tests' }
-SpaceShipMovementTests >> testWhenIntendedToMoveSpaceShip3WhenOnly2AreOnGameThenCreationFails [
-
-	| aGame aDiceRoll boardSize numberOfSpaceShips |
-	boardSize := 10.
-	numberOfSpaceShips := 1.
-	aGame := Game
-		         withBoardSize: boardSize
-		         withSpaceShips: numberOfSpaceShips.
-	aDiceRoll := 1.
-	self
-		should: [ aGame moveSpaceShip: 2 numberOfPositions: aDiceRoll. ]
-		raise: Error
-		withMessageText:
-		'Invalid spaceship ID. There are only 1 spaceships.'
 ]
