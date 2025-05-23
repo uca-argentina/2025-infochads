@@ -33,6 +33,15 @@ Board class >> withSize: aBoardSize andWormHolePosition: aWormHolePosition [
 ]
 
 { #category : 'as yet unclassified' }
+Board >> adjustPositionOf: aSpaceShipTemporaryPosition [
+
+	| aNewPosition |
+	aNewPosition := self boardLimitAdjustment: aSpaceShipTemporaryPosition.
+	aNewPosition := self checkForWormHole: aNewPosition.
+	^ aNewPosition
+]
+
+{ #category : 'as yet unclassified' }
 Board >> boardLimitAdjustment: newPosition [
 
 	| aPosition |
@@ -69,7 +78,7 @@ Board >> initializeWithSize: aBoardSize andWormHolePosition: aWormHolePosition [
 
 { #category : 'path commands' }
 Board >> spaceShipWillMoveTo: posibleNextPosition [
-
+	"redundante"
 	| aNewPosition |
 	aNewPosition := self boardLimitAdjustment: posibleNextPosition.
 	aNewPosition := self checkForWormHole: aNewPosition.

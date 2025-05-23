@@ -61,7 +61,9 @@ RacePosition >> startingPositions: aNumberOfSpaceShips [
 
 	| initialPositions |
 	initialPositions := OrderedCollection new.
-	1 to: aNumberOfSpaceShips do: [ :position | initialPositions add: 0 ].
+	1 to: aNumberOfSpaceShips do: [ :position |
+		initialPositions add:
+			(SpaceShip new initializeWithShield: 3 andInitialPosition: 0) ].
 
 	^ initialPositions
 ]
@@ -73,6 +75,14 @@ RacePosition >> validateID: spaceShipID [
 		Error signal:
 			'Invalid spaceship ID. There are only ' , spaceShips size asString
 			, ' spaceships.' ]
+]
+
+{ #category : 'as yet unclassified' }
+RacePosition >> withID: aSpaceShipID moveToTemporaryPosition: positionsToSum [
+	"self validateID: aSpaceShipID. -> Redundante"
+
+	(spaceShips at: aSpaceShipID) goToTemporaryPosition: positionsToSum.
+	^ spaceShips at: aSpaceShipID
 ]
 
 { #category : 'as yet unclassified' }
