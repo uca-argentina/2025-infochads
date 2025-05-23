@@ -76,15 +76,6 @@ Board >> initializeWithSize: aBoardSize andWormHolePosition: aWormHolePosition [
 	^ self
 ]
 
-{ #category : 'path commands' }
-Board >> spaceShipWillMoveTo: posibleNextPosition [
-	"redundante"
-	| aNewPosition |
-	aNewPosition := self boardLimitAdjustment: posibleNextPosition.
-	aNewPosition := self checkForWormHole: aNewPosition.
-	^ aNewPosition
-]
-
 { #category : 'as yet unclassified' }
 Board >> withWormHole: aWormHole [
 	wormHole := WormHole withGates: aWormHole.

@@ -13,7 +13,25 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+Game class >> numberOfSpaceShipsMustBeAtLeastOne: aNumberOfSpaceShips [
+
+	aNumberOfSpaceShips <= 0 ifTrue: [
+		Error signal: 'The number of space ships must be at least 1.' ]
+]
+
+{ #category : 'as yet unclassified' }
+Game class >> numberOfSpaceShipsMustBePositiveInteger: boardSize [
+
+	(boardSize isInteger not or: [ boardSize negative ]) ifTrue: [
+		Error signal:
+			'The number of space ships should be a positive integer.' ]
+]
+
+{ #category : 'as yet unclassified' }
 Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips withDiceSet: aDiceSet withWormHole: aWormHolePosition [
+	
+	self numberOfSpaceShipsMustBePositiveInteger: aNumberOfSpaceShips.
+	self numberOfSpaceShipsMustBeAtLeastOne: aNumberOfSpaceShips.
 
 	^ self new
 		  initializeWithBoardSize: aBoardSize
@@ -22,11 +40,17 @@ Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips with
 		  AndWormHole: aWormHolePosition
 ]
 
+{ #category : 'added' }
+Game >> getSpaceShips [
+
+	^ spaceShips
+]
+
 { #category : 'initialization' }
 Game >> initializeWithBoardSize: aBoardSize AndNumberOfSpaceShips: aNumberOfSpaceShips AndDiceSet: aDiceSet AndWormHole: aWormHolePosition [
 
 	aBoard := Board withSize: aBoardSize andWormHolePosition: aWormHolePosition .
-	spaceShips := RacePosition withPieces: aNumberOfSpaceShips.
+	spaceShips := self startingPositions: aNumberOfSpaceShips.
 	diceSet := aDiceSet.
 	nextSpaceShipToMove := 1.
 	numberOfSpaceShips := aNumberOfSpaceShips.
@@ -36,7 +60,7 @@ Game >> initializeWithBoardSize: aBoardSize AndNumberOfSpaceShips: aNumberOfSpac
 { #category : 'testing' }
 Game >> isGameOver [
 
-	^ spaceShips isAtFinishLine: aBoard boardSize
+	^ spaceShips anySatisfy: [ :aShip | (aShip getPosition) = aBoard boardSize ]
 ]
 
 { #category : 'testing' }
@@ -45,63 +69,75 @@ Game >> isOver [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> lookForBattle [
+Game >> lookForBattle: aSpaceShip [
 
-	| aDiceRoll aDiceRoll2 shipsPositions encounteredShips ship1 ship2 shipsNotInStart |
-	shipsPositions := spaceShips positions.
-	shipsNotInStart := shipsPositions select: [ :pos | pos ~= 0 ].
+	| opponentShip attackDiceRoll1 attackDiceRoll2 otherShips |
+	otherShips := spaceShips select: [ :ship | ship ~= aSpaceShip ].
 
-	encounteredShips := (1 to: shipsPositions size) select: [ :i |
-		                    (shipsPositions at: i) ~= 0 and: [
-			                    (shipsNotInStart occurrencesOf:
-				                     (shipsPositions at: i)) > 1 ] ].
+	opponentShip := otherShips
+		                detect: [ :ship |
+		                ship getPosition = aSpaceShip getPosition ]
+		                ifNone: [ nil ].
 
-	encounteredShips size ~= 2 ifTrue: [ ^ self ].
+	opponentShip isNil ifTrue: [ ^ self ].
 
-	aDiceRoll := diceSet toss.
-	aDiceRoll2 := diceSet toss.
+	attackDiceRoll1 := diceSet toss.
+	attackDiceRoll2 := diceSet toss.
 
-	ship1 := encounteredShips at: 1.
-	ship2 := encounteredShips at: 2.
-
-	aDiceRoll > aDiceRoll2
-		ifTrue: [ spaceShips move: ship2 toPosition: 0 ]
-		ifFalse: [ spaceShips move: ship1 toPosition: 0 ]
+	attackDiceRoll1 > attackDiceRoll2
+		ifTrue: [
+			aSpaceShip updatePosition: 0.
+			aSpaceShip consumeShield ]
+		ifFalse: [
+			opponentShip updatePosition: 0.
+			opponentShip consumeShield ]
 ]
 
 { #category : 'as yet unclassified' }
 Game >> positionOfSpaceShip: aSpaceShipID [
 
-	^ (spaceShips positions at: aSpaceShipID) getPosition.
+	^ (spaceShips at: aSpaceShipID) getPosition.
 ]
 
 { #category : 'as yet unclassified' }
-Game >> spaceShip: aSpaceShipID hasRolled: diceRoll [
+Game >> shieldStatus: aSpaceShipID [
 
-	"| posibleNextPosition realNextPosition |" 
-	|spaceShip |
-	"posibleNextPosition := spaceShips
-		                       withID: aSpaceShipID
-		                       wouldMoveForward: diceRoll."
-		
-	spaceShip := spaceShips withID: aSpaceShipID moveToTemporaryPosition: diceRoll.
-
-	"realNextPosition := aBoard spaceShipWillMoveTo: posibleNextPosition."
-	spaceShip updatePosition: (aBoard adjustPositionOf: (spaceShip getTemporaryPosition)).
-
-	"spaceShips move: aSpaceShipID toPosition: realNextPosition"
+	^ (spaceShips at: aSpaceShipID) getShield
 ]
 
 { #category : 'accessing' }
 Game >> start [
 
-	| diceRoll |
+	| diceRoll spaceShip |
 	diceRoll := diceSet toss.
 	[ self isGameOver or: diceRoll = 0 ] whileFalse: [
-		self spaceShip: nextSpaceShipToMove hasRolled: diceRoll.
+		spaceShip := spaceShips at: nextSpaceShipToMove.
+		self the: spaceShip hasRolled: diceRoll.
+		self lookForBattle: spaceShip.
 		self updateNextShipToMove: nextSpaceShipToMove.
-		self lookForBattle.
 		diceRoll := diceSet toss ]
+]
+
+{ #category : 'added' }
+Game >> startingPositions: aNumberOfSpaceShips [
+
+	| initialPositions |
+	initialPositions := OrderedCollection new.
+	1 to: aNumberOfSpaceShips do: [ :position |
+		initialPositions add: (SpaceShip new
+				 initializeWithShield: 3
+				 andInitialPosition: 0
+				 andID: position) ].
+
+	^ initialPositions
+]
+
+{ #category : 'as yet unclassified' }
+Game >> the: spaceShip hasRolled: diceRoll [
+
+	spaceShip goToTemporaryPosition: diceRoll.
+	spaceShip updatePosition:
+		(aBoard adjustPositionOf: spaceShip getTemporaryPosition)
 ]
 
 { #category : 'as yet unclassified' }
