@@ -43,7 +43,7 @@ Board >> adjustPositionOf: aSpaceShip considering: totalLaps [
 
 { #category : 'as yet unclassified' }
 Board >> boardLimitAdjustment: aSpaceShip lap: totalLaps [
-	"extract"
+	"extract and Fix matemathic solution to get lap and position with large numbers"
 
 	(aSpaceShip getLaps = totalLaps and:
 		 aSpaceShip getTemporaryPosition > boardSize) ifTrue: [
@@ -51,9 +51,9 @@ Board >> boardLimitAdjustment: aSpaceShip lap: totalLaps [
 		^ self ].
 
 	aSpaceShip getTemporaryPosition > boardSize ifTrue: [
-		aSpaceShip updateLap: (aSpaceShip getTemporaryPosition -1)// boardSize.
+		aSpaceShip updateLap: aSpaceShip getTemporaryPosition // boardSize.
 		aSpaceShip updateTemporaryPosition: aSpaceShip getTemporaryPosition
-			- (boardSize * ((aSpaceShip getTemporaryPosition -1)// boardSize)) ].
+			- (boardSize * (aSpaceShip getTemporaryPosition // boardSize)) ].
 	^ self
 ]
 

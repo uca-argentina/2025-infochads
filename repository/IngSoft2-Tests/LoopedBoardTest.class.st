@@ -53,13 +53,51 @@ LoopedBoardTest >> testWhenGameStartsAndSpaceShipsHaventMadeALap [
 ]
 
 { #category : 'tests' }
+LoopedBoardTest >> testWhenShip1MakesALapAndExceedsTheEndOfBoardInFinalLapUsingMultipleThrowsThenGameIsOver [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 5. 1. 5. 3. 10}.
+	aGame := Game
+		         withBoardSize: 10
+		         withSpaceShips: 2
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 2.
+
+	aGame start.
+
+	self assert: (aGame inWhichLapIsSpaceShip: 1) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 10.
+	self assert: aGame isOver 
+]
+
+{ #category : 'tests' }
+LoopedBoardTest >> testWhenShip1MakesALapAndExceedsTheEndOfBoardInFinalLapUsingSingleThrowThenGameIsOver [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 30}.
+	aGame := Game
+		         withBoardSize: 10
+		         withSpaceShips: 1
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 2.
+
+	aGame start.
+
+	self assert: (aGame inWhichLapIsSpaceShip: 1) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 10.
+	self assert: aGame isOver 
+]
+
+{ #category : 'tests' }
 LoopedBoardTest >> testWhenShip1MakesALapAndGetToTheEndOfLap2UsingASingleThrowThenGameIsOver [
 
 	| aGame aDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 19}.
 	aGame := Game
 		         withBoardSize: 10
-		         withSpaceShips: 2
+		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
 		         withAmountOfLaps: 2.
