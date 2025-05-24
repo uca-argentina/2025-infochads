@@ -5,17 +5,12 @@ Class {
 		'shield',
 		'position',
 		'temporaryPosition',
-		'spaceShipID'
+		'spaceShipID',
+		'skipTurns'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
-
-{ #category : 'as yet unclassified' }
-SpaceShip >> getID [
-
-	^ spaceShipID
-]
 
 { #category : 'as yet unclassified' }
 SpaceShip >> getPosition [
@@ -42,28 +37,38 @@ SpaceShip >> goToTemporaryPosition: positionsToSum [
 ]
 
 { #category : 'initialization' }
-SpaceShip >> initializeWithShield: aNumberOfShields andInitialPosition: aPosition [ 
-	shield := aNumberOfShields.
-	position := aPosition.
-	temporaryPosition := aPosition.
-	^self
-]
-
-{ #category : 'initialization' }
 SpaceShip >> initializeWithShield: aNumberOfShields andInitialPosition: aPosition andID: aSpaceShipID [
 
 	spaceShipID := aSpaceShipID.
 	shield := aNumberOfShields.
 	position := aPosition.
 	temporaryPosition := aPosition.
+	skipTurns := 0.
 	^ self
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> loseShield [
+
+	shield := shield - 1.
+	shield = 0 ifTrue: [ skipTurns := 2 ]
 ]
 
 { #category : 'as yet unclassified' }
 SpaceShip >> lostBattle [
 
 	self updatePosition: 0.
-	shield := shield -1
+	self loseShield
+]
+
+{ #category : 'accessing' }
+SpaceShip >> skipTurns [
+
+	skipTurns ~= 0
+		ifTrue: [
+			skipTurns := skipTurns - 1.
+			^ true ]
+		ifFalse: [ ^ false ]
 ]
 
 { #category : 'as yet unclassified' }

@@ -43,13 +43,13 @@ Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips with
 { #category : 'as yet unclassified' }
 Game >> battleBetween: attacker and: defendant [
 
-	| attackDiceRoll1 attackDiceRoll2 |
+	| attackDiceRollAttacker attackDiceRollDefendant |
 	[
-	attackDiceRoll1 := diceSet toss.
-	attackDiceRoll2 := diceSet toss.
-	attackDiceRoll1 = attackDiceRoll2 ] whileTrue.
+	attackDiceRollDefendant := diceSet toss.
+	attackDiceRollAttacker := diceSet toss.
+	attackDiceRollAttacker = attackDiceRollDefendant ] whileTrue.
 
-	attackDiceRoll1 > attackDiceRoll2
+	attackDiceRollAttacker < attackDiceRollDefendant
 		ifTrue: [ attacker lostBattle ]
 		ifFalse: [ defendant lostBattle ]
 ]
@@ -112,7 +112,6 @@ Game >> start [
 	[ self isGameOver or: diceRoll = 0 ] whileFalse: [
 		spaceShip := spaceShips at: nextSpaceShipToMove.
 		self the: spaceShip hasRolled: diceRoll.
-		self lookForBattle: spaceShip.
 		self updateNextShipToMove: nextSpaceShipToMove.
 		diceRoll := diceSet toss ]
 ]
@@ -133,10 +132,14 @@ Game >> startingPositions: aNumberOfSpaceShips [
 
 { #category : 'as yet unclassified' }
 Game >> the: spaceShip hasRolled: diceRoll [
-
+	
+	spaceShip skipTurns ifTrue: [ ^self ].
 	spaceShip goToTemporaryPosition: diceRoll.
+	
 	spaceShip updatePosition:
-		(aBoard adjustPositionOf: spaceShip getTemporaryPosition)
+		(aBoard adjustPositionOf: spaceShip getTemporaryPosition).
+
+	self lookForBattle: spaceShip
 ]
 
 { #category : 'as yet unclassified' }

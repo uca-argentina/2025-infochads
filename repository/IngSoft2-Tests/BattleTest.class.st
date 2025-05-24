@@ -6,6 +6,42 @@ Class {
 }
 
 { #category : 'tests' }
+BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2Turns [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith:
+		            { 5. 5. 1. 2. 6. 1. 1. 2. 7. 1. 1. 2. 1. 1. 1. 1 }.
+	aGame := Game
+		         withBoardSize: 100
+		         withSpaceShips: 2
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }.
+
+	aGame start.
+
+	self assert: (aGame positionOfSpaceShip: 1) equals: 0.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 9
+]
+
+{ #category : 'tests' }
+BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2TurnsAndThenItMoves1 [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith:
+		            { 5. 5. 1. 2. 6. 1. 1. 2. 7. 1. 1. 2. 1. 1. 1. 1. 1. 1 }.
+	aGame := Game
+		         withBoardSize: 100
+		         withSpaceShips: 2
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }.
+
+	aGame start.
+
+	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 10
+]
+
+{ #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2EnconterAfterOneRoundAndShip1WinsThenShip2ReturnsToStart [
 
 	| aGame aDiceSet |
@@ -36,6 +72,7 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2NowHas2Shields [
 	aGame start.
 
 	self assert: (aGame shieldStatus: 2) equals: 2.
+	self assert: (aGame shieldStatus: 1) equals: 3.
 ]
 
 { #category : 'tests' }
@@ -86,6 +123,7 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip2NowHas2Shields [
 	aGame start.
 
 	self assert: (aGame shieldStatus: 1) equals: 2.
+	self assert: (aGame shieldStatus: 2) equals: 3.
 ]
 
 { #category : 'tests' }
