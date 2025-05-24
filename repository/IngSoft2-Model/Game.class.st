@@ -13,7 +13,25 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+Game class >> numberOfSpaceShipsMustBeAtLeastOne: aNumberOfSpaceShips [
+
+	aNumberOfSpaceShips <= 0 ifTrue: [
+		Error signal: 'The number of space ships must be at least 1.' ]
+]
+
+{ #category : 'as yet unclassified' }
+Game class >> numberOfSpaceShipsMustBePositiveInteger: boardSize [
+
+	(boardSize isInteger not or: [ boardSize negative ]) ifTrue: [
+		Error signal:
+			'The number of space ships should be a positive integer.' ]
+]
+
+{ #category : 'as yet unclassified' }
 Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips withDiceSet: aDiceSet withWormHole: aWormHolePosition [
+	
+	self numberOfSpaceShipsMustBePositiveInteger: aNumberOfSpaceShips.
+	self numberOfSpaceShipsMustBeAtLeastOne: aNumberOfSpaceShips.
 
 	^ self new
 		  initializeWithBoardSize: aBoardSize
@@ -22,11 +40,25 @@ Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips with
 		  AndWormHole: aWormHolePosition
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> battleBetween: attacker and: defendant [
+
+	| attackDiceRollAttacker attackDiceRollDefendant |
+	[
+	attackDiceRollDefendant := diceSet toss.
+	attackDiceRollAttacker := diceSet toss.
+	attackDiceRollAttacker = attackDiceRollDefendant ] whileTrue.
+
+	attackDiceRollAttacker < attackDiceRollDefendant
+		ifTrue: [ attacker lostBattle ]
+		ifFalse: [ defendant lostBattle ]
+]
+
 { #category : 'initialization' }
 Game >> initializeWithBoardSize: aBoardSize AndNumberOfSpaceShips: aNumberOfSpaceShips AndDiceSet: aDiceSet AndWormHole: aWormHolePosition [
 
 	aBoard := Board withSize: aBoardSize andWormHolePosition: aWormHolePosition .
-	spaceShips := RacePosition withPieces: aNumberOfSpaceShips.
+	spaceShips := self startingPositions: aNumberOfSpaceShips.
 	diceSet := aDiceSet.
 	nextSpaceShipToMove := 1.
 	numberOfSpaceShips := aNumberOfSpaceShips.
@@ -36,42 +68,79 @@ Game >> initializeWithBoardSize: aBoardSize AndNumberOfSpaceShips: aNumberOfSpac
 { #category : 'testing' }
 Game >> isGameOver [
 
-	^ spaceShips isAtFinishLine: aBoard boardSize
+	^ spaceShips anySatisfy: [ :aShip | (aShip getPosition) = aBoard boardSize ]
 ]
 
 { #category : 'testing' }
 Game >> isOver [
-	^ self isGameOver 
+
+	^ self isGameOver
+]
+
+{ #category : 'as yet unclassified' }
+Game >> lookForBattle: aSpaceShip [
+
+	| opponentShip otherShips |
+	otherShips := spaceShips select: [ :ship | ship ~= aSpaceShip ].
+
+	opponentShip := otherShips
+		                detect: [ :ship |
+		                ship getPosition = aSpaceShip getPosition ]
+		                ifNone: [ nil ].
+
+	opponentShip isNil ifFalse: [
+		self battleBetween: aSpaceShip and: opponentShip ]
 ]
 
 { #category : 'as yet unclassified' }
 Game >> positionOfSpaceShip: aSpaceShipID [
 
-	^ spaceShips positions at: aSpaceShipID
+	^ (spaceShips at: aSpaceShipID) getPosition.
 ]
 
 { #category : 'as yet unclassified' }
-Game >> spaceShip: aSpaceShipID hasRolled: diceRoll [
+Game >> shieldStatus: aSpaceShipID [
 
-	| posibleNextPosition realNextPosition |
-	posibleNextPosition := spaceShips
-		                       withID: aSpaceShipID
-		                       wouldMoveForward: diceRoll.
-
-	realNextPosition := aBoard spaceShipWillMoveTo: posibleNextPosition.
-
-	spaceShips move: aSpaceShipID toPosition: realNextPosition
+	^ (spaceShips at: aSpaceShipID) getShield
 ]
 
 { #category : 'accessing' }
 Game >> start [
 
-	| diceRoll |
+	| diceRoll spaceShip |
 	diceRoll := diceSet toss.
-	[ (self isGameOver) or: (diceRoll = 0)] whileFalse: [
-		self spaceShip: nextSpaceShipToMove hasRolled: diceRoll.
+	[ self isGameOver or: diceRoll = -1 ] whileFalse: [
+		spaceShip := spaceShips at: nextSpaceShipToMove.
+		self the: spaceShip hasRolled: diceRoll.
 		self updateNextShipToMove: nextSpaceShipToMove.
 		diceRoll := diceSet toss ]
+]
+
+{ #category : 'whats left of race positions' }
+Game >> startingPositions: aNumberOfSpaceShips [
+
+	| initialPositions |
+	initialPositions := OrderedCollection new.
+	1 to: aNumberOfSpaceShips do: [ :position |
+		initialPositions add: (SpaceShip new
+				 initializeWithShield: 3
+				 andInitialPosition: 0
+				 andID: position) ].
+
+	^ initialPositions
+]
+
+{ #category : 'as yet unclassified' }
+Game >> the: spaceShip hasRolled: diceRoll [
+	
+	spaceShip skipTurns ifTrue: [ ^self ].
+	(spaceShip skipATurn: diceRoll )ifTrue: [ ^self ]. 
+	spaceShip goToTemporaryPosition: diceRoll.
+	
+	spaceShip updatePosition:
+		(aBoard adjustPositionOf: spaceShip getTemporaryPosition).
+
+	self lookForBattle: spaceShip
 ]
 
 { #category : 'as yet unclassified' }

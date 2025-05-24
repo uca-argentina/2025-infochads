@@ -24,5 +24,5 @@ RiggedDice >> toss [
 		movement := setOfMovements at: turn.
 		turn := turn + 1.
 		^ movement ].
-	^ 0
+	^ -1
 ]

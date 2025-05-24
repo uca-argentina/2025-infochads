@@ -48,7 +48,7 @@ TurnsTests >> testWhenSpaceShip1IsToPlayAndSpaceShip1PlaysThenIsValid [
 TurnsTests >> testWhenSpaceShip2IsToPlayAndSpaceShip2PlaysThenIsValid [
 
 	| aGame aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 2. 2 }.
+	aDiceSet := RiggedDice new initializeWith: { 2. 3 }.
 	aGame := Game
 		         withBoardSize: 10
 		         withSpaceShips: 3
@@ -56,14 +56,14 @@ TurnsTests >> testWhenSpaceShip2IsToPlayAndSpaceShip2PlaysThenIsValid [
 		         withWormHole: {  }.
 	aGame start.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 2
+	self assert: (aGame positionOfSpaceShip: 2) equals: 3
 ]
 
 { #category : 'tests' }
 TurnsTests >> testWhenSpaceShip3IsToPlayAndSpaceShip3PlaysThenIsValid [
 
 	| aGame aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 2. 2. 2 }.
+	aDiceSet := RiggedDice new initializeWith: { 1. 2. 3 }.
 	aGame := Game
 		         withBoardSize: 10
 		         withSpaceShips: 3
@@ -71,16 +71,16 @@ TurnsTests >> testWhenSpaceShip3IsToPlayAndSpaceShip3PlaysThenIsValid [
 		         withWormHole: {  }.
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
 	self assert: (aGame positionOfSpaceShip: 2) equals: 2.
-	self assert: (aGame positionOfSpaceShip: 3) equals: 2
+	self assert: (aGame positionOfSpaceShip: 3) equals: 3
 ]
 
 { #category : 'tests' }
 TurnsTests >> testWhenTheFirstRoundIsPlayedThenSpaceShip1IsToPlayThenIsValid [
 
 		| aGame aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 2. 2. 2. 2 }.
+	aDiceSet := RiggedDice new initializeWith: { 2. 1. 3. 2 }.
 	aGame := Game
 		         withBoardSize: 10
 		         withSpaceShips: 3
@@ -89,6 +89,6 @@ TurnsTests >> testWhenTheFirstRoundIsPlayedThenSpaceShip1IsToPlayThenIsValid [
 	aGame start.
 
 	self assert: (aGame positionOfSpaceShip: 1) equals: 4.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 2.
-	self assert: (aGame positionOfSpaceShip: 3) equals: 2
+	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 3
 ]

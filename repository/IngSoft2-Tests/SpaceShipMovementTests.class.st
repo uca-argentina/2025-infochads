@@ -33,23 +33,6 @@ SpaceShipMovementTests >> testWhenASetOfDiceWithAD6AndD8TossThenSpaceShip1MovesT
 ]
 
 { #category : 'tests' }
-SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls1ThenMoveSpaceShip1And2ToPosition1 [
-
-	| aGame aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 1. 1 }.
-	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 2
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
-
-	aGame start.
-
-	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 1
-]
-
-{ #category : 'tests' }
 SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls2AndDice3Rolls3ThenMoveSpaceShipToPosition6 [
 
 	| aGame aDiceSet |
