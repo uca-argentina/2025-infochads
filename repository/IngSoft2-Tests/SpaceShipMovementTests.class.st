@@ -25,7 +25,8 @@ SpaceShipMovementTests >> testWhenASetOfDiceWithAD6AndD8TossThenSpaceShip1MovesT
 		         withBoardSize: 10
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -41,7 +42,8 @@ SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls2AndDice3Rolls3ThenMov
 		         withBoardSize: 10
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+		         withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -57,7 +59,8 @@ SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls2ThenMoveSpaceShipToPo
 		         withBoardSize: 10
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+		         withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -73,7 +76,8 @@ SpaceShipMovementTests >> testWhenDiceRolls5ThenMovesSpaceShipToPosition5 [
 		         withBoardSize: 10
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+		         withAmountOfLaps: 1.
 
 	aGame start.
 

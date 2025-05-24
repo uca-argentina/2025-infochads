@@ -6,11 +6,17 @@ Class {
 		'position',
 		'temporaryPosition',
 		'spaceShipID',
-		'loseTurn'
+		'loseTurn',
+		'laps'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> getLaps [
+	^laps
+]
 
 { #category : 'as yet unclassified' }
 SpaceShip >> getPosition [
@@ -44,6 +50,7 @@ SpaceShip >> initializeWithShield: aNumberOfShields andInitialPosition: aPositio
 	position := aPosition.
 	temporaryPosition := aPosition.
 	loseTurn := 0.
+	laps := 1.
 	^ self
 ]
 
@@ -57,7 +64,7 @@ SpaceShip >> loseShield [
 { #category : 'as yet unclassified' }
 SpaceShip >> lostBattle [
 
-	self updatePosition: 0.
+	self returnToBeginingOfLap.
 	self loseShield
 ]
 
@@ -67,6 +74,12 @@ SpaceShip >> rechargableShield: aDiceRoll [
 	(shield = 3 and: aDiceRoll = 0) ifTrue: [
 		Error signal: 
 			'The Shield is already full, it cant be recharged.' ]
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> returnToBeginingOfLap [
+
+	position := 0
 ]
 
 { #category : 'as yet unclassified' }
@@ -91,10 +104,15 @@ SpaceShip >> skipTurns [
 ]
 
 { #category : 'as yet unclassified' }
-SpaceShip >> updatePosition: aNewPosition [
+SpaceShip >> updateLap: numberOfLaps [
 
-	position := aNewPosition.
-	temporaryPosition := position
+	laps := laps + numberOfLaps
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> updatePosition [
+
+	position := temporaryPosition.
 ]
 
 { #category : 'as yet unclassified' }

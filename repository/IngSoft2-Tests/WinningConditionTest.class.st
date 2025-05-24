@@ -14,7 +14,8 @@ WinningConditionTest >> testWhenARoundHasPassedAndSpaceShip1WinsTheGameIsOver [
 		         withBoardSize: 10
 		         withSpaceShips: 3
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -30,7 +31,8 @@ WinningConditionTest >> testWhenAfterARoundSpaceShip1WinsGameIsOverThenInformsSp
 		         withBoardSize: 10
 		         withSpaceShips: 3
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -48,7 +50,8 @@ WinningConditionTest >> testWhenDiceRollIsHigherThanBoardSizeThenSpaceShipMovesT
 		         withBoardSize: 10
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -64,7 +67,8 @@ WinningConditionTest >> testWhenSpaceShip1HasMovedToTheEndOfThenGameIsOver [
 		         withBoardSize: 10
 		         withSpaceShips: 3
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 	self assert: aGame isOver.
@@ -80,7 +84,8 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndGameIsntOverThenGameContinues 
 		         withBoardSize: 10
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -96,7 +101,8 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsGameThenInformsS
 		         withBoardSize: 10
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -113,7 +119,8 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsThenGameIsOver [
 		         withBoardSize: 10
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -129,7 +136,8 @@ WinningConditionTest >> testWhenSpaceShip1WinsAndInformsSpaceShip1_2And3Position
 		         withBoardSize: 10
 		         withSpaceShips: 3
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -148,7 +156,8 @@ WinningConditionTest >> testWhenSpaceShip3WinsGameIsOverThenInformsSpaceShip1And
 		         withBoardSize: 10
 		         withSpaceShips: 3
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 

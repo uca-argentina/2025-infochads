@@ -24,7 +24,8 @@ SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPosi
 		         withBoardSize: 10
 		         withSpaceShips: 3
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	self assert: (aGame positionOfSpaceShip: 3) equals: 0.
 	self assert: (aGame positionOfSpaceShip: 2) equals: 0.
@@ -42,7 +43,8 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsAStringThenCreationFails [
 				withBoardSize: 10
 				withSpaceShips: '3'
 				withDiceSet: aDiceSet
-				withWormHole: {  } ]
+				withWormHole: {  }
+				withAmountOfLaps: 1 ]
 		raise: Error
 		withMessageText:
 		'The number of space ships should be a positive integer.'
@@ -59,7 +61,8 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
 				withBoardSize: 10
 				withSpaceShips: 0
 				withDiceSet: aDiceSet
-				withWormHole: {  } ]
+				withWormHole: {  }
+				withAmountOfLaps: 1 ]
 		raise: Error
 		withMessageText: 'The number of space ships must be at least 1.'
 ]
@@ -67,7 +70,7 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails [
 
-		| aDiceSet |
+	| aDiceSet |
 	aDiceSet := RiggedDice new initializeWith: {  }.
 	self
 		should: [
@@ -75,10 +78,11 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails 
 				withBoardSize: 10
 				withSpaceShips: -1
 				withDiceSet: aDiceSet
-				withWormHole: {  } ]
+				withWormHole: {  }
+				withAmountOfLaps: 1 ]
 		raise: Error
-		withMessageText:'The number of space ships should be a positive integer.'
-
+		withMessageText:
+		'The number of space ships should be a positive integer.'
 ]
 
 { #category : 'tests' }
@@ -90,7 +94,8 @@ SpaceShipCreationTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs0
 		         withBoardSize: 10
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	self assert: (aGame positionOfSpaceShip: 1) equals: 0
 ]
@@ -104,7 +109,8 @@ SpaceShipCreationTests >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositions
 		         withBoardSize: 10
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	self assert: (aGame positionOfSpaceShip: 2) equals: 0.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 0

@@ -25,7 +25,8 @@ WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnFirstWormHoleThenTeleportsToSec
 		         withBoardSize: 10
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
-		         withWormHole: aWormHole.
+		         withWormHole: aWormHole
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -42,7 +43,8 @@ WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnSecondWormHoleThenTeleportsToFi
 		         withBoardSize: 10
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
-		         withWormHole: aWormHole.
+		         withWormHole: aWormHole
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -85,7 +87,8 @@ WormHoleTest >> testWhenExitHoleIsEqualToBoardSizeThenIsInvalid [
 				withBoardSize: 10
 				withSpaceShips: 2
 				withDiceSet: {  }
-				withWormHole: {10. 2 } ]
+				withWormHole: { 10. 2 }
+				withAmountOfLaps: 1 ]
 		raise: Error
 		withMessageText: 'WormHole exit must be within board limits.'
 ]
@@ -99,7 +102,8 @@ WormHoleTest >> testWhenExitHoleIsHigherThanABoardSizeThenIsInvalid [
 				withBoardSize: 10
 				withSpaceShips: 2
 				withDiceSet: {  }
-				withWormHole: {100. 2 } ]
+				withWormHole: { 100. 2 }
+				withAmountOfLaps: 1 ]
 		raise: Error
 		withMessageText: 'WormHole exit must be within board limits.'
 ]
