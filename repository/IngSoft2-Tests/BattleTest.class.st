@@ -5,6 +5,17 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+BattleTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+
+    self
+        should: anErrorBlock
+        raise: anErrorClass
+        withExceptionDo: [ :error |
+            self assert: (error messageText) equals:
+                errorMessage ]
+]
+
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2Turns [
 
@@ -56,6 +67,22 @@ BattleTest >> testWhenShip1AndShip2EnconterAfterOneRoundAndShip1WinsThenShip2Ret
 
 	self assert: (aGame positionOfSpaceShip: 1) equals: 7.
 	self assert: (aGame positionOfSpaceShip: 2) equals: 0
+]
+
+{ #category : 'tests' }
+BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsAndShip2Loses1ShieldThenShip2Toss0ToRecoverTo3Shields [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 5. 5. 3. 2. 1. 0 }.
+	aGame := Game
+		         withBoardSize: 20
+		         withSpaceShips: 2
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }.
+
+	aGame start.
+
+	self assert: (aGame shieldStatus: 2) equals: 3.
 ]
 
 { #category : 'tests' }
@@ -159,4 +186,21 @@ BattleTest >> testWhenShip1AndShip3EnconterAndShip1WinsThenShip3ReturnsToStart [
 	self assert: (aGame positionOfSpaceShip: 1) equals: 5.
 	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
 	self assert: (aGame positionOfSpaceShip: 3) equals: 0
+]
+
+{ #category : 'tests' }
+BattleTest >> testWhenShip1Has3ShieldsThenShip1CantSkipTurns [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 0. }.
+	aGame := Game
+		         withBoardSize: 20
+		         withSpaceShips: 2
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }.
+
+	self
+		should: [ aGame start ]
+		raise: Error
+		withMessageText: 'The Shield is already full, it cant be recharged.'
 ]

@@ -6,7 +6,7 @@ Class {
 		'position',
 		'temporaryPosition',
 		'spaceShipID',
-		'skipTurns'
+		'loseTurn'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -43,7 +43,7 @@ SpaceShip >> initializeWithShield: aNumberOfShields andInitialPosition: aPositio
 	shield := aNumberOfShields.
 	position := aPosition.
 	temporaryPosition := aPosition.
-	skipTurns := 0.
+	loseTurn := 0.
 	^ self
 ]
 
@@ -51,7 +51,7 @@ SpaceShip >> initializeWithShield: aNumberOfShields andInitialPosition: aPositio
 SpaceShip >> loseShield [
 
 	shield := shield - 1.
-	shield = 0 ifTrue: [ skipTurns := 2 ]
+	shield = 0 ifTrue: [ loseTurn := 2 ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -61,12 +61,31 @@ SpaceShip >> lostBattle [
 	self loseShield
 ]
 
+{ #category : 'as yet unclassified' }
+SpaceShip >> rechargableShield: aDiceRoll [
+
+	(shield = 3 and: aDiceRoll = 0) ifTrue: [
+		Error signal: 
+			'The Shield is already full, it cant be recharged.' ]
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> skipATurn: aDiceRoll [
+
+	self rechargableShield: aDiceRoll.
+	aDiceRoll = 0
+		ifTrue: [
+			shield := 3.
+			^ true ]
+		ifFalse: [ ^ false ]
+]
+
 { #category : 'accessing' }
 SpaceShip >> skipTurns [
 
-	skipTurns ~= 0
+	loseTurn ~= 0
 		ifTrue: [
-			skipTurns := skipTurns - 1.
+			loseTurn := loseTurn - 1.
 			^ true ]
 		ifFalse: [ ^ false ]
 ]

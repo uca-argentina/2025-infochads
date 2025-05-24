@@ -109,7 +109,7 @@ Game >> start [
 
 	| diceRoll spaceShip |
 	diceRoll := diceSet toss.
-	[ self isGameOver or: diceRoll = 0 ] whileFalse: [
+	[ self isGameOver or: diceRoll = -1 ] whileFalse: [
 		spaceShip := spaceShips at: nextSpaceShipToMove.
 		self the: spaceShip hasRolled: diceRoll.
 		self updateNextShipToMove: nextSpaceShipToMove.
@@ -134,6 +134,7 @@ Game >> startingPositions: aNumberOfSpaceShips [
 Game >> the: spaceShip hasRolled: diceRoll [
 	
 	spaceShip skipTurns ifTrue: [ ^self ].
+	(spaceShip skipATurn: diceRoll )ifTrue: [ ^self ]. 
 	spaceShip goToTemporaryPosition: diceRoll.
 	
 	spaceShip updatePosition:
