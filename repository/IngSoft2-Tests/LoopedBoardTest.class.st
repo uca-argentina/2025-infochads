@@ -16,6 +16,25 @@ LoopedBoardTest >> should: anErrorBlock raise: anErrorClass withMessageText: anE
 ]
 
 { #category : 'tests' }
+LoopedBoardTest >> testWhenASpaceShipGetsToTheEndMadeTheMaxLapsFromGameThenIsOver [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 5. 2. 6 }.
+	aGame := Game
+		         withBoardSize: 11
+		         withSpaceShips: 2
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 1.
+
+	aGame start.
+
+	self assert: (aGame inWhichLapIsSpaceShip: 1) equals: 1.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 11.
+	self assert: aGame isOver
+]
+
+{ #category : 'tests' }
 LoopedBoardTest >> testWhenGameStartsAndSpaceShipsHaventMadeALap [
 
 	| aGame aDiceSet |
@@ -29,15 +48,15 @@ LoopedBoardTest >> testWhenGameStartsAndSpaceShipsHaventMadeALap [
 
 	aGame start.
 
-	self assert: (aGame amountOfLapsFromSpaceShip: 1) equals: 1.
-	self assert: (aGame amountOfLapsFromSpaceShip: 2) equals: 1
+	self assert: (aGame inWhichLapIsSpaceShip: 1) equals: 1.
+	self assert: (aGame inWhichLapIsSpaceShip: 2) equals: 1
 ]
 
 { #category : 'tests' }
-LoopedBoardTest >> testWhenSpaceShipMakesALapTheExcessThrowIsUsedToMoveInTheNextLapWhenReturningToStart [
+LoopedBoardTest >> testWhenShip1MakesALapAndGetToTheEndOfLap2UsingASingleThrowThenGameIsOver [
 
 	| aGame aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 5. 2. 6 }.
+	aDiceSet := RiggedDice new initializeWith: { 19}.
 	aGame := Game
 		         withBoardSize: 10
 		         withSpaceShips: 2
@@ -47,8 +66,46 @@ LoopedBoardTest >> testWhenSpaceShipMakesALapTheExcessThrowIsUsedToMoveInTheNext
 
 	aGame start.
 
-	self assert: (aGame amountOfLapsFromSpaceShip: 1) equals: 2.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
+	self assert: (aGame inWhichLapIsSpaceShip: 1) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 10.
+	self assert: aGame isOver 
+]
+
+{ #category : 'tests' }
+LoopedBoardTest >> testWhenShip1MakesALapAndGetToTheEndOfLap2UsingMultipleThrowsThenGameIsOver [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 5. 1. 5. 3. 9}.
+	aGame := Game
+		         withBoardSize: 10
+		         withSpaceShips: 2
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 2.
+
+	aGame start.
+
+	self assert: (aGame inWhichLapIsSpaceShip: 1) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 10.
+	self assert: aGame isOver 
+]
+
+{ #category : 'tests' }
+LoopedBoardTest >> testWhenSpaceShipMakesALapTheExcessThrowIsUsedToMoveInTheNextLapWhenReturningToStart [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 5. 2. 7 }.
+	aGame := Game
+		         withBoardSize: 11
+		         withSpaceShips: 2
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 2.
+
+	aGame start.
+
+	self assert: (aGame inWhichLapIsSpaceShip: 1) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
 ]
 
 { #category : 'tests' }

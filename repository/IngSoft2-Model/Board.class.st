@@ -49,11 +49,11 @@ Board >> boardLimitAdjustment: aSpaceShip lap: totalLaps [
 		 aSpaceShip getTemporaryPosition > boardSize) ifTrue: [
 		aSpaceShip updateTemporaryPosition: boardSize.
 		^ self ].
-	
+
 	aSpaceShip getTemporaryPosition > boardSize ifTrue: [
-		aSpaceShip updateLap: (aSpaceShip getTemporaryPosition // boardSize).
-		aSpaceShip updateTemporaryPosition: (aSpaceShip getTemporaryPosition
-			- (boardSize * (aSpaceShip getTemporaryPosition // boardSize))) ].
+		aSpaceShip updateLap: (aSpaceShip getTemporaryPosition -1)// boardSize.
+		aSpaceShip updateTemporaryPosition: aSpaceShip getTemporaryPosition
+			- (boardSize * ((aSpaceShip getTemporaryPosition -1)// boardSize)) ].
 	^ self
 ]
 

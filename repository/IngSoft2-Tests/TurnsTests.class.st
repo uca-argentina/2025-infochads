@@ -43,7 +43,7 @@ TurnsTests >> testWhenSpaceShip1IsToPlayAndSpaceShip1PlaysThenIsValid [
 		         withWormHole: {  }
 					withAmountOfLaps: 1.
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 2
+	self assert: (aGame positionOfSpaceShip: 1) equals: 3
 ]
 
 { #category : 'tests' }
@@ -58,8 +58,8 @@ TurnsTests >> testWhenSpaceShip2IsToPlayAndSpaceShip2PlaysThenIsValid [
 		         withWormHole: {  }
 					withAmountOfLaps: 1.
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 3
+	self assert: (aGame positionOfSpaceShip: 1) equals: 3.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 4
 ]
 
 { #category : 'tests' }
@@ -75,9 +75,9 @@ TurnsTests >> testWhenSpaceShip3IsToPlayAndSpaceShip3PlaysThenIsValid [
 					withAmountOfLaps: 1.
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 2.
-	self assert: (aGame positionOfSpaceShip: 3) equals: 3
+	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 3.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 4
 ]
 
 { #category : 'tests' }
@@ -93,7 +93,7 @@ TurnsTests >> testWhenTheFirstRoundIsPlayedThenSpaceShip1IsToPlayThenIsValid [
 					withAmountOfLaps: 1.
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 4.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 3) equals: 3
+	self assert: (aGame positionOfSpaceShip: 1) equals: 5.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 4
 ]

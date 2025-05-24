@@ -26,7 +26,7 @@ WinningConditionTest >> testWhenARoundHasPassedAndSpaceShip1WinsTheGameIsOver [
 WinningConditionTest >> testWhenAfterARoundSpaceShip1WinsGameIsOverThenInformsSpaceShip2And3Position [
 
 	| aGame aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 9. 3. 7. 1 }.
+	aDiceSet := RiggedDice new initializeWith: { 8. 3. 7. 1 }.
 	aGame := Game
 		         withBoardSize: 10
 		         withSpaceShips: 3
@@ -37,8 +37,8 @@ WinningConditionTest >> testWhenAfterARoundSpaceShip1WinsGameIsOverThenInformsSp
 	aGame start.
 
 	self assert: aGame isOver.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 3.
-	self assert: (aGame positionOfSpaceShip: 3) equals: 7
+	self assert: (aGame positionOfSpaceShip: 2) equals: 4.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 8
 ]
 
 { #category : 'tests' }
@@ -107,7 +107,7 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsGameThenInformsS
 	aGame start.
 
 	self assert: aGame isOver.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 3
+	self assert: (aGame positionOfSpaceShip: 1) equals: 4
 ]
 
 { #category : 'tests' }
@@ -143,8 +143,8 @@ WinningConditionTest >> testWhenSpaceShip1WinsAndInformsSpaceShip1_2And3Position
 
 	self assert: aGame isOver.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 10.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 0.
-	self assert: (aGame positionOfSpaceShip: 3) equals: 0
+	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 1
 ]
 
 { #category : 'tests' }
@@ -164,6 +164,6 @@ WinningConditionTest >> testWhenSpaceShip3WinsGameIsOverThenInformsSpaceShip1And
 	self assert: aGame isOver.
 
 	self assert: aGame isOver.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 2
+	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 3
 ]

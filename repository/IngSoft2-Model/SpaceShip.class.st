@@ -79,7 +79,7 @@ SpaceShip >> rechargableShield: aDiceRoll [
 { #category : 'as yet unclassified' }
 SpaceShip >> returnToBeginingOfLap [
 
-	position := 0
+	position := 1
 ]
 
 { #category : 'as yet unclassified' }

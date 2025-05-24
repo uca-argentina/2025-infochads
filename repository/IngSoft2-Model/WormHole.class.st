@@ -23,7 +23,7 @@ WormHole class >> withGates: aWormHolePositions [
 { #category : 'as yet unclassified' }
 WormHole class >> wormHoleExitMustBePositiveInteger: aWormHoleExit [
 
-	(aWormHoleExit isInteger and: aWormHoleExit > 0) ifFalse: [
+	(aWormHoleExit isInteger and: aWormHoleExit > 1) ifFalse: [
 		Error signal: 'WormHole must be a pair of integers.' ]
 ]
 
@@ -52,7 +52,7 @@ WormHole >> intializeWithGates: aWormHolePositions [
 WormHole >> mustBeWithInLimits: aBoardSize [
 
 	(wormHolePositions anySatisfy: [ :hole |
-		 hole >= aBoardSize or: hole <= 0 ]) ifTrue: [
+		 hole >= aBoardSize or: hole <= 1 ]) ifTrue: [
 		Error signal: 'WormHole exit must be within board limits.']
 ]
 

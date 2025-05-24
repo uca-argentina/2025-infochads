@@ -19,7 +19,7 @@ WormHoleTest >> should: anErrorBlock raise: anErrorClass withMessageText: anErro
 WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnFirstWormHoleThenTeleportsToSecondWormHoleThenIsValid [
 
 	| aGame aWormHole aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 3 }.
+	aDiceSet := RiggedDice new initializeWith: { 2 }.
 	aWormHole := { 3. 7 }.
 	aGame := Game
 		         withBoardSize: 10
@@ -37,7 +37,7 @@ WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnFirstWormHoleThenTeleportsToSec
 WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnSecondWormHoleThenTeleportsToFirstWormHoleThenIsValid [
 
 	| aGame aWormHole aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 7 }.
+	aDiceSet := RiggedDice new initializeWith: { 6 }.
 	aWormHole := { 3. 7 }.
 	aGame := Game
 		         withBoardSize: 10
@@ -52,19 +52,19 @@ WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnSecondWormHoleThenTeleportsToFi
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testWhenEntryHoleIsNegativeThenIsInvalid [
+WormHoleTest >> testWhenEntryHoleIs1ThenIsInvalid [
 
 	self
-		should: [ WormHole withGates: { -1. 7 } ]
+		should: [ WormHole withGates: { 1. 7 } ]
 		raise: Error
 		withMessageText: 'WormHole must be a pair of integers.'
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testWhenEntryHoleIsZeroThenIsInvalid [
+WormHoleTest >> testWhenEntryHoleIsNegativeThenIsInvalid [
 
 	self
-		should: [ WormHole withGates: { 0. 7 } ]
+		should: [ WormHole withGates: { -1. 7 } ]
 		raise: Error
 		withMessageText: 'WormHole must be a pair of integers.'
 ]

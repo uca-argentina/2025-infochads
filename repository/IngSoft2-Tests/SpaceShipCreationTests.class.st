@@ -16,7 +16,7 @@ SpaceShipCreationTests >> should: anErrorBlock raise: anErrorClass withMessageTe
 ]
 
 { #category : 'tests' }
-SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPositionsAre0 [
+SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPositionsAre1 [
 
 	| aGame aDiceSet |
 	aDiceSet := RiggedDice new initializeWith: {  }.
@@ -27,9 +27,9 @@ SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPosi
 		         withWormHole: {  }
 					withAmountOfLaps: 1.
 
-	self assert: (aGame positionOfSpaceShip: 3) equals: 0.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 0.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 0
+	self assert: (aGame positionOfSpaceShip: 3) equals: 1.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 1
 ]
 
 { #category : 'tests' }
@@ -86,7 +86,7 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails 
 ]
 
 { #category : 'tests' }
-SpaceShipCreationTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs0 [
+SpaceShipCreationTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs1 [
 
 	| aGame aDiceSet |
 	aDiceSet := RiggedDice new initializeWith: {  }.
@@ -97,11 +97,11 @@ SpaceShipCreationTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs0
 		         withWormHole: {  }
 					withAmountOfLaps: 1.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 0
+	self assert: (aGame positionOfSpaceShip: 1) equals: 1
 ]
 
 { #category : 'tests' }
-SpaceShipCreationTests >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositionsAre0 [
+SpaceShipCreationTests >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositionsAre1 [
 
 	| aGame aDiceSet |
 	aDiceSet := RiggedDice new initializeWith: {  }.
@@ -112,6 +112,6 @@ SpaceShipCreationTests >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositions
 		         withWormHole: {  }
 					withAmountOfLaps: 1.
 
-	self assert: (aGame positionOfSpaceShip: 2) equals: 0.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 0
+	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 1
 ]

@@ -17,7 +17,7 @@ SpaceShipMovementTests >> should: anErrorBlock raise: anErrorClass withMessageTe
 ]
 
 { #category : 'tests' }
-SpaceShipMovementTests >> testWhenASetOfDiceWithAD6AndD8TossThenSpaceShip1MovesToPositionBetween1And14 [
+SpaceShipMovementTests >> testWhenARiggedDiceToss6ThenShipMovesTo7 [
 
 	| aGame aDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 6 }.
@@ -30,45 +30,11 @@ SpaceShipMovementTests >> testWhenASetOfDiceWithAD6AndD8TossThenSpaceShip1MovesT
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 6
+	self assert: (aGame positionOfSpaceShip: 1) equals: 7
 ]
 
 { #category : 'tests' }
-SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls2AndDice3Rolls3ThenMoveSpaceShipToPosition6 [
-
-	| aGame aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 1. 2. 3 }.
-	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 1
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-		         withAmountOfLaps: 1.
-
-	aGame start.
-
-	self assert: (aGame positionOfSpaceShip: 1) equals: 6
-]
-
-{ #category : 'tests' }
-SpaceShipMovementTests >> testWhenDice1Rolls1AndDice2Rolls2ThenMoveSpaceShipToPosition3 [
-
-	| aGame aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 1. 2 }.
-	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 1
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-		         withAmountOfLaps: 1.
-
-	aGame start.
-
-	self assert: (aGame positionOfSpaceShip: 1) equals: 3
-]
-
-{ #category : 'tests' }
-SpaceShipMovementTests >> testWhenDiceRolls5ThenMovesSpaceShipToPosition5 [
+SpaceShipMovementTests >> testWhenDiceRolls5ThenMovesSpaceShipToPosition6 [
 
 	| aGame aDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 5 }.
@@ -81,5 +47,39 @@ SpaceShipMovementTests >> testWhenDiceRolls5ThenMovesSpaceShipToPosition5 [
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 5
+	self assert: (aGame positionOfSpaceShip: 1) equals: 6
+]
+
+{ #category : 'tests' }
+SpaceShipMovementTests >> testWhenRiggedDiceToss1_2ThenShip1MovesTo4 [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 1. 2 }.
+	aGame := Game
+		         withBoardSize: 10
+		         withSpaceShips: 1
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 1.
+
+	aGame start.
+
+	self assert: (aGame positionOfSpaceShip: 1) equals: 4
+]
+
+{ #category : 'tests' }
+SpaceShipMovementTests >> testWhenRiggedDiceToss1_2_3ThenShip1MovesTo7 [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 1. 2. 3 }.
+	aGame := Game
+		         withBoardSize: 10
+		         withSpaceShips: 1
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 1.
+
+	aGame start.
+
+	self assert: (aGame positionOfSpaceShip: 1) equals: 7
 ]

@@ -51,12 +51,6 @@ Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips with
 ]
 
 { #category : 'as yet unclassified' }
-Game >> amountOfLapsFromSpaceShip: aSpaceShipID [
-
-	^ (spaceShips at: aSpaceShipID) getLaps
-]
-
-{ #category : 'as yet unclassified' }
 Game >> battleBetween: attacker and: defendant [
 
 	| attackDiceRollAttacker attackDiceRollDefendant |
@@ -68,6 +62,12 @@ Game >> battleBetween: attacker and: defendant [
 	attackDiceRollAttacker < attackDiceRollDefendant
 		ifTrue: [ attacker lostBattle ]
 		ifFalse: [ defendant lostBattle ]
+]
+
+{ #category : 'as yet unclassified' }
+Game >> inWhichLapIsSpaceShip: aSpaceShipID [
+
+	^ (spaceShips at: aSpaceShipID) getLaps
 ]
 
 { #category : 'initialization' }
@@ -87,7 +87,8 @@ Game >> initializeWithBoardSize: aBoardSize AndNumberOfSpaceShips: aNumberOfSpac
 { #category : 'testing' }
 Game >> isGameOver [
 
-	^ spaceShips anySatisfy: [ :aShip | ((aShip getPosition) = aBoard boardSize and: ((aShip getLaps))=laps )]
+	^ spaceShips anySatisfy: [ :aShip |
+		  aShip getPosition = aBoard boardSize and: aShip getLaps = laps ]
 ]
 
 { #category : 'testing' }
@@ -143,7 +144,7 @@ Game >> startingPositions: aNumberOfSpaceShips [
 	1 to: aNumberOfSpaceShips do: [ :position |
 		initialPositions add: (SpaceShip new
 				 initializeWithShield: 3
-				 andInitialPosition: 0
+				 andInitialPosition: 1
 				 andID: position) ].
 
 	^ initialPositions
