@@ -19,13 +19,14 @@ WormHoleTest >> should: anErrorBlock raise: anErrorClass withMessageText: anErro
 WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnFirstWormHoleThenTeleportsToSecondWormHoleThenIsValid [
 
 	| aGame aWormHole aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 3 }.
+	aDiceSet := RiggedDice new initializeWith: { 2 }.
 	aWormHole := { 3. 7 }.
 	aGame := Game
 		         withBoardSize: 10
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
-		         withWormHole: aWormHole.
+		         withWormHole: aWormHole
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -36,13 +37,14 @@ WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnFirstWormHoleThenTeleportsToSec
 WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnSecondWormHoleThenTeleportsToFirstWormHoleThenIsValid [
 
 	| aGame aWormHole aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 7 }.
+	aDiceSet := RiggedDice new initializeWith: { 6 }.
 	aWormHole := { 3. 7 }.
 	aGame := Game
 		         withBoardSize: 10
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
-		         withWormHole: aWormHole.
+		         withWormHole: aWormHole
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -50,19 +52,19 @@ WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnSecondWormHoleThenTeleportsToFi
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testWhenEntryHoleIsNegativeThenIsInvalid [
+WormHoleTest >> testWhenEntryHoleIs1ThenIsInvalid [
 
 	self
-		should: [ WormHole withGates: { -1. 7 } ]
+		should: [ WormHole withGates: { 1. 7 } ]
 		raise: Error
 		withMessageText: 'WormHole must be a pair of integers.'
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testWhenEntryHoleIsZeroThenIsInvalid [
+WormHoleTest >> testWhenEntryHoleIsNegativeThenIsInvalid [
 
 	self
-		should: [ WormHole withGates: { 0. 7 } ]
+		should: [ WormHole withGates: { -1. 7 } ]
 		raise: Error
 		withMessageText: 'WormHole must be a pair of integers.'
 ]
@@ -85,7 +87,8 @@ WormHoleTest >> testWhenExitHoleIsEqualToBoardSizeThenIsInvalid [
 				withBoardSize: 10
 				withSpaceShips: 2
 				withDiceSet: {  }
-				withWormHole: {10. 2 } ]
+				withWormHole: { 10. 2 }
+				withAmountOfLaps: 1 ]
 		raise: Error
 		withMessageText: 'WormHole exit must be within board limits.'
 ]
@@ -99,7 +102,8 @@ WormHoleTest >> testWhenExitHoleIsHigherThanABoardSizeThenIsInvalid [
 				withBoardSize: 10
 				withSpaceShips: 2
 				withDiceSet: {  }
-				withWormHole: {100. 2 } ]
+				withWormHole: { 100. 2 }
+				withAmountOfLaps: 1 ]
 		raise: Error
 		withMessageText: 'WormHole exit must be within board limits.'
 ]

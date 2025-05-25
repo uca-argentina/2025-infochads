@@ -6,11 +6,19 @@ Class {
 		'spaceShips',
 		'diceSet',
 		'nextSpaceShipToMove',
-		'numberOfSpaceShips'
+		'numberOfSpaceShips',
+		'laps'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
+
+{ #category : 'as yet unclassified' }
+Game class >> lapsMustBePositiveInteger: aLapsCount [
+
+	(aLapsCount isInteger and: [ aLapsCount > 0 ]) ifFalse: [
+		self error: 'Laps must be a positive integer.' ]
+]
 
 { #category : 'as yet unclassified' }
 Game class >> numberOfSpaceShipsMustBeAtLeastOne: aNumberOfSpaceShips [
@@ -28,16 +36,18 @@ Game class >> numberOfSpaceShipsMustBePositiveInteger: boardSize [
 ]
 
 { #category : 'as yet unclassified' }
-Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips withDiceSet: aDiceSet withWormHole: aWormHolePosition [
-	
+Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips withDiceSet: aDiceSet withWormHole: aWormHolePosition withAmountOfLaps: aLapsCount [
+
 	self numberOfSpaceShipsMustBePositiveInteger: aNumberOfSpaceShips.
 	self numberOfSpaceShipsMustBeAtLeastOne: aNumberOfSpaceShips.
+	self lapsMustBePositiveInteger: aLapsCount.
 
 	^ self new
 		  initializeWithBoardSize: aBoardSize
 		  AndNumberOfSpaceShips: aNumberOfSpaceShips
 		  AndDiceSet: aDiceSet
 		  AndWormHole: aWormHolePosition
+		  Andlaps: aLapsCount
 ]
 
 { #category : 'as yet unclassified' }
@@ -54,21 +64,31 @@ Game >> battleBetween: attacker and: defendant [
 		ifFalse: [ defendant lostBattle ]
 ]
 
-{ #category : 'initialization' }
-Game >> initializeWithBoardSize: aBoardSize AndNumberOfSpaceShips: aNumberOfSpaceShips AndDiceSet: aDiceSet AndWormHole: aWormHolePosition [
+{ #category : 'as yet unclassified' }
+Game >> inWhichLapIsSpaceShip: aSpaceShipID [
 
-	aBoard := Board withSize: aBoardSize andWormHolePosition: aWormHolePosition .
+	^ (spaceShips at: aSpaceShipID) getLaps
+]
+
+{ #category : 'initialization' }
+Game >> initializeWithBoardSize: aBoardSize AndNumberOfSpaceShips: aNumberOfSpaceShips AndDiceSet: aDiceSet AndWormHole: aWormHolePosition Andlaps: aLapsCount [
+
+	aBoard := Board
+		          withSize: aBoardSize
+		          andWormHolePosition: aWormHolePosition.
 	spaceShips := self startingPositions: aNumberOfSpaceShips.
 	diceSet := aDiceSet.
 	nextSpaceShipToMove := 1.
 	numberOfSpaceShips := aNumberOfSpaceShips.
+	laps := aLapsCount ifNil: [ laps := 1 ].
 	^ self
 ]
 
 { #category : 'testing' }
 Game >> isGameOver [
 
-	^ spaceShips anySatisfy: [ :aShip | (aShip getPosition) = aBoard boardSize ]
+	^ spaceShips anySatisfy: [ :aShip |
+		  aShip getPosition = aBoard boardSize and: aShip getLaps = laps ]
 ]
 
 { #category : 'testing' }
@@ -124,7 +144,7 @@ Game >> startingPositions: aNumberOfSpaceShips [
 	1 to: aNumberOfSpaceShips do: [ :position |
 		initialPositions add: (SpaceShip new
 				 initializeWithShield: 3
-				 andInitialPosition: 0
+				 andInitialPosition: 1
 				 andID: position) ].
 
 	^ initialPositions
@@ -132,13 +152,12 @@ Game >> startingPositions: aNumberOfSpaceShips [
 
 { #category : 'as yet unclassified' }
 Game >> the: spaceShip hasRolled: diceRoll [
-	
-	spaceShip skipTurns ifTrue: [ ^self ].
-	(spaceShip skipATurn: diceRoll )ifTrue: [ ^self ]. 
+
+	spaceShip skipTurns ifTrue: [ ^ self ].
+	(spaceShip skipATurn: diceRoll) ifTrue: [ ^ self ].
 	spaceShip goToTemporaryPosition: diceRoll.
-	
-	spaceShip updatePosition:
-		(aBoard adjustPositionOf: spaceShip getTemporaryPosition).
+
+	aBoard adjustPositionOf: spaceShip considering: laps.
 
 	self lookForBattle: spaceShip
 ]

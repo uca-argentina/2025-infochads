@@ -14,7 +14,8 @@ WinningConditionTest >> testWhenARoundHasPassedAndSpaceShip1WinsTheGameIsOver [
 		         withBoardSize: 10
 		         withSpaceShips: 3
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -25,18 +26,19 @@ WinningConditionTest >> testWhenARoundHasPassedAndSpaceShip1WinsTheGameIsOver [
 WinningConditionTest >> testWhenAfterARoundSpaceShip1WinsGameIsOverThenInformsSpaceShip2And3Position [
 
 	| aGame aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 9. 3. 7. 1 }.
+	aDiceSet := RiggedDice new initializeWith: { 8. 3. 7. 1 }.
 	aGame := Game
 		         withBoardSize: 10
 		         withSpaceShips: 3
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
 	self assert: aGame isOver.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 3.
-	self assert: (aGame positionOfSpaceShip: 3) equals: 7
+	self assert: (aGame positionOfSpaceShip: 2) equals: 4.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 8
 ]
 
 { #category : 'tests' }
@@ -48,7 +50,8 @@ WinningConditionTest >> testWhenDiceRollIsHigherThanBoardSizeThenSpaceShipMovesT
 		         withBoardSize: 10
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -64,7 +67,8 @@ WinningConditionTest >> testWhenSpaceShip1HasMovedToTheEndOfThenGameIsOver [
 		         withBoardSize: 10
 		         withSpaceShips: 3
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 	self assert: aGame isOver.
@@ -80,7 +84,8 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndGameIsntOverThenGameContinues 
 		         withBoardSize: 10
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -96,12 +101,13 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsGameThenInformsS
 		         withBoardSize: 10
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
 	self assert: aGame isOver.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 3
+	self assert: (aGame positionOfSpaceShip: 1) equals: 4
 ]
 
 { #category : 'tests' }
@@ -113,7 +119,8 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsThenGameIsOver [
 		         withBoardSize: 10
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -129,14 +136,15 @@ WinningConditionTest >> testWhenSpaceShip1WinsAndInformsSpaceShip1_2And3Position
 		         withBoardSize: 10
 		         withSpaceShips: 3
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
 	self assert: aGame isOver.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 10.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 0.
-	self assert: (aGame positionOfSpaceShip: 3) equals: 0
+	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 1
 ]
 
 { #category : 'tests' }
@@ -148,13 +156,14 @@ WinningConditionTest >> testWhenSpaceShip3WinsGameIsOverThenInformsSpaceShip1And
 		         withBoardSize: 10
 		         withSpaceShips: 3
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
 	self assert: aGame isOver.
 
 	self assert: aGame isOver.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 2
+	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 3
 ]

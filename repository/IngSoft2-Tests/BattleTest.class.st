@@ -26,12 +26,13 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 		         withBoardSize: 100
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 0.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 9
+	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 10
 ]
 
 { #category : 'tests' }
@@ -44,12 +45,12 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 		         withBoardSize: 100
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
-
+		         withWormHole: {  }
+		         withAmountOfLaps: 1.
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 10
+	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 11
 ]
 
 { #category : 'tests' }
@@ -61,12 +62,13 @@ BattleTest >> testWhenShip1AndShip2EnconterAfterOneRoundAndShip1WinsThenShip2Ret
 		         withBoardSize: 20
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 7.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 0
+	self assert: (aGame positionOfSpaceShip: 1) equals: 8.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 1
 ]
 
 { #category : 'tests' }
@@ -78,7 +80,8 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsAndShip2Loses1ShieldThenS
 		         withBoardSize: 20
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -94,7 +97,8 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2NowHas2Shields [
 		         withBoardSize: 10
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -111,12 +115,13 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2ReturnsToStart [
 		         withBoardSize: 10
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 5.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 0
+	self assert: (aGame positionOfSpaceShip: 1) equals: 6.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 1
 ]
 
 { #category : 'tests' }
@@ -128,12 +133,13 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip1ReturnsToStart [
 		         withBoardSize: 10
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 0.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 5
+	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 6
 ]
 
 { #category : 'tests' }
@@ -145,7 +151,8 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip2NowHas2Shields [
 		         withBoardSize: 10
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
@@ -162,12 +169,13 @@ BattleTest >> testWhenShip1AndShip2EnconterAndTheyTossTheSameNumberThenTheyTossT
 		         withBoardSize: 10
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 5.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 0
+	self assert: (aGame positionOfSpaceShip: 1) equals: 6.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 1
 ]
 
 { #category : 'tests' }
@@ -179,13 +187,14 @@ BattleTest >> testWhenShip1AndShip3EnconterAndShip1WinsThenShip3ReturnsToStart [
 		         withBoardSize: 10
 		         withSpaceShips: 3
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 5.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 3) equals: 0
+	self assert: (aGame positionOfSpaceShip: 1) equals: 6.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 1
 ]
 
 { #category : 'tests' }
@@ -197,7 +206,8 @@ BattleTest >> testWhenShip1Has3ShieldsThenShip1CantSkipTurns [
 		         withBoardSize: 20
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
-		         withWormHole: {  }.
+		         withWormHole: {  }
+					withAmountOfLaps: 1.
 
 	self
 		should: [ aGame start ]

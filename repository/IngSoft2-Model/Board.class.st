@@ -33,21 +33,27 @@ Board class >> withSize: aBoardSize andWormHolePosition: aWormHolePosition [
 ]
 
 { #category : 'as yet unclassified' }
-Board >> adjustPositionOf: aSpaceShipTemporaryPosition [
+Board >> adjustPositionOf: aSpaceShip considering: totalLaps [
 
-	| aNewPosition |
-	aNewPosition := self boardLimitAdjustment: aSpaceShipTemporaryPosition.
-	aNewPosition := self checkForWormHole: aNewPosition.
-	^ aNewPosition
+	self boardLimitAdjustment: aSpaceShip lap: totalLaps.
+	self checkForWormHole: aSpaceShip.
+
+	aSpaceShip updatePosition
 ]
 
 { #category : 'as yet unclassified' }
-Board >> boardLimitAdjustment: newPosition [
+Board >> boardLimitAdjustment: aSpaceShip lap: totalLaps [
 
-	| aPosition |
-	aPosition := newPosition.
-	newPosition > boardSize ifTrue: [ aPosition := boardSize ].
-	^ aPosition
+	(aSpaceShip isBeforeBoardStart: boardSize) ifTrue: [ ^ self ].
+
+	(aSpaceShip hasReachedMaxProgressFor: totalLaps boardSize: boardSize)
+		ifTrue: [
+			aSpaceShip finishAt: boardSize withLaps: totalLaps.
+			^ self ].
+
+	aSpaceShip adjustLapAndPositionRelativeTo: boardSize.
+
+	^ self
 ]
 
 { #category : 'accessing' }
@@ -58,13 +64,11 @@ Board >> boardSize [
 ]
 
 { #category : 'as yet unclassified' }
-Board >> checkForWormHole: aPosition [
+Board >> checkForWormHole: aSpaceShip [
 
-	| aNewPosition |
 	
-	aNewPosition := (wormHole verifyPosition: aPosition).
+	aSpaceShip updateTemporaryPosition: (wormHole verifyPosition: aSpaceShip getTemporaryPosition ). "extract"
 
-	^ aNewPosition
 ]
 
 { #category : 'initialization' }
