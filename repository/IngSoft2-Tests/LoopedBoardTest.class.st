@@ -48,8 +48,8 @@ LoopedBoardTest >> testWhenGameStartsAndSpaceShipsHaventMadeALap [
 
 	aGame start.
 
-	self assert: (aGame inWhichLapIsSpaceShip: 1) equals: 1.
-	self assert: (aGame inWhichLapIsSpaceShip: 2) equals: 1
+	self assert: (aGame inWhichLapIsSpaceShip: 1) equals: 0.
+	self assert: (aGame inWhichLapIsSpaceShip: 2) equals: 0
 ]
 
 { #category : 'tests' }
@@ -94,7 +94,7 @@ LoopedBoardTest >> testWhenShip1MakesALapAndExceedsTheEndOfBoardInFinalLapUsingS
 LoopedBoardTest >> testWhenShip1MakesALapAndGetToTheEndOfLap2UsingASingleThrowThenGameIsOver [
 
 	| aGame aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 19}.
+	aDiceSet := RiggedDice new initializeWith: { 19 }.
 	aGame := Game
 		         withBoardSize: 10
 		         withSpaceShips: 1
@@ -142,7 +142,7 @@ LoopedBoardTest >> testWhenSpaceShipMakesALapTheExcessThrowIsUsedToMoveInTheNext
 
 	aGame start.
 
-	self assert: (aGame inWhichLapIsSpaceShip: 1) equals: 2.
+	self assert: (aGame inWhichLapIsSpaceShip: 1) equals: 1.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
 ]
 

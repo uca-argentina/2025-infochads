@@ -50,7 +50,7 @@ SpaceShip >> initializeWithShield: aNumberOfShields andInitialPosition: aPositio
 	position := aPosition.
 	temporaryPosition := aPosition.
 	loseTurn := 0.
-	laps := 1.
+	laps := 0.
 	^ self
 ]
 
@@ -119,4 +119,11 @@ SpaceShip >> updatePosition [
 SpaceShip >> updateTemporaryPosition: aNewTemporaryPosition [
 
 	temporaryPosition := aNewTemporaryPosition
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> wonInPosition: finalPosition andLaps: numberOfLaps [
+
+	temporaryPosition := finalPosition.
+	laps := numberOfLaps
 ]
