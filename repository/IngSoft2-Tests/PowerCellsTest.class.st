@@ -6,16 +6,60 @@ Class {
 }
 
 { #category : 'tests' }
+PowerCellsTest >> testWhenAAtomicBombEffectIsAppliedToCellThenCanBeCreated [
+
+	| cell |
+	cell := Cell new
+		        initializeWithPosition: 1
+		        type: #atomicBomb
+		        effect: (AtomicBombEffect
+				         ShieldsSacrificed: 1).
+
+	self assert: cell position equals: 1.
+	self assert: cell type equals: #atomicBomb
+]
+
+{ #category : 'tests' }
 PowerCellsTest >> testWhenABlackHoleEffectIsAppliedToCellThenCanBeCreated [
 
 	| cell |
 	cell := Cell new
 		        initializeWithPosition: 1
 		        type: #blackHole
-		        effect: (HyperSpaceJump withDesplacementValue: 4 andShieldsSacrificed: 1).
+		        effect: (HyperSpaceJumpEffect withDesplacementValue: 4 andShieldsSacrificed: 1).
 		
 	self assert: (cell position) equals: 1.
 	self assert: cell type equals: #blackHole.
+
+]
+
+{ #category : 'tests' }
+PowerCellsTest >> testWhenAHyperJumpEffectIsAppliedToCellThenCanBeCreated [
+
+	| cell |
+	cell := Cell new
+		        initializeWithPosition: 1
+		        type: #hyperJump
+		        effect: (HyperJumpEffect
+				         withParsecValue: 100
+				         totalBoardSize: 10
+				         andParsecJumps: #( 10 7 2 )).
+
+	self assert: cell position equals: 1.
+	self assert: cell type equals: #hyperJump
+]
+
+{ #category : 'tests' }
+PowerCellsTest >> testWhenAMoonWalkEffectIsAppliedToCellThenCanBeCreated [
+
+	| cell |
+	cell := Cell new
+		        initializeWithPosition: 1
+		        type: #moonWalk
+		        effect: (MoonWalkEffect withDesplacementValue: 4).
+		
+	self assert: (cell position) equals: 1.
+	self assert: cell type equals: #moonWalk.
 
 ]
 
@@ -39,10 +83,10 @@ PowerCellsTest >> testWhenHyperSpaceJumpEffectIsAppliedToCellThenCanBeCreated [
 	| cell |
 	cell := Cell new
 		        initializeWithPosition: 1
-		        type: #blackHole
+		        type: #hyperSpaceJump
 		        effect: (BlackHoleEffect withDesplacementValue: 4).
 		
 	self assert: (cell position) equals: 1.
-	self assert: cell type equals: #blackHole.
+	self assert: cell type equals: #hyperSpaceJump.
 
 ]

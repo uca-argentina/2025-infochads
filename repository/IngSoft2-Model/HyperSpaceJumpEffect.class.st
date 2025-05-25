@@ -1,5 +1,5 @@
 Class {
-	#name : 'HyperSpaceJump',
+	#name : 'HyperSpaceJumpEffect',
 	#superclass : 'Object',
 	#classInstVars : [
 		'displacement',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-HyperSpaceJump class >> withDesplacementValue: aPosition andShieldsSacrificed: aNumberOfShields [
+HyperSpaceJumpEffect class >> withDesplacementValue: aPosition andShieldsSacrificed: aNumberOfShields [
 
 	displacement := aPosition.
 	shieldsTaken := aNumberOfShields
