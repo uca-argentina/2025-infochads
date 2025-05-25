@@ -65,6 +65,13 @@ Game >> battleBetween: attacker and: defendant [
 		ifFalse: [ defendant lostBattle ]
 ]
 
+{ #category : 'initialization' }
+Game >> determineWinner [
+
+	^ (spaceShips select: [ :aShip |
+		   aShip getPosition = aBoard boardSize and: aShip getLaps = laps ]) first.
+]
+
 { #category : 'as yet unclassified' }
 Game >> getRanking [
 	^ ranking asArray
@@ -132,15 +139,35 @@ Game >> positionOfSpaceShip: aSpaceShipID [
 { #category : 'initialization' }
 Game >> setRanking [
 
-	| spaceShip |
-	spaceShip := (spaceShips select:[:aShip | (aShip getPosition = aBoard boardSize and: aShip getLaps = laps) ] )first.
-	ranking add: spaceShip getID.
+	| winner otherShips sortedOthers |
+	winner := self determineWinner.
+
+	otherShips := spaceShips select: [ :ship | ship ~= winner ].
+
+	sortedOthers := self sortShipsByProgress: otherShips.
+
+	ranking add: winner getID.
+
+	sortedOthers isNotEmpty ifTrue: [
+		ranking add: (sortedOthers at: 1) getID ].
+
+	sortedOthers size >= 2 ifTrue: [
+		ranking add: (sortedOthers at: 2) getID ]
 ]
 
 { #category : 'as yet unclassified' }
 Game >> shieldStatus: aSpaceShipID [
 
 	^ (spaceShips at: aSpaceShipID) getShield
+]
+
+{ #category : 'sorting' }
+Game >> sortShipsByProgress: ships [
+
+	^ ships sort: [ :a :b |
+		  a getPosition = b getPosition
+			  ifTrue: [ a getLaps > b getLaps ]
+			  ifFalse: [ a getPosition > b getPosition ] ]
 ]
 
 { #category : 'accessing' }

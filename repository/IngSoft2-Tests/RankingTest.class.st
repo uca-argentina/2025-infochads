@@ -6,6 +6,59 @@ Class {
 }
 
 { #category : 'tests' }
+RankingTest >> testWhenGameIsNotOverThereIsNoRanking [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 5. 2. 3 }.
+	aGame := Game
+		         withBoardSize: 11
+		         withSpaceShips: 3
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 1.
+
+	aGame start.
+
+	self assert: (aGame getRanking) equals: { } 
+]
+
+{ #category : 'tests' }
+RankingTest >> testWhenGameIsOverAndShip1WinsAndShip2IsSecond [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 5. 2. 6. 9 }.
+	aGame := Game
+		         withBoardSize: 11
+		         withSpaceShips: 2
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 1.
+
+	aGame start.
+
+	self assert: aGame isOver.
+	self assert: (aGame getRanking)  equals: {1. 2 } 
+]
+
+{ #category : 'tests' }
+RankingTest >> testWhenGameIsOverAndShip1WinsAndShip3IsSecondAndShip2IsThird [
+
+	| aGame aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 5. 2. 3. 6 }.
+	aGame := Game
+		         withBoardSize: 11
+		         withSpaceShips: 3
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 1.
+
+	aGame start.
+	
+	self assert: aGame isOver.
+	self assert: (aGame getRanking)  equals: {1. 3. 2} 
+]
+
+{ #category : 'tests' }
 RankingTest >> testWhenGameIsOverAndSpaceShip2Wins [
 
 	| aGame aDiceSet |
