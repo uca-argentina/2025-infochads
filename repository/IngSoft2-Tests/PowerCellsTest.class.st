@@ -87,6 +87,30 @@ PowerCellsTest >> testWhenHyperSpaceJumpEffectIsAppliedToCellThenCanBeCreated [
 ]
 
 { #category : 'tests' }
+PowerCellsTest >> testWhenShipMovesToAAtomicBombCellThenAllShipsReturnToBeguiningAndLose1Shield [
+
+	| aGame aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 10. 14. 44 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 100. 3. 30. 20. 10. 6. 4. 2. 5. 7 }.
+	aGame := Game
+		         withBoardSize: 50
+		         withSpaceShips: 3
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 1
+		         withCellConfigurations: aConfigureDiceSet.
+
+	aGame start.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
+	self assert: (aGame shieldStatus: 1) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
+	self assert: (aGame shieldStatus: 2) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 1.
+	self assert: (aGame shieldStatus: 3) equals: 2.
+]
+
+{ #category : 'tests' }
 PowerCellsTest >> testWhenShipMovesToABlackHoleCellThenItGoesBack4Spaces [
 
 	| aGame aDiceSet aConfigureDiceSet |
@@ -126,6 +150,27 @@ PowerCellsTest >> testWhenShipMovesToAHyperSpaceJumpCellThenItMovesForward4Space
 ]
 
 { #category : 'tests' }
+PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf4ThenItMovesEveryShipExceptForSelectedBack6Steps [
+
+	| aGame aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 10. 11. 46 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 100. 3. 30. 20. 10. 6. 4. 2. 5. 7 }.
+	aGame := Game
+		         withBoardSize: 50
+		         withSpaceShips: 3
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 1
+		         withCellConfigurations: aConfigureDiceSet.
+
+	aGame start.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 7.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 8.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 47.
+]
+
+{ #category : 'tests' }
 PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf6ThenItMovesEveryShipExceptForSelectedBack6Steps [
 
 	| aGame aDiceSet aConfigureDiceSet |
@@ -143,6 +188,27 @@ PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf6ThenItMovesEveryShipExceptF
 	aGame start.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 5.
 	self assert: (aGame positionOfSpaceShip: 2) equals: 6.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 46.
+]
+
+{ #category : 'tests' }
+PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf6ThenShipWithNegativePositionMoveToBeguiningOfLap [
+
+	| aGame aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 2. 3. 45 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 100. 3. 30. 20. 10. 6. 4. 2. 5. 7 }.
+	aGame := Game
+		         withBoardSize: 50
+		         withSpaceShips: 3
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 1
+		         withCellConfigurations: aConfigureDiceSet.
+
+	aGame start.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
 	self assert: (aGame positionOfSpaceShip: 3) equals: 46.
 ]
 

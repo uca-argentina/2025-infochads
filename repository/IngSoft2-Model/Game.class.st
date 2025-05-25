@@ -103,6 +103,7 @@ Game >> isOver [
 Game >> lookForBattle: aSpaceShip [
 
 	| opponentShip otherShips |
+	(aSpaceShip getPosition = 1) ifTrue: [ ^self ].
 	otherShips := spaceShips select: [ :ship | ship ~= aSpaceShip ].
 
 	opponentShip := otherShips
@@ -160,7 +161,7 @@ Game >> the: spaceShip hasRolled: diceRoll [
 	spaceShip goToTemporaryPosition: diceRoll.
 
 	aBoard adjustPositionOf: spaceShip withTotallaps: laps.
-	
+	aBoard checkForWormHole: spaceShip.
 	aBoard checkForPowerUps: spaceShip andOtherSpaceShips: spaceShips.
 
 	spaceShips do: [ :ship | aBoard adjustPositionOf: ship withTotallaps: laps. ].

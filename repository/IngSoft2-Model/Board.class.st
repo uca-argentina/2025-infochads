@@ -37,7 +37,6 @@ Board class >> withSize: aBoardSize andWormHolePosition: aWormHolePosition andCe
 { #category : 'as yet unclassified' }
 Board >> adjustPositionOf: aSpaceShip withTotallaps: totalLaps [
 
-	self checkForWormHole: aSpaceShip.
 	self boardLimitAdjustment: aSpaceShip lap: totalLaps.
 
 	aSpaceShip updatePosition
@@ -73,6 +72,9 @@ Board >> blackHoleCellsWithPercentage: aPercentage andDesplacemets: aDesplacemen
 
 { #category : 'as yet unclassified' }
 Board >> boardLimitAdjustment: aSpaceShip lap: totalLaps [
+
+	aSpaceShip getTemporaryPosition <= 0 ifTrue: [
+		aSpaceShip updateTemporaryPosition: 1 ].
 
 	(aSpaceShip isBeforeBoardStart: boardSize) ifTrue: [ ^ self ].
 

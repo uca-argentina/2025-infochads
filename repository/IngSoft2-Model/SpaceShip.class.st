@@ -108,7 +108,8 @@ SpaceShip >> rechargableShield: aDiceRoll [
 { #category : 'new methods' }
 SpaceShip >> returnToBeginingOfLap [
 
-	position := 1
+	position := 1.
+	temporaryPosition := position
 ]
 
 { #category : 'as yet unclassified' }
