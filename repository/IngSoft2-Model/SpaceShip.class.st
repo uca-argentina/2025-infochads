@@ -14,32 +14,55 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+SpaceShip >> adjustLapAndPositionRelativeTo: boardSize [
+
+	| tempPos |
+	tempPos := self getTemporaryPosition.
+	self updateLap: tempPos // boardSize.
+	self updateTemporaryPosition: tempPos \\ boardSize
+]
+
+{ #category : 'new methods' }
+SpaceShip >> finishAt: finalPosition withLaps: finalLaps [
+
+	temporaryPosition := finalPosition.
+	laps := finalLaps
+]
+
+{ #category : 'getters' }
 SpaceShip >> getLaps [
 	^laps
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'getters' }
 SpaceShip >> getPosition [
 
 	^ position
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'getters' }
 SpaceShip >> getShield [
 
 	^ shield
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'getters' }
 SpaceShip >> getTemporaryPosition [
 
 	^ temporaryPosition
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'new methods' }
 SpaceShip >> goToTemporaryPosition: positionsToSum [
 
 	temporaryPosition := position + positionsToSum
+]
+
+{ #category : 'testing' }
+SpaceShip >> hasReachedMaxProgressFor: totalLaps boardSize: boardSize [
+
+	^ self getTemporaryPosition + (self getLaps * boardSize)
+	  >= (totalLaps * boardSize)
 ]
 
 { #category : 'initialization' }
@@ -52,6 +75,12 @@ SpaceShip >> initializeWithShield: aNumberOfShields andInitialPosition: aPositio
 	loseTurn := 0.
 	laps := 0.
 	^ self
+]
+
+{ #category : 'testing' }
+SpaceShip >> isBeforeBoardStart: aBoardSize [
+
+	^ self getTemporaryPosition < aBoardSize
 ]
 
 { #category : 'as yet unclassified' }
@@ -76,7 +105,7 @@ SpaceShip >> rechargableShield: aDiceRoll [
 			'The Shield is already full, it cant be recharged.' ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'new methods' }
 SpaceShip >> returnToBeginingOfLap [
 
 	position := 1
@@ -103,27 +132,20 @@ SpaceShip >> skipTurns [
 		ifFalse: [ ^ false ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'update' }
 SpaceShip >> updateLap: numberOfLaps [
 
 	laps := laps + numberOfLaps
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'update' }
 SpaceShip >> updatePosition [
 
 	position := temporaryPosition.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'update' }
 SpaceShip >> updateTemporaryPosition: aNewTemporaryPosition [
 
 	temporaryPosition := aNewTemporaryPosition
-]
-
-{ #category : 'as yet unclassified' }
-SpaceShip >> wonInPosition: finalPosition andLaps: numberOfLaps [
-
-	temporaryPosition := finalPosition.
-	laps := numberOfLaps
 ]

@@ -44,20 +44,14 @@ Board >> adjustPositionOf: aSpaceShip considering: totalLaps [
 { #category : 'as yet unclassified' }
 Board >> boardLimitAdjustment: aSpaceShip lap: totalLaps [
 
-	aSpaceShip getTemporaryPosition < boardSize ifTrue: [ ^ self ].
+	(aSpaceShip isBeforeBoardStart: boardSize) ifTrue: [ ^ self ].
 
-	"ya dio todas las vueltas permitidas"
-	((aSpaceShip getTemporaryPosition) + 
-		((aSpaceShip getLaps) * boardSize)) >= (totalLaps * boardSize)
-			ifTrue: [
-				aSpaceShip wonInPosition: boardSize andLaps: totalLaps.
-				^ self
-			].
+	(aSpaceShip hasReachedMaxProgressFor: totalLaps boardSize: boardSize)
+		ifTrue: [
+			aSpaceShip finishAt: boardSize withLaps: totalLaps.
+			^ self ].
 
-	"dentro del resto de los casos, la nave no se pasa pero es mas grande que el bs"
-	aSpaceShip updateLap: aSpaceShip getTemporaryPosition // boardSize.
-	aSpaceShip updateTemporaryPosition: aSpaceShip getTemporaryPosition
-		- (aSpaceShip getTemporaryPosition // boardSize * boardSize).
+	aSpaceShip adjustLapAndPositionRelativeTo: boardSize.
 
 	^ self
 ]
