@@ -7,7 +7,8 @@ Class {
 		'diceSet',
 		'nextSpaceShipToMove',
 		'numberOfSpaceShips',
-		'laps'
+		'laps',
+		'ranking'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -65,6 +66,11 @@ Game >> battleBetween: attacker and: defendant [
 ]
 
 { #category : 'as yet unclassified' }
+Game >> getRanking [
+	^ ranking asArray
+]
+
+{ #category : 'as yet unclassified' }
 Game >> inWhichLapIsSpaceShip: aSpaceShipID [
 
 	^ (spaceShips at: aSpaceShipID) getLaps
@@ -81,6 +87,7 @@ Game >> initializeWithBoardSize: aBoardSize AndNumberOfSpaceShips: aNumberOfSpac
 	nextSpaceShipToMove := 1.
 	numberOfSpaceShips := aNumberOfSpaceShips.
 	laps := aLapsCount ifNil: [ laps := 1 ].
+	ranking:= OrderedCollection new.
 	^ self
 ]
 
@@ -94,7 +101,11 @@ Game >> isGameOver [
 { #category : 'testing' }
 Game >> isOver [
 
-	^ self isGameOver
+	self isGameOver
+		ifTrue: [
+			self setRanking.
+			^ true ]
+		ifFalse: [ ^ false ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -116,6 +127,14 @@ Game >> lookForBattle: aSpaceShip [
 Game >> positionOfSpaceShip: aSpaceShipID [
 
 	^ (spaceShips at: aSpaceShipID) getPosition.
+]
+
+{ #category : 'initialization' }
+Game >> setRanking [
+
+	| spaceShip |
+	spaceShip := (spaceShips select:[:aShip | (aShip getPosition = aBoard boardSize and: aShip getLaps = laps) ] )first.
+	ranking add: spaceShip getID.
 ]
 
 { #category : 'as yet unclassified' }
