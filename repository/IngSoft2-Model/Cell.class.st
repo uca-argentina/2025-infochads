@@ -18,18 +18,18 @@ Cell >> effect [
 ]
 
 { #category : 'initialization' }
-Cell >> initializeWithPosition: aPosition type: aType effect: anEffect [
+Cell >> initializeWithType: aType effect: anEffect [
 
-	position := aPosition.
 	type := aType.
 	effect := anEffect.
 	^ self
 ]
 
-{ #category : 'accessing' }
-Cell >> position [
-
-	^ position
+{ #category : 'as yet unclassified' }
+Cell >> takeAction: aSpaceShip andOtherSpaceShips: otherSpaceShips [
+	
+	(type = #normal) ifTrue: [ ^self ]
+	"effect modify: aSpaceShip orMaybe: otherSpaceShips"
 ]
 
 { #category : 'accessing' }

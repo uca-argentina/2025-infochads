@@ -26,7 +26,8 @@ TurnsTests >> testWhenSpaceShip1IsTheOnlyPlayerThenCanPlayAlone [
 		         withSpaceShips: 1
 		         withDiceSet: diceSet
 		         withWormHole: {  }
-		         withAmountOfLaps: 1.
+		         withAmountOfLaps: 1
+					withCellConfigurations: { }.
 	aGame start.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 10
 ]
@@ -41,7 +42,8 @@ TurnsTests >> testWhenSpaceShip1IsToPlayAndSpaceShip1PlaysThenIsValid [
 		         withSpaceShips: 3
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-					withAmountOfLaps: 1.
+					withAmountOfLaps: 1
+					withCellConfigurations: { }.
 	aGame start.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 3
 ]
@@ -56,7 +58,8 @@ TurnsTests >> testWhenSpaceShip2IsToPlayAndSpaceShip2PlaysThenIsValid [
 		         withSpaceShips: 3
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-					withAmountOfLaps: 1.
+					withAmountOfLaps: 1
+					withCellConfigurations: { }.
 	aGame start.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 3.
 	self assert: (aGame positionOfSpaceShip: 2) equals: 4
@@ -72,7 +75,8 @@ TurnsTests >> testWhenSpaceShip3IsToPlayAndSpaceShip3PlaysThenIsValid [
 		         withSpaceShips: 3
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-					withAmountOfLaps: 1.
+					withAmountOfLaps: 1
+					withCellConfigurations: { }.
 	aGame start.
 
 	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
@@ -90,7 +94,8 @@ TurnsTests >> testWhenTheFirstRoundIsPlayedThenSpaceShip1IsToPlayThenIsValid [
 		         withSpaceShips: 3
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-					withAmountOfLaps: 1.
+					withAmountOfLaps: 1
+					withCellConfigurations: { }.
 	aGame start.
 
 	self assert: (aGame positionOfSpaceShip: 1) equals: 5.

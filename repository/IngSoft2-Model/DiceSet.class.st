@@ -20,6 +20,12 @@ DiceSet >> initializeWith [
 	sackOfDices := OrderedCollection new
 ]
 
+{ #category : 'testing' }
+DiceSet >> isEmpty [
+
+	^ false
+]
+
 { #category : 'as yet unclassified' }
 DiceSet >> toss [
 

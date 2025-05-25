@@ -27,7 +27,8 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-					withAmountOfLaps: 1.
+					withAmountOfLaps: 1
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -46,7 +47,8 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-		         withAmountOfLaps: 1.
+		         withAmountOfLaps: 1
+					withCellConfigurations: { }.
 	aGame start.
 
 	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
@@ -63,7 +65,8 @@ BattleTest >> testWhenShip1AndShip2EnconterAfterOneRoundAndShip1WinsThenShip2Ret
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-					withAmountOfLaps: 1.
+					withAmountOfLaps: 1
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -81,7 +84,8 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsAndShip2Loses1ShieldThenS
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-					withAmountOfLaps: 1.
+					withAmountOfLaps: 1
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -98,7 +102,8 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2NowHas2Shields [
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-					withAmountOfLaps: 1.
+					withAmountOfLaps: 1
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -116,7 +121,8 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2ReturnsToStart [
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-					withAmountOfLaps: 1.
+					withAmountOfLaps: 1
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -134,7 +140,8 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip1ReturnsToStart [
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-					withAmountOfLaps: 1.
+					withAmountOfLaps: 1
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -152,7 +159,8 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip2NowHas2Shields [
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-					withAmountOfLaps: 1.
+					withAmountOfLaps: 1
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -170,7 +178,8 @@ BattleTest >> testWhenShip1AndShip2EnconterAndTheyTossTheSameNumberThenTheyTossT
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-					withAmountOfLaps: 1.
+					withAmountOfLaps: 1
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -188,7 +197,8 @@ BattleTest >> testWhenShip1AndShip3EnconterAndShip1WinsThenShip3ReturnsToStart [
 		         withSpaceShips: 3
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-					withAmountOfLaps: 1.
+					withAmountOfLaps: 1
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -207,7 +217,8 @@ BattleTest >> testWhenShip1Has3ShieldsThenShip1CantSkipTurns [
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-					withAmountOfLaps: 1.
+					withAmountOfLaps: 1
+					withCellConfigurations: { }.
 
 	self
 		should: [ aGame start ]

@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-AtomicBombEffect class >> ShieldsSacrificed: aNumberOfShields [
+AtomicBombEffect class >> shieldsSacrificed: aNumberOfShields [
 
 	shieldScrificed := aNumberOfShields
 ]
