@@ -22,3 +22,11 @@ HyperJumpEffect class >> withParsecValue: totalParsecs totalBoardSize: totalDist
 	parsecScale := totalDistance / totalParsecs.
 	listOfJumps := aListOfJumps
 ]
+
+{ #category : 'as yet unclassified' }
+HyperJumpEffect >> withParsecValue: totalParsecs totalBoardSize: totalDistance andParsecJumps: aListOfJumps [
+
+	parsecs := totalParsecs.
+	parsecScale := totalDistance / totalParsecs.
+	listOfJumps := aListOfJumps
+]

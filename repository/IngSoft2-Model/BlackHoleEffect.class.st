@@ -2,7 +2,7 @@ Class {
 	#name : 'BlackHoleEffect',
 	#superclass : 'Object',
 	#instVars : [
-		'desplacement'
+		'displacement'
 	],
 	#classInstVars : [
 		'displacement'
@@ -12,13 +12,13 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-BlackHoleEffect class >> withDesplacementValue: aPosition [
+BlackHoleEffect >> modify: aSpaceShip orMaybe: allSpaceShips [
 
-	displacement := aPosition
+	aSpaceShip updateTemporaryPosition: (aSpaceShip getTemporaryPosition ) + displacement
 ]
 
 { #category : 'as yet unclassified' }
-BlackHoleEffect >> withDesplacementValue: aNumber [
+BlackHoleEffect >> withDesplacementValue: aPosition [
 
-	desplacement := aNumber
+	displacement := aPosition
 ]

@@ -28,8 +28,8 @@ Cell >> initializeWithType: aType effect: anEffect [
 { #category : 'as yet unclassified' }
 Cell >> takeAction: aSpaceShip andOtherSpaceShips: otherSpaceShips [
 	
-	(type = #normal) ifTrue: [ ^self ]
-	"effect modify: aSpaceShip orMaybe: otherSpaceShips"
+	(type = #normal) ifTrue: [ ^self ].
+	effect modify: aSpaceShip orMaybe: otherSpaceShips
 ]
 
 { #category : 'accessing' }

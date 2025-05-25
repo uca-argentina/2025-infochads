@@ -18,7 +18,7 @@ PowerCellsTest >> testWhenAAtomicBombEffectIsAppliedToCellThenCanBeCreated [
 	| cell |
 	cell := Cell new
 		        initializeWithType: #atomicBomb
-		        effect: (AtomicBombEffect shieldsSacrificed: 1).
+		        effect: (AtomicBombEffect new shieldsSacrificed: 1).
 
 	self assert: cell type equals: #atomicBomb
 ]
@@ -29,7 +29,7 @@ PowerCellsTest >> testWhenABlackHoleEffectIsAppliedToCellThenCanBeCreated [
 	| cell |
 	cell := Cell new
 		        initializeWithType: #blackHole
-		        effect: (BlackHoleEffect withDesplacementValue: 4).
+		        effect: (BlackHoleEffect new withDesplacementValue: 4).
 
 	self assert: cell type equals: #blackHole
 ]
@@ -40,7 +40,7 @@ PowerCellsTest >> testWhenAHyperJumpEffectIsAppliedToCellThenCanBeCreated [
 	| cell |
 	cell := Cell new
 		        initializeWithType: #hyperJump
-		        effect: (HyperJumpEffect
+		        effect: (HyperJumpEffect new
 				         withParsecValue: 100
 				         totalBoardSize: 10
 				         andParsecJumps: #( 10 7 2 )).
@@ -54,7 +54,7 @@ PowerCellsTest >> testWhenAMoonWalkEffectIsAppliedToCellThenCanBeCreated [
 	| cell |
 	cell := Cell new
 		        initializeWithType: #moonWalk
-		        effect: (MoonWalkEffect withDesplacementValue: 4).
+		        effect: (MoonWalkEffect new withDesplacementValue: 4).
 		
 	self assert: cell type equals: #moonWalk.
 
@@ -79,11 +79,71 @@ PowerCellsTest >> testWhenHyperSpaceJumpEffectIsAppliedToCellThenCanBeCreated [
 	cell := Cell new
 		        initializeWithType: #hyperSpaceJump
 		        effect:
-		        (HyperSpaceJumpEffect
+		        (HyperSpaceJumpEffect new 
 			         withDesplacementValue: 4
 			         andShieldsSacrificed: 1).
 
 	self assert: cell type equals: #hyperSpaceJump
+]
+
+{ #category : 'tests' }
+PowerCellsTest >> testWhenShipMovesToABlackHoleCellThenItGoesBack4Spaces [
+
+	| aGame aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 20 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 100. 3. 30. 20. 10. 6. 4. 2. 5. 7 }.
+	aGame := Game
+		         withBoardSize: 50
+		         withSpaceShips: 1
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 1
+		         withCellConfigurations: aConfigureDiceSet.
+
+	aGame start.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 17
+]
+
+{ #category : 'tests' }
+PowerCellsTest >> testWhenShipMovesToAHyperSpaceJumpCellThenItMovesForward4SpacesAndLose1Shield [
+
+	| aGame aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 30 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 100. 3. 30. 20. 10. 6. 4. 2. 5. 7 }.
+	aGame := Game
+		         withBoardSize: 50
+		         withSpaceShips: 1
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 1
+		         withCellConfigurations: aConfigureDiceSet.
+
+	aGame start.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 35.
+	self assert: (aGame shieldStatus: 1) equals: 2
+]
+
+{ #category : 'tests' }
+PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf6ThenItMovesEveryShipExceptForSelectedBack6Steps [
+
+	| aGame aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 10. 11. 45 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 100. 3. 30. 20. 10. 6. 4. 2. 5. 7 }.
+	aGame := Game
+		         withBoardSize: 50
+		         withSpaceShips: 3
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 1
+		         withCellConfigurations: aConfigureDiceSet.
+
+	aGame start.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 5.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 6.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 46.
 ]
 
 { #category : 'tests' }
@@ -92,7 +152,7 @@ PowerCellsTest >> testWhenShipMovesToNormalCellThenItStaysThere [
 	| aGame aDiceSet aConfigureDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 1 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 4. 4. 1. 100. 3. 30. 20. 10. 1. 6. 4. 2. 5. 7 }.
+		                     { 100. 3. 30. 20. 10. 6. 4. 2. 5. 7 }.
 	aGame := Game
 		         withBoardSize: 50
 		         withSpaceShips: 1

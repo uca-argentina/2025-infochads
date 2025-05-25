@@ -159,8 +159,12 @@ Game >> the: spaceShip hasRolled: diceRoll [
 	(spaceShip skipATurn: diceRoll) ifTrue: [ ^ self ].
 	spaceShip goToTemporaryPosition: diceRoll.
 
-	aBoard adjustPositionOf: spaceShip withTotallaps: laps andOtherShips: spaceShips.
+	aBoard adjustPositionOf: spaceShip withTotallaps: laps.
+	
+	aBoard checkForPowerUps: spaceShip andOtherSpaceShips: spaceShips.
 
+	spaceShips do: [ :ship | aBoard adjustPositionOf: ship withTotallaps: laps. ].
+	
 	self lookForBattle: spaceShip
 ]
 

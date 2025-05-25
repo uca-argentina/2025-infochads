@@ -1,6 +1,10 @@
 Class {
 	#name : 'HyperSpaceJumpEffect',
 	#superclass : 'Object',
+	#instVars : [
+		'displacement',
+		'shieldsTaken'
+	],
 	#classInstVars : [
 		'displacement',
 		'shieldsTaken'
@@ -10,7 +14,15 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-HyperSpaceJumpEffect class >> withDesplacementValue: aPosition andShieldsSacrificed: aNumberOfShields [
+HyperSpaceJumpEffect >> modify: aSpaceShip orMaybe: allSpaceShips [
+
+	aSpaceShip updateTemporaryPosition:
+		aSpaceShip getTemporaryPosition + displacement.
+	aSpaceShip loseShield
+]
+
+{ #category : 'as yet unclassified' }
+HyperSpaceJumpEffect >> withDesplacementValue: aPosition andShieldsSacrificed: aNumberOfShields [
 
 	displacement := aPosition.
 	shieldsTaken := aNumberOfShields

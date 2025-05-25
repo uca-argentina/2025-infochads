@@ -35,11 +35,10 @@ Board class >> withSize: aBoardSize andWormHolePosition: aWormHolePosition andCe
 ]
 
 { #category : 'as yet unclassified' }
-Board >> adjustPositionOf: aSpaceShip withTotallaps: totalLaps andOtherShips: allSpaceShips [
+Board >> adjustPositionOf: aSpaceShip withTotallaps: totalLaps [
 
 	self checkForWormHole: aSpaceShip.
 	self boardLimitAdjustment: aSpaceShip lap: totalLaps.
-	self checkForPowerUps: aSpaceShip andOtherSpaceShips: allSpaceShips.
 
 	aSpaceShip updatePosition
 ]
@@ -47,27 +46,29 @@ Board >> adjustPositionOf: aSpaceShip withTotallaps: totalLaps andOtherShips: al
 { #category : 'creation' }
 Board >> atomicBombCellsWithPercentage: aPercentage andShieldsSacrificed: aNumberOfShields [
 
-	| numberOfCells |
+	| numberOfCells newCells |
 	numberOfCells := aPercentage * boardSize / 100.
 
-	gameBoard := (1 to: numberOfCells) collect: [ :i |
-		             Cell new
-			             initializeWithType: #atomicBomb
-			             effect:
-			             (AtomicBombEffect shieldsSacrificed: aNumberOfShields) ]
+	newCells := (1 to: numberOfCells) collect: [ :i |
+		            Cell new
+			            initializeWithType: #atomicBomb
+			            effect:
+			            (AtomicBombEffect new shieldsSacrificed: aNumberOfShields) ].
+	gameBoard := gameBoard, newCells
 ]
 
 { #category : 'creation' }
 Board >> blackHoleCellsWithPercentage: aPercentage andDesplacemets: aDesplacement [
 
-	| numberOfCells |
+	| numberOfCells newCells |
 	numberOfCells := aPercentage * boardSize / 100.
 
-	gameBoard := (1 to: numberOfCells) collect: [ :i |
-		             Cell new
-			             initializeWithType: #blackhole
-			             effect:
-			             (BlackHoleEffect withDesplacementValue: aDesplacement) ]
+	newCells := (1 to: numberOfCells) collect: [ :i |
+		            Cell new
+			            initializeWithType: #blackhole
+			            effect:
+			            (BlackHoleEffect new withDesplacementValue: aDesplacement) ].
+	gameBoard := gameBoard, newCells
 ]
 
 { #category : 'as yet unclassified' }
@@ -114,20 +115,16 @@ Board >> createBoardWithCellConfiguration: aConfigDice [
 
 	gameBoard := OrderedCollection new.
 	self normalCellsWithPercentage: 40.
-	self
-		blackHoleCellsWithPercentage: 20
-		andDesplacemets: aConfigDice toss.
+	self blackHoleCellsWithPercentage: 20 andDesplacemets: -4.
 	self
 		hyperSpaceJumpCellsWithPercantage: 20
-		andDesplacements: aConfigDice toss
-		andShieldsLost: aConfigDice toss.
+		andDesplacements: 4
+		andShieldsLost: -1.
 	self
 		hyperJumpCellsWithPercentage: 8
 		andParsecValue: aConfigDice toss
 		andJumpList: aConfigDice.
-	self
-		atomicBombCellsWithPercentage: 2
-		andShieldsSacrificed: aConfigDice toss.
+	self atomicBombCellsWithPercentage: 2 andShieldsSacrificed: -1.
 	self moonWalkCellsWithPercentage: 10 andDisplacements: aConfigDice.
 
 	^ self
@@ -136,7 +133,7 @@ Board >> createBoardWithCellConfiguration: aConfigDice [
 { #category : 'creation' }
 Board >> hyperJumpCellsWithPercentage: aPercentage andParsecValue: aParsecValue andJumpList: aConfigDice [
 
-	| numberOfCells jumps amountOfJumps |
+	| numberOfCells jumps amountOfJumps newCells |
 	numberOfCells := aPercentage * boardSize / 100.
 
 	amountOfJumps := aConfigDice toss.
@@ -145,27 +142,29 @@ Board >> hyperJumpCellsWithPercentage: aPercentage andParsecValue: aParsecValue 
 	jumps := (1 to: amountOfJumps) collect: [ :i | aConfigDice toss ].
 
 
-	gameBoard := (1 to: numberOfCells) collect: [ :i |
-		             Cell new
-			             initializeWithType: #hyperJump
-			             effect: (HyperJumpEffect
-					              withParsecValue: aParsecValue
-					              totalBoardSize: boardSize
-					              andParsecJumps: jumps) ]
+	newCells := (1 to: numberOfCells) collect: [ :i |
+		            Cell new
+			            initializeWithType: #hyperJump
+			            effect: (HyperJumpEffect new
+					             withParsecValue: aParsecValue
+					             totalBoardSize: boardSize
+					             andParsecJumps: jumps) ].
+	gameBoard := gameBoard, newCells
 ]
 
 { #category : 'creation' }
 Board >> hyperSpaceJumpCellsWithPercantage: aPercentage andDesplacements: aDesplacement andShieldsLost: aShieldNumber [
 
-	| numberOfCells |
+	| numberOfCells newCells |
 	numberOfCells := aPercentage * boardSize / 100.
 
-	gameBoard := (1 to: numberOfCells) collect: [ :i |
-		             Cell new
-			             initializeWithType: #hyperSpaceJump
-			             effect: (HyperSpaceJumpEffect
-					              withDesplacementValue: aDesplacement
-					              andShieldsSacrificed: aShieldNumber) ]
+	newCells := (1 to: numberOfCells) collect: [ :i |
+		            Cell new
+			            initializeWithType: #hyperSpaceJump
+			            effect: (HyperSpaceJumpEffect new
+					             withDesplacementValue: aDesplacement
+					             andShieldsSacrificed: aShieldNumber) ].
+	gameBoard := gameBoard, newCells
 ]
 
 { #category : 'initialization' }
@@ -184,15 +183,16 @@ Board >> initializeWithSize: aBoardSize andWormHolePosition: aWormHolePosition a
 { #category : 'creation' }
 Board >> moonWalkCellsWithPercentage: aPercentage andDisplacements: aConfigDice [
 
-	| numberOfCells |
+	| numberOfCells newCells |
 	numberOfCells := aPercentage * boardSize / 100.
 
-	gameBoard := (1 to: numberOfCells) collect: [ :i |
-		             Cell new
-			             initializeWithType: #moonWalk
-			             effect:
-			             (MoonWalkEffect withDesplacementValue:
-				              aConfigDice toss) ]
+	newCells := (1 to: numberOfCells) collect: [ :i |
+		            Cell new
+			            initializeWithType: #moonWalk
+			            effect:
+			            (MoonWalkEffect new withDesplacementValue:
+				             aConfigDice toss * -1) ].
+	gameBoard := gameBoard , newCells
 ]
 
 { #category : 'creation' }
@@ -202,7 +202,7 @@ Board >> normalCellsWithPercentage: aPercentage [
 	
 	1 to: numberOfCells do: [ :cell |
 		gameBoard add:
-			(Cell new initializeWithType: #normal effect: nil) ]
+			(Cell new initializeWithType: #normal effect: nil) ].
 ]
 
 { #category : 'as yet unclassified' }

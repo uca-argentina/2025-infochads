@@ -1,6 +1,9 @@
 Class {
 	#name : 'AtomicBombEffect',
 	#superclass : 'Object',
+	#instVars : [
+		'shieldScrificed'
+	],
 	#classInstVars : [
 		'shieldScrificed'
 	],
@@ -9,7 +12,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-AtomicBombEffect class >> shieldsSacrificed: aNumberOfShields [
+AtomicBombEffect >> shieldsSacrificed: aNumberOfShields [
 
 	shieldScrificed := aNumberOfShields
 ]
