@@ -35,6 +35,26 @@ PowerCellsTest >> testWhenABlackHoleEffectIsAppliedToCellThenCanBeCreated [
 ]
 
 { #category : 'tests' }
+PowerCellsTest >> testWhenABoardDoesntMatchThePercentagesOfCellsThenItFillsTheRestWithNormalCells [
+
+	| aGame aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 51 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 100. 3. 30. 20. 10. 6. 4. 2. 5. 7 }.
+	aGame := Game
+		         withBoardSize: 52
+		         withSpaceShips: 1
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 2
+		         withCellConfigurations: aConfigureDiceSet.
+
+	aGame start.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 52.
+
+]
+
+{ #category : 'tests' }
 PowerCellsTest >> testWhenAForthShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10JumpsThenItMoves30JumpsAndCombatsWithFirstShip [
 
 	| aGame aDiceSet aConfigureDiceSet |
@@ -93,6 +113,23 @@ PowerCellsTest >> testWhenANormalEffectIsAppliedToCellThenCanBeCreated [
 		
 	self assert: cell type equals: #normal.
 
+]
+
+{ #category : 'tests' }
+PowerCellsTest >> testWhenARandomizedBoardIsCreatedThenIsValid [
+
+	| aGame aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 38 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 100. 3. 30. 20. 10. 6. 4. 2. 5. 7 }.
+	aGame := Game
+		         withBoardSize: 50
+		         withSpaceShips: 1
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 1
+		         withCellConfigurations: aConfigureDiceSet.
+	self assert: aGame shuffleBoard.
 ]
 
 { #category : 'tests' }
@@ -377,4 +414,23 @@ PowerCellsTest >> testWhenShipMovesToNormalCellThenItStaysThere [
 		
 	aGame start.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 2
+]
+
+{ #category : 'tests' }
+PowerCellsTest >> testWhenShipMovesToNormalInABiggerBoardCellThenItStaysThere [
+
+	| aGame aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 38 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 100. 3. 30. 20. 10. 6. 4. 2. 5. 7. 5. 6. 3. 4. 2}.
+	aGame := Game
+		         withBoardSize: 100
+		         withSpaceShips: 1
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 1
+		         withCellConfigurations: aConfigureDiceSet.
+		
+	aGame start.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 39
 ]

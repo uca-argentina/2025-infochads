@@ -72,16 +72,18 @@ Board >> blackHoleCellsWithPercentage: aPercentage andDesplacemets: aDesplacemen
 
 { #category : 'as yet unclassified' }
 Board >> boardLimitAdjustment: aSpaceShip lap: totalLaps [
-
+	
 	aSpaceShip getTemporaryPosition <= 0 ifTrue: [
 		aSpaceShip updateTemporaryPosition: 1 ].
-
-	(aSpaceShip isBeforeBoardStart: boardSize) ifTrue: [ ^ self ].
-
+	
 	(aSpaceShip hasReachedMaxProgressFor: totalLaps boardSize: boardSize)
 		ifTrue: [
 			aSpaceShip finishAt: boardSize withLaps: totalLaps.
 			^ self ].
+
+	(aSpaceShip isBeforeBoardStart: boardSize) ifTrue: [ ^ self ].
+
+	
 
 	aSpaceShip adjustLapAndPositionRelativeTo: boardSize.
 
@@ -100,7 +102,7 @@ Board >> checkForPowerUps: aSpaceShip andOtherSpaceShips: allSpaceShips [
 
 	| cell |
 	gameBoard ifNil: [ ^ self ].
-	cell := gameBoard at: aSpaceShip getTemporaryPosition.
+	cell := gameBoard at: (aSpaceShip getTemporaryPosition).
 
 	cell takeAction: aSpaceShip andOtherSpaceShips: allSpaceShips
 ]
@@ -108,8 +110,9 @@ Board >> checkForPowerUps: aSpaceShip andOtherSpaceShips: allSpaceShips [
 { #category : 'as yet unclassified' }
 Board >> checkForWormHole: aSpaceShip [
 
-	aSpaceShip updateTemporaryPosition: (wormHole verifyPosition: aSpaceShip getTemporaryPosition ).
-
+	wormHole positions isNil ifTrue: [ ^ self ].
+	aSpaceShip updateTemporaryPosition:
+		(wormHole verifyPosition: aSpaceShip getTemporaryPosition)
 ]
 
 { #category : 'creation' }
@@ -129,7 +132,17 @@ Board >> createBoardWithCellConfiguration: aConfigDice [
 	self atomicBombCellsWithPercentage: 2 andShieldsSacrificed: -1.
 	self moonWalkCellsWithPercentage: 10 andDisplacements: aConfigDice.
 
+	self fillTheMissingCells.
+
 	^ self
+]
+
+{ #category : 'creation' }
+Board >> fillTheMissingCells [
+
+	gameBoard size = boardSize ifTrue: [ ^ self ].
+	1 to: boardSize - gameBoard size do: [ :cell |
+		gameBoard add: (Cell new initializeWithType: #normal effect: nil) ]
 ]
 
 { #category : 'creation' }
@@ -205,6 +218,16 @@ Board >> normalCellsWithPercentage: aPercentage [
 	1 to: numberOfCells do: [ :cell |
 		gameBoard add:
 			(Cell new initializeWithType: #normal effect: nil) ].
+]
+
+{ #category : 'as yet unclassified' }
+Board >> shuffle [
+
+	| range randomizedBoard |
+	range := Random new.
+	randomizedBoard := gameBoard asSortedCollection: [ :a :b |
+		               range next < 0.5 ].
+	gameBoard := randomizedBoard.
 ]
 
 { #category : 'as yet unclassified' }

@@ -80,7 +80,7 @@ SpaceShip >> initializeWithShield: aNumberOfShields andInitialPosition: aPositio
 { #category : 'testing' }
 SpaceShip >> isBeforeBoardStart: aBoardSize [
 
-	^ self getTemporaryPosition < aBoardSize
+	^ self getTemporaryPosition <= aBoardSize
 ]
 
 { #category : 'as yet unclassified' }

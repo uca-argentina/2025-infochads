@@ -2,9 +2,7 @@ Class {
 	#name : 'Cell',
 	#superclass : 'Object',
 	#instVars : [
-		'position',
 		'type',
-		'powerUp',
 		'effect'
 	],
 	#category : 'IngSoft2-Model',

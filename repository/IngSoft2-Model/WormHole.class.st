@@ -57,6 +57,12 @@ WormHole >> mustBeWithInLimits: aBoardSize [
 ]
 
 { #category : 'as yet unclassified' }
+WormHole >> positions [
+
+	^ wormHolePositions
+]
+
+{ #category : 'as yet unclassified' }
 WormHole >> verifyPosition: aPosition [
 
 	wormHolePositions ifNotEmpty: [

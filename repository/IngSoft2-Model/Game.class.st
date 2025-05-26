@@ -127,6 +127,12 @@ Game >> shieldStatus: aSpaceShipID [
 	^ (spaceShips at: aSpaceShipID) getShield
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> shuffleBoard [
+	aBoard shuffle.
+	^true.
+]
+
 { #category : 'accessing' }
 Game >> start [
 
