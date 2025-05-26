@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'parsecs',
 		'parsecScale',
-		'listOfJumps'
+		'listOfJumps',
+		'turn'
 	],
 	#classInstVars : [
 		'parsecs',
@@ -24,9 +25,35 @@ HyperJumpEffect class >> withParsecValue: totalParsecs totalBoardSize: totalDist
 ]
 
 { #category : 'as yet unclassified' }
+HyperJumpEffect >> getPositionToMove [
+
+	| actualTurn |
+	turn > listOfJumps size
+		ifTrue: [
+			actualTurn := 1.
+			turn := 1 ]
+		ifFalse: [
+			actualTurn := turn.
+			turn := turn + 1 ].
+	^ listOfJumps at: actualTurn
+]
+
+{ #category : 'as yet unclassified' }
+HyperJumpEffect >> modify: aSpaceShip orMaybe: allSpaceShips [
+
+	| positionToMove cells |
+	positionToMove := self getPositionToMove.
+	
+	cells := (parsecScale*positionToMove rounded).
+	
+	aSpaceShip updateTemporaryPosition: (aSpaceShip getTemporaryPosition + cells)
+]
+
+{ #category : 'as yet unclassified' }
 HyperJumpEffect >> withParsecValue: totalParsecs totalBoardSize: totalDistance andParsecJumps: aListOfJumps [
 
 	parsecs := totalParsecs.
 	parsecScale := totalDistance / totalParsecs.
-	listOfJumps := aListOfJumps
+	listOfJumps := aListOfJumps.
+	turn := 1.
 ]

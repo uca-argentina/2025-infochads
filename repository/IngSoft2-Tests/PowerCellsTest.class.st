@@ -73,6 +73,28 @@ PowerCellsTest >> testWhenANormalEffectIsAppliedToCellThenCanBeCreated [
 ]
 
 { #category : 'tests' }
+PowerCellsTest >> testWhenAThirdShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10JumpsThenItMoves10Jumps [
+
+	| aGame aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 40. 40. 40. }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 100. 3. 30. 20. 10. 6. 4. 2. 5. 7 }.
+	aGame := Game
+		         withBoardSize: 50
+		         withSpaceShips: 3
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 2
+		         withCellConfigurations: aConfigureDiceSet.
+
+	aGame start.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 6.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
+	self assert: (aGame positionOfSpaceShip: 3) equals: 46.
+
+]
+
+{ #category : 'tests' }
 PowerCellsTest >> testWhenHyperSpaceJumpEffectIsAppliedToCellThenCanBeCreated [
 
 	| cell |
@@ -84,6 +106,27 @@ PowerCellsTest >> testWhenHyperSpaceJumpEffectIsAppliedToCellThenCanBeCreated [
 			         andShieldsSacrificed: 1).
 
 	self assert: cell type equals: #hyperSpaceJump
+]
+
+{ #category : 'tests' }
+PowerCellsTest >> testWhenShipAnotherMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10JumpsThenItMoves20Jumps [
+
+	| aGame aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 40. 40 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 100. 3. 30. 20. 10. 6. 4. 2. 5. 7 }.
+	aGame := Game
+		         withBoardSize: 50
+		         withSpaceShips: 2
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 2
+		         withCellConfigurations: aConfigureDiceSet.
+
+	aGame start.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 6.
+	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
+
 ]
 
 { #category : 'tests' }
@@ -127,6 +170,26 @@ PowerCellsTest >> testWhenShipMovesToABlackHoleCellThenItGoesBack4Spaces [
 
 	aGame start.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 17
+]
+
+{ #category : 'tests' }
+PowerCellsTest >> testWhenShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10JumpsThenItMoves30Moves [
+
+	| aGame aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 40 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 100. 3. 30. 20. 10. 6. 4. 2. 5. 7 }.
+	aGame := Game
+		         withBoardSize: 50
+		         withSpaceShips: 1
+		         withDiceSet: aDiceSet
+		         withWormHole: {  }
+		         withAmountOfLaps: 2
+		         withCellConfigurations: aConfigureDiceSet.
+
+	aGame start.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 6.
+
 ]
 
 { #category : 'tests' }
