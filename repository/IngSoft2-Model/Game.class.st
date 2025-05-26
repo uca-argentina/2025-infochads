@@ -7,8 +7,7 @@ Class {
 		'diceSet',
 		'nextSpaceShipToMove',
 		'numberOfSpaceShips',
-		'laps',
-		'ranking'
+		'laps'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -66,15 +65,16 @@ Game >> battleBetween: attacker and: defendant [
 ]
 
 { #category : 'initialization' }
-Game >> determineWinner [
-
-	^ (spaceShips select: [ :aShip |
-		   aShip getPosition = aBoard boardSize and: aShip getLaps = laps ]) first.
-]
-
-{ #category : 'as yet unclassified' }
 Game >> getRanking [
-	^ ranking asArray
+
+	| ranking |
+	self isOver ifFalse: [ ^ #(  ) ].
+
+	ranking := spaceShips sorted: [ :a :b |
+		           a getLaps -> a getPosition > (b getLaps -> b getPosition) ].
+
+	^ ((ranking first: (ranking size min: 3)) collect: [ :each |
+		   each getID ]) asArray
 ]
 
 { #category : 'as yet unclassified' }
@@ -94,7 +94,6 @@ Game >> initializeWithBoardSize: aBoardSize AndNumberOfSpaceShips: aNumberOfSpac
 	nextSpaceShipToMove := 1.
 	numberOfSpaceShips := aNumberOfSpaceShips.
 	laps := aLapsCount ifNil: [ laps := 1 ].
-	ranking:= OrderedCollection new.
 	^ self
 ]
 
@@ -108,11 +107,7 @@ Game >> isGameOver [
 { #category : 'testing' }
 Game >> isOver [
 
-	self isGameOver
-		ifTrue: [
-			self setRanking.
-			^ true ]
-		ifFalse: [ ^ false ]
+	^ self isGameOver
 ]
 
 { #category : 'as yet unclassified' }
@@ -136,38 +131,10 @@ Game >> positionOfSpaceShip: aSpaceShipID [
 	^ (spaceShips at: aSpaceShipID) getPosition.
 ]
 
-{ #category : 'initialization' }
-Game >> setRanking [
-
-	| winner otherShips sortedOthers |
-	winner := self determineWinner.
-
-	otherShips := spaceShips select: [ :ship | ship ~= winner ].
-
-	sortedOthers := self sortShipsByProgress: otherShips.
-
-	ranking add: winner getID.
-
-	sortedOthers isNotEmpty ifTrue: [
-		ranking add: (sortedOthers at: 1) getID ].
-
-	sortedOthers size >= 2 ifTrue: [
-		ranking add: (sortedOthers at: 2) getID ]
-]
-
 { #category : 'as yet unclassified' }
 Game >> shieldStatus: aSpaceShipID [
 
 	^ (spaceShips at: aSpaceShipID) getShield
-]
-
-{ #category : 'sorting' }
-Game >> sortShipsByProgress: ships [
-
-	^ ships sort: [ :a :b |
-		  a getPosition = b getPosition
-			  ifTrue: [ a getLaps > b getLaps ]
-			  ifFalse: [ a getPosition > b getPosition ] ]
 ]
 
 { #category : 'accessing' }
