@@ -108,7 +108,7 @@ Board >> checkForPowerUps: aSpaceShip andOtherSpaceShips: allSpaceShips [
 { #category : 'as yet unclassified' }
 Board >> checkForWormHole: aSpaceShip [
 
-	aSpaceShip updateTemporaryPosition: (wormHole verifyPosition: aSpaceShip getTemporaryPosition ). "extract"
+	aSpaceShip updateTemporaryPosition: (wormHole verifyPosition: aSpaceShip getTemporaryPosition ).
 
 ]
 

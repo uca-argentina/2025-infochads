@@ -341,6 +341,26 @@ PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf6ThenShipWithNegativePositio
 ]
 
 { #category : 'tests' }
+PowerCellsTest >> testWhenShipMovesToAWormHoleThenTheEffectOfThePowerCellIsActualyTheOneInTheOtherEnd [
+
+	| aGame aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 20 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 100. 3. 30. 20. 10. 6. 4. 2. 5. 7 }.
+	aGame := Game
+		         withBoardSize: 50
+		         withSpaceShips: 1
+		         withDiceSet: aDiceSet
+		         withWormHole: { 21. 4 }
+		         withAmountOfLaps: 2
+		         withCellConfigurations: aConfigureDiceSet.
+
+	aGame start.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 4.
+
+]
+
+{ #category : 'tests' }
 PowerCellsTest >> testWhenShipMovesToNormalCellThenItStaysThere [
 
 	| aGame aDiceSet aConfigureDiceSet |
