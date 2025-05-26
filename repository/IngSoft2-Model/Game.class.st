@@ -36,7 +36,7 @@ Game class >> numberOfSpaceShipsMustBePositiveInteger: boardSize [
 ]
 
 { #category : 'as yet unclassified' }
-Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips withDiceSet: aDiceSet withWormHole: aWormHolePosition withAmountOfLaps: aLapsCount [
+Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips withDiceSet: aDiceSet withWormHole: aWormHolePosition withAmountOfLaps: aLapsCount withCellConfigurations: boardCellConfiguration [
 
 	self numberOfSpaceShipsMustBePositiveInteger: aNumberOfSpaceShips.
 	self numberOfSpaceShipsMustBeAtLeastOne: aNumberOfSpaceShips.
@@ -48,6 +48,7 @@ Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips with
 		  AndDiceSet: aDiceSet
 		  AndWormHole: aWormHolePosition
 		  Andlaps: aLapsCount
+		  AndConfiguration: boardCellConfiguration
 ]
 
 { #category : 'as yet unclassified' }
@@ -71,11 +72,12 @@ Game >> inWhichLapIsSpaceShip: aSpaceShipID [
 ]
 
 { #category : 'initialization' }
-Game >> initializeWithBoardSize: aBoardSize AndNumberOfSpaceShips: aNumberOfSpaceShips AndDiceSet: aDiceSet AndWormHole: aWormHolePosition Andlaps: aLapsCount [
+Game >> initializeWithBoardSize: aBoardSize AndNumberOfSpaceShips: aNumberOfSpaceShips AndDiceSet: aDiceSet AndWormHole: aWormHolePosition Andlaps: aLapsCount AndConfiguration: aConfigDiceSet [
 
 	aBoard := Board
 		          withSize: aBoardSize
-		          andWormHolePosition: aWormHolePosition.
+		          andWormHolePosition: aWormHolePosition
+		          andCellConfiguration: aConfigDiceSet.
 	spaceShips := self startingPositions: aNumberOfSpaceShips.
 	diceSet := aDiceSet.
 	nextSpaceShipToMove := 1.
@@ -101,6 +103,7 @@ Game >> isOver [
 Game >> lookForBattle: aSpaceShip [
 
 	| opponentShip otherShips |
+	(aSpaceShip getPosition = 1) ifTrue: [ ^self ].
 	otherShips := spaceShips select: [ :ship | ship ~= aSpaceShip ].
 
 	opponentShip := otherShips
@@ -122,6 +125,12 @@ Game >> positionOfSpaceShip: aSpaceShipID [
 Game >> shieldStatus: aSpaceShipID [
 
 	^ (spaceShips at: aSpaceShipID) getShield
+]
+
+{ #category : 'as yet unclassified' }
+Game >> shuffleBoard [
+	aBoard shuffle.
+	^true.
 ]
 
 { #category : 'accessing' }
@@ -157,8 +166,12 @@ Game >> the: spaceShip hasRolled: diceRoll [
 	(spaceShip skipATurn: diceRoll) ifTrue: [ ^ self ].
 	spaceShip goToTemporaryPosition: diceRoll.
 
-	aBoard adjustPositionOf: spaceShip considering: laps.
+	aBoard adjustPositionOf: spaceShip withTotallaps: laps.
+	aBoard checkForWormHole: spaceShip.
+	aBoard checkForPowerUps: spaceShip andOtherSpaceShips: spaceShips.
 
+	spaceShips do: [ :ship | aBoard adjustPositionOf: ship withTotallaps: laps. ].
+	
 	self lookForBattle: spaceShip
 ]
 

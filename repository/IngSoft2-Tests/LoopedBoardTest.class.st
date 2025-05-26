@@ -25,7 +25,8 @@ LoopedBoardTest >> testWhenASpaceShipGetsToTheEndMadeTheMaxLapsFromGameThenIsOve
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-		         withAmountOfLaps: 1.
+		         withAmountOfLaps: 1
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -44,7 +45,8 @@ LoopedBoardTest >> testWhenGameStartsAndSpaceShipsHaventMadeALap [
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-		         withAmountOfLaps: 1.
+		         withAmountOfLaps: 1
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -62,7 +64,8 @@ LoopedBoardTest >> testWhenShip1MakesALapAndExceedsTheEndOfBoardInFinalLapUsingM
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-		         withAmountOfLaps: 2.
+		         withAmountOfLaps: 2
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -81,7 +84,8 @@ LoopedBoardTest >> testWhenShip1MakesALapAndExceedsTheEndOfBoardInFinalLapUsingS
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-		         withAmountOfLaps: 2.
+		         withAmountOfLaps: 2
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -100,7 +104,8 @@ LoopedBoardTest >> testWhenShip1MakesALapAndGetToTheEndOfLap2UsingASingleThrowTh
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-		         withAmountOfLaps: 2.
+		         withAmountOfLaps: 2
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -119,7 +124,8 @@ LoopedBoardTest >> testWhenShip1MakesALapAndGetToTheEndOfLap2UsingMultipleThrows
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-		         withAmountOfLaps: 2.
+		         withAmountOfLaps: 2
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -138,7 +144,8 @@ LoopedBoardTest >> testWhenSpaceShipMakesALapTheExcessThrowIsUsedToMoveInTheNext
 		         withSpaceShips: 2
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-		         withAmountOfLaps: 2.
+		         withAmountOfLaps: 2
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -156,7 +163,8 @@ LoopedBoardTest >> testWhenTheInputtedLapIsNegativeThenIsInvalid [
 				withSpaceShips: 2
 				withDiceSet: {  }
 				withWormHole: { 10. 2 }
-				withAmountOfLaps: -1 ]
+				withAmountOfLaps: -1
+				withCellConfigurations: {  } ]
 		raise: Error
 		withMessageText: 'Laps must be a positive integer.'
 ]

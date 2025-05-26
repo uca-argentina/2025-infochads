@@ -26,7 +26,8 @@ SpaceShipMovementTests >> testWhenARiggedDiceToss6ThenShipMovesTo7 [
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-					withAmountOfLaps: 1.
+					withAmountOfLaps: 1
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -43,7 +44,8 @@ SpaceShipMovementTests >> testWhenDiceRolls5ThenMovesSpaceShipToPosition6 [
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-		         withAmountOfLaps: 1.
+		         withAmountOfLaps: 1
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -60,7 +62,8 @@ SpaceShipMovementTests >> testWhenRiggedDiceToss1_2ThenShip1MovesTo4 [
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-		         withAmountOfLaps: 1.
+		         withAmountOfLaps: 1
+					withCellConfigurations: { }.
 
 	aGame start.
 
@@ -77,7 +80,8 @@ SpaceShipMovementTests >> testWhenRiggedDiceToss1_2_3ThenShip1MovesTo7 [
 		         withSpaceShips: 1
 		         withDiceSet: aDiceSet
 		         withWormHole: {  }
-		         withAmountOfLaps: 1.
+		         withAmountOfLaps: 1
+					withCellConfigurations: { }.
 
 	aGame start.
 

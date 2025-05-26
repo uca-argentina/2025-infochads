@@ -28,7 +28,11 @@ BoardTest >> testWhenBoardIsCreated [
 BoardTest >> testWhenBoardIsCreatedWithASizeZeroThenIsNotValid [
 
 	self
-		should: [ Board withSize: 0 andWormHolePosition: {  } ]
+		should: [
+			Board
+				withSize: 0
+				andWormHolePosition: {  }
+				andCellConfiguration: {  } ]
 		raise: Error
 		withMessageText: 'Board Size must be over 0.'
 ]
@@ -37,7 +41,11 @@ BoardTest >> testWhenBoardIsCreatedWithASizeZeroThenIsNotValid [
 BoardTest >> testWhenBoardIsCreatedWithAStringSizeThenIsNotValid [
 
 	self
-		should: [ Board withSize: '3' andWormHolePosition: {  } ]
+		should: [
+			Board
+				withSize: '3'
+				andWormHolePosition: {  }
+				andCellConfiguration: {  } ]
 		raise: Error
 		withMessageText: 'Board Size must be a positive interger.'
 ]
@@ -46,7 +54,10 @@ BoardTest >> testWhenBoardIsCreatedWithAStringSizeThenIsNotValid [
 BoardTest >> testWhenBoardIsCreatedWithCertainSize [
 
 	| aBoard |
-	aBoard := Board withSize: 13 andWormHolePosition: {  } .
+	aBoard := Board
+		          withSize: 13
+		          andWormHolePosition: {  }
+		          andCellConfiguration: {  }.
 	self assert: aBoard boardSize equals: 13
 ]
 
@@ -54,7 +65,11 @@ BoardTest >> testWhenBoardIsCreatedWithCertainSize [
 BoardTest >> testWhenBoardIsCreatedWithNegativeSizeThenIsNotValid [
 
 	self
-		should: [ Board withSize: -5 andWormHolePosition: {  } ]
+		should: [
+			Board
+				withSize: -5
+				andWormHolePosition: {  }
+				andCellConfiguration: {  } ]
 		raise: Error
 		withMessageText: 'Board Size must be over 0.'
 ]

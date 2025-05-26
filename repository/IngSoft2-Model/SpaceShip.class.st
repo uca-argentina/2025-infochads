@@ -80,7 +80,7 @@ SpaceShip >> initializeWithShield: aNumberOfShields andInitialPosition: aPositio
 { #category : 'testing' }
 SpaceShip >> isBeforeBoardStart: aBoardSize [
 
-	^ self getTemporaryPosition < aBoardSize
+	^ self getTemporaryPosition <= aBoardSize
 ]
 
 { #category : 'as yet unclassified' }
@@ -108,7 +108,8 @@ SpaceShip >> rechargableShield: aDiceRoll [
 { #category : 'new methods' }
 SpaceShip >> returnToBeginingOfLap [
 
-	position := 1
+	position := 1.
+	temporaryPosition := position
 ]
 
 { #category : 'as yet unclassified' }

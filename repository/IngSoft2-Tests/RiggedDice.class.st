@@ -16,6 +16,12 @@ RiggedDice >> initializeWith: aSetOfMovements [
 	turn := 1
 ]
 
+{ #category : 'testing' }
+RiggedDice >> isEmpty [
+
+	^ false
+]
+
 { #category : 'as yet unclassified' }
 RiggedDice >> toss [
 
