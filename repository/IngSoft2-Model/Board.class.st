@@ -35,15 +35,15 @@ Board class >> withSize: aBoardSize andWormHolePosition: aWormHolePosition andCe
 ]
 
 { #category : 'as yet unclassified' }
-Board >> adjustPositionOf: aSpaceShip withTotallaps: totalLaps [
+Board >> adjust: spaceShips positionAnd: laps [
 
-	self boardLimitAdjustment: aSpaceShip lap: totalLaps.
-
-	aSpaceShip updatePosition
+	spaceShips do: [ :ship |
+		self boardLimitAdjustment: ship withTotalLaps: laps.
+		ship updatePosition ]
 ]
 
 { #category : 'as yet unclassified' }
-Board >> boardLimitAdjustment: aSpaceShip lap: totalLaps [
+Board >> boardLimitAdjustment: aSpaceShip withTotalLaps: totalLaps [
 	
 	aSpaceShip getTemporaryPosition <= 0 ifTrue: [
 		aSpaceShip updateTemporaryPosition: 1 ].
@@ -73,10 +73,11 @@ Board >> boardSize [
 Board >> checkForPowerUps: aSpaceShip andAllSpaceShips: allSpaceShips [
 
 	| cell |
-	gameBoard ifNil: [ ^ self ].
-	cell := gameBoard at: (aSpaceShip getTemporaryPosition).
+	gameBoard ifNotNil: [
+		cell := gameBoard at: aSpaceShip getTemporaryPosition.
+		cell takeAction: aSpaceShip andOtherSpaceShips: allSpaceShips ].
 
-	cell takeAction: aSpaceShip andOtherSpaceShips: allSpaceShips
+	self checkForWormHole: aSpaceShip
 ]
 
 { #category : 'as yet unclassified' }

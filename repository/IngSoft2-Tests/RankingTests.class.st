@@ -116,9 +116,9 @@ RankingTests >> testWhenGameIsOverInformsSpaceShipsPositionAndWhichLap [
 
 	self assert: aGame isOver.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 11.
-	self assert: (aGame inWhichLapIsSpaceShip: 1) equals: 1.
+	self assert: (aGame lapOfSpaceShip: 1) equals: 1.
 	self assert: (aGame positionOfSpaceShip: 2) equals: 3.
-	self assert: (aGame inWhichLapIsSpaceShip: 2) equals: 0
+	self assert: (aGame lapOfSpaceShip: 2) equals: 0
 ]
 
 { #category : 'tests' }

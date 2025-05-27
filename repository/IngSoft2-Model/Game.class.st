@@ -65,7 +65,7 @@ Game >> battleBetween: attacker and: defendant [
 		ifFalse: [ defendant lostBattle ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'informationTest' }
 Game >> getRanking [
 
 	| ranking |
@@ -77,12 +77,6 @@ Game >> getRanking [
 
 	^ ((ranking first: (ranking size min: 3)) collect: [ :each |
 		   each getID ]) asArray
-]
-
-{ #category : 'as yet unclassified' }
-Game >> inWhichLapIsSpaceShip: aSpaceShipID [
-
-	^ (spaceShips at: aSpaceShipID) getLaps
 ]
 
 { #category : 'initialization' }
@@ -100,42 +94,55 @@ Game >> initializeWithBoardSize: aBoardSize AndNumberOfSpaceShips: aNumberOfSpac
 	^ self
 ]
 
-{ #category : 'testing' }
+{ #category : 'whats left of race positions' }
 Game >> isGameOver [
 
 	^ spaceShips anySatisfy: [ :aShip |
 		  aShip getPosition = aBoard boardSize and: aShip getLaps = laps ]
 ]
 
-{ #category : 'testing' }
+{ #category : 'informationTest' }
 Game >> isOver [
 
 	^ self isGameOver
 ]
 
+{ #category : 'informationTest' }
+Game >> lapOfSpaceShip: aSpaceShipID [
+
+	^ (spaceShips at: aSpaceShipID) getLaps
+]
+
 { #category : 'as yet unclassified' }
 Game >> lookForBattle: aSpaceShip [
 
-	| opponentShip otherShips |
-	(aSpaceShip getPosition = 1) ifTrue: [ ^self ].
-	otherShips := spaceShips select: [ :ship | ship ~= aSpaceShip ].
+	| opponentShip |
+	aSpaceShip getPosition = 1 ifTrue: [ ^ self ].
 
-	opponentShip := otherShips
-		                detect: [ :ship |
-		                ship getPosition = aSpaceShip getPosition ]
-		                ifNone: [ nil ].
+	opponentShip := self obtainOponentShip: aSpaceShip.
 
-	opponentShip isNil ifFalse: [
+	opponentShip ifNotNil: [
 		self battleBetween: aSpaceShip and: opponentShip ]
 ]
 
 { #category : 'as yet unclassified' }
+Game >> obtainOponentShip: aSpaceShip [
+
+	| otherShips |
+	otherShips := spaceShips select: [ :ship | ship ~= aSpaceShip ].
+
+	^ otherShips
+		  detect: [ :ship | ship getPosition = aSpaceShip getPosition ]
+		  ifNone: [ nil ]
+]
+
+{ #category : 'informationTest' }
 Game >> positionOfSpaceShip: aSpaceShipID [
 
 	^ (spaceShips at: aSpaceShipID) getPosition.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'informationTest' }
 Game >> shieldStatus: aSpaceShipID [
 
 	^ (spaceShips at: aSpaceShipID) getShield
@@ -162,8 +169,8 @@ Game >> start [
 		spaceShip := spaceShips at: nextSpaceShipToMove.
 
 		self the: spaceShip hasRolled: diceRoll.
+		
 		self updateNextShipToMove: nextSpaceShipToMove.
-
 		diceRoll := diceSet toss ]
 ]
 
@@ -182,19 +189,19 @@ Game >> startingPositions: aNumberOfSpaceShips [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> the: spaceShip hasRolled: diceRoll [
+Game >> the: aSpaceShip hasRolled: diceRoll [
 
-	(self skippingTurns: spaceShip withRoll: diceRoll) ifTrue:[ ^self].
-	
-	spaceShip goToTemporaryPosition: diceRoll.
+	(self skippingTurns: aSpaceShip withRoll: diceRoll) ifTrue: [ ^ self ].
 
-	aBoard adjustPositionOf: spaceShip withTotallaps: laps.
-	aBoard checkForPowerUps: spaceShip andAllSpaceShips: spaceShips.
-	aBoard checkForWormHole: spaceShip.
-	
-	spaceShips do: [ :ship | aBoard adjustPositionOf: ship withTotallaps: laps. ].
-	
-	self lookForBattle: spaceShip
+	aSpaceShip goToTemporaryPosition: diceRoll.
+
+	aBoard adjust: spaceShips positionAnd: laps.
+
+	aBoard checkForPowerUps: aSpaceShip andAllSpaceShips: spaceShips.
+
+	aBoard adjust: spaceShips positionAnd: laps.
+
+	self lookForBattle: aSpaceShip
 ]
 
 { #category : 'as yet unclassified' }
