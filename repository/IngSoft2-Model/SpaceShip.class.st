@@ -13,23 +13,21 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'laps and position' }
 SpaceShip >> adjustLapAndPositionRelativeTo: boardSize [
 
-	| tempPos |
-	tempPos := self getTemporaryPosition.
-	self updateLap: tempPos // boardSize.
-	self updateTemporaryPosition: tempPos \\ boardSize
+	self updateLap: temporaryPosition // boardSize.
+	self updateTemporaryPosition: temporaryPosition \\ boardSize
 ]
 
-{ #category : 'new methods' }
+{ #category : 'laps and position' }
 SpaceShip >> finishAt: finalPosition withLaps: finalLaps [
 
 	temporaryPosition := finalPosition.
 	laps := finalLaps
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'getters' }
 SpaceShip >> getID [
 
 	^ spaceShipID
@@ -37,7 +35,8 @@ SpaceShip >> getID [
 
 { #category : 'getters' }
 SpaceShip >> getLaps [
-	^laps
+
+	^ laps
 ]
 
 { #category : 'getters' }
@@ -58,16 +57,16 @@ SpaceShip >> getTemporaryPosition [
 	^ temporaryPosition
 ]
 
-{ #category : 'new methods' }
+{ #category : 'positions' }
 SpaceShip >> goToTemporaryPosition: positionsToSum [
 
 	temporaryPosition := position + positionsToSum
 ]
 
-{ #category : 'testing' }
+{ #category : 'laps and position' }
 SpaceShip >> hasReachedMaxProgressFor: totalLaps boardSize: boardSize [
 
-	^ self getTemporaryPosition + (self getLaps * boardSize)
+	^ temporaryPosition + (laps * boardSize)
 	  >= (totalLaps * boardSize)
 ]
 
@@ -83,27 +82,27 @@ SpaceShip >> initializeWithShield: aNumberOfShields andInitialPosition: aPositio
 	^ self
 ]
 
-{ #category : 'testing' }
+{ #category : 'positions' }
 SpaceShip >> isBeforeBoardStart: aBoardSize [
 
 	^ self getTemporaryPosition <= aBoardSize
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'shield' }
 SpaceShip >> loseShield [
 
 	shield := shield - 1.
 	shield = 0 ifTrue: [ loseTurn := 2 ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 SpaceShip >> lostBattle [
 
 	self returnToBeginingOfLap.
 	self loseShield
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'shield' }
 SpaceShip >> rechargableShield: aDiceRoll [
 
 	(shield = 3 and: aDiceRoll = 0) ifTrue: [
@@ -111,14 +110,14 @@ SpaceShip >> rechargableShield: aDiceRoll [
 			'The Shield is already full, it cant be recharged.' ]
 ]
 
-{ #category : 'new methods' }
+{ #category : 'laps and position' }
 SpaceShip >> returnToBeginingOfLap [
 
 	position := 1.
 	temporaryPosition := position
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 SpaceShip >> skipATurn: aDiceRoll [
 
 	self rechargableShield: aDiceRoll.
@@ -139,19 +138,19 @@ SpaceShip >> skipTurns [
 		ifFalse: [ ^ false ]
 ]
 
-{ #category : 'update' }
+{ #category : 'laps' }
 SpaceShip >> updateLap: numberOfLaps [
 
 	laps := laps + numberOfLaps
 ]
 
-{ #category : 'update' }
+{ #category : 'positions' }
 SpaceShip >> updatePosition [
 
 	position := temporaryPosition.
 ]
 
-{ #category : 'update' }
+{ #category : 'positions' }
 SpaceShip >> updateTemporaryPosition: aNewTemporaryPosition [
 
 	temporaryPosition := aNewTemporaryPosition
