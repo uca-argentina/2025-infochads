@@ -29,6 +29,12 @@ SpaceShip >> finishAt: finalPosition withLaps: finalLaps [
 	laps := finalLaps
 ]
 
+{ #category : 'as yet unclassified' }
+SpaceShip >> getID [
+
+	^ spaceShipID
+]
+
 { #category : 'getters' }
 SpaceShip >> getLaps [
 	^laps

@@ -66,6 +66,20 @@ Game >> battleBetween: attacker and: defendant [
 ]
 
 { #category : 'as yet unclassified' }
+Game >> getRanking [
+
+	| ranking |
+	self isOver ifFalse: [ ^ #(  ) ].
+
+	ranking := spaceShips sorted: [ :ship1 :ship2 |
+		           ship1 getLaps -> ship1 getPosition
+		           > (ship2 getLaps -> ship2 getPosition) ].
+
+	^ ((ranking first: (ranking size min: 3)) collect: [ :each |
+		   each getID ]) asArray
+]
+
+{ #category : 'as yet unclassified' }
 Game >> inWhichLapIsSpaceShip: aSpaceShipID [
 
 	^ (spaceShips at: aSpaceShipID) getLaps
