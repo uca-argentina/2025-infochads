@@ -96,7 +96,7 @@ Game >> initializeWithBoardSize: aBoardSize AndNumberOfSpaceShips: aNumberOfSpac
 	diceSet := aDiceSet.
 	nextSpaceShipToMove := 1.
 	numberOfSpaceShips := aNumberOfSpaceShips.
-	laps := aLapsCount ifNil: [ laps := 1 ].
+	laps := aLapsCount.
 	^ self
 ]
 
@@ -147,6 +147,12 @@ Game >> shuffleBoard [
 	^true.
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> skippingTurns: aSpaceShip withRoll: aDiceRoll [
+
+	^ aSpaceShip skipTurns or: (aSpaceShip skipATurn: aDiceRoll)
+]
+
 { #category : 'accessing' }
 Game >> start [
 
@@ -154,8 +160,10 @@ Game >> start [
 	diceRoll := diceSet toss.
 	[ self isGameOver or: diceRoll = -1 ] whileFalse: [
 		spaceShip := spaceShips at: nextSpaceShipToMove.
+
 		self the: spaceShip hasRolled: diceRoll.
 		self updateNextShipToMove: nextSpaceShipToMove.
+
 		diceRoll := diceSet toss ]
 ]
 
@@ -176,14 +184,14 @@ Game >> startingPositions: aNumberOfSpaceShips [
 { #category : 'as yet unclassified' }
 Game >> the: spaceShip hasRolled: diceRoll [
 
-	spaceShip skipTurns ifTrue: [ ^ self ].
-	(spaceShip skipATurn: diceRoll) ifTrue: [ ^ self ].
+	(self skippingTurns: spaceShip withRoll: diceRoll) ifTrue:[ ^self].
+	
 	spaceShip goToTemporaryPosition: diceRoll.
 
 	aBoard adjustPositionOf: spaceShip withTotallaps: laps.
+	aBoard checkForPowerUps: spaceShip andAllSpaceShips: spaceShips.
 	aBoard checkForWormHole: spaceShip.
-	aBoard checkForPowerUps: spaceShip andOtherSpaceShips: spaceShips.
-
+	
 	spaceShips do: [ :ship | aBoard adjustPositionOf: ship withTotallaps: laps. ].
 	
 	self lookForBattle: spaceShip

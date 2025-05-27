@@ -42,34 +42,6 @@ Board >> adjustPositionOf: aSpaceShip withTotallaps: totalLaps [
 	aSpaceShip updatePosition
 ]
 
-{ #category : 'creation' }
-Board >> atomicBombCellsWithPercentage: aPercentage andShieldsSacrificed: aNumberOfShields [
-
-	| numberOfCells newCells |
-	numberOfCells := aPercentage * boardSize / 100.
-
-	newCells := (1 to: numberOfCells) collect: [ :i |
-		            Cell new
-			            initializeWithType: #atomicBomb
-			            effect:
-			            (AtomicBombEffect new shieldsSacrificed: aNumberOfShields) ].
-	gameBoard := gameBoard, newCells
-]
-
-{ #category : 'creation' }
-Board >> blackHoleCellsWithPercentage: aPercentage andDesplacemets: aDesplacement [
-
-	| numberOfCells newCells |
-	numberOfCells := aPercentage * boardSize / 100.
-
-	newCells := (1 to: numberOfCells) collect: [ :i |
-		            Cell new
-			            initializeWithType: #blackhole
-			            effect:
-			            (BlackHoleEffect new withDesplacementValue: aDesplacement) ].
-	gameBoard := gameBoard, newCells
-]
-
 { #category : 'as yet unclassified' }
 Board >> boardLimitAdjustment: aSpaceShip lap: totalLaps [
 	
@@ -98,7 +70,7 @@ Board >> boardSize [
 ]
 
 { #category : 'as yet unclassified' }
-Board >> checkForPowerUps: aSpaceShip andOtherSpaceShips: allSpaceShips [
+Board >> checkForPowerUps: aSpaceShip andAllSpaceShips: allSpaceShips [
 
 	| cell |
 	gameBoard ifNil: [ ^ self ].
@@ -115,109 +87,15 @@ Board >> checkForWormHole: aSpaceShip [
 		(wormHole verifyPosition: aSpaceShip getTemporaryPosition)
 ]
 
-{ #category : 'creation' }
-Board >> createBoardWithCellConfiguration: aConfigDice [
-
-	gameBoard := OrderedCollection new.
-	self normalCellsWithPercentage: 40.
-	self blackHoleCellsWithPercentage: 20 andDesplacemets: -4.
-	self
-		hyperSpaceJumpCellsWithPercantage: 20
-		andDesplacements: 4
-		andShieldsLost: -1.
-	self
-		hyperJumpCellsWithPercentage: 8
-		andParsecValue: aConfigDice toss
-		andJumpList: aConfigDice.
-	self atomicBombCellsWithPercentage: 2 andShieldsSacrificed: -1.
-	self moonWalkCellsWithPercentage: 10 andDisplacements: aConfigDice.
-
-	self fillTheMissingCells.
-
-	^ self
-]
-
-{ #category : 'creation' }
-Board >> fillTheMissingCells [
-
-	gameBoard size = boardSize ifTrue: [ ^ self ].
-	1 to: boardSize - gameBoard size do: [ :cell |
-		gameBoard add: (Cell new initializeWithType: #normal effect: nil) ]
-]
-
-{ #category : 'creation' }
-Board >> hyperJumpCellsWithPercentage: aPercentage andParsecValue: aParsecValue andJumpList: aConfigDice [
-
-	| numberOfCells jumps amountOfJumps newCells |
-	numberOfCells := aPercentage * boardSize / 100.
-
-	amountOfJumps := aConfigDice toss.
-	jumps := Array new: amountOfJumps.
-
-	jumps := (1 to: amountOfJumps) collect: [ :i | aConfigDice toss ].
-
-
-	newCells := (1 to: numberOfCells) collect: [ :i |
-		            Cell new
-			            initializeWithType: #hyperJump
-			            effect: (HyperJumpEffect new
-					             withParsecValue: aParsecValue
-					             totalBoardSize: boardSize
-					             andParsecJumps: jumps) ].
-	gameBoard := gameBoard, newCells
-]
-
-{ #category : 'creation' }
-Board >> hyperSpaceJumpCellsWithPercantage: aPercentage andDesplacements: aDesplacement andShieldsLost: aShieldNumber [
-
-	| numberOfCells newCells |
-	numberOfCells := aPercentage * boardSize / 100.
-
-	newCells := (1 to: numberOfCells) collect: [ :i |
-		            Cell new
-			            initializeWithType: #hyperSpaceJump
-			            effect: (HyperSpaceJumpEffect new
-					             withDesplacementValue: aDesplacement
-					             andShieldsSacrificed: aShieldNumber) ].
-	gameBoard := gameBoard, newCells
-]
-
 { #category : 'initialization' }
 Board >> initializeWithSize: aBoardSize andWormHolePosition: aWormHolePosition andCellConfiguration: aConfigDiceSet [
 
 	boardSize := aBoardSize.
-
-	(aConfigDiceSet isEmpty) ifFalse: [self createBoardWithCellConfiguration: aConfigDiceSet ] .
-
+	gameBoard := CellPlacement new createBoardWithCellConfiguration: aConfigDiceSet andSize: boardSize.
 
 	wormHole := WormHole withGates: aWormHolePosition.
 	wormHole mustBeWithInLimits: aBoardSize.
 	^ self
-]
-
-{ #category : 'creation' }
-Board >> moonWalkCellsWithPercentage: aPercentage andDisplacements: aConfigDice [
-
-	| numberOfCells newCells |
-	numberOfCells := aPercentage * boardSize / 100.
-
-	newCells := (1 to: numberOfCells) collect: [ :i |
-		            Cell new
-			            initializeWithType: #moonWalk
-			            effect:
-			            (MoonWalkEffect new withDesplacementValue:
-				             aConfigDice toss * -1) ].
-	gameBoard := gameBoard , newCells
-]
-
-{ #category : 'creation' }
-Board >> normalCellsWithPercentage: aPercentage [
-	|numberOfCells|
-	numberOfCells := (aPercentage*boardSize)/100.
-	
-	1 to: numberOfCells do: [ :cell |
-		gameBoard add:
-			(Cell new initializeWithType: #normal effect: nil) ].
 ]
 
 { #category : 'as yet unclassified' }

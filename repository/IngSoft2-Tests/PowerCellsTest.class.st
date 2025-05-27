@@ -8,8 +8,9 @@ Class {
 { #category : 'as yet unclassified' }
 PowerCellsTest >> readme [
    " Para testeo de posiciones de celdas en tablero (board size 50)"
-	" Normal     | BlackHole (4) | HyperSpaceJump (4,1) | HyperJump (parsecs , length M of list, jump1, jump2, ... ,jumpM) | AtomicBomb (1) | MoonWalk (N positions back) ..."
-	" 40% -> 20c | 20% -> 10c    | 20% -> 10c           | 8% -> 4c                                                         | 2% -> 1        | 10% -> 5c "
+	"Effects:       Normal     | BlackHole (4) | HyperSpaceJump (4,1) | HyperJump (parsecs , length M of list, jump1, jump2, ... ,jumpM) | AtomicBomb (1) | MoonWalk (N positions back) ..."
+	"% -> n cells:  40% -> 20c | 20% -> 10c    | 20% -> 10c           | 8% -> 4c                                                         | 2% -> 1        | 10% -> 5c "
+	"Cells:         (1 - 20)   | (21 - 30)     | (31 - 40)            | (41 - 44)                                                        | (45 )          | (46 - 50)"
 ]
 
 { #category : 'tests' }
@@ -232,6 +233,26 @@ PowerCellsTest >> testWhenShipAnotherMovesToAHyperJumpWith100ParsecDivisionAnd30
 ]
 
 { #category : 'tests' }
+PowerCellsTest >> testWhenShipIsMovedByAnEffectToAWormHoleThenIsTPdToACellThatHasNoEffectOnTheShip [
+
+	| aGame aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 30 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 100. 3. 30. 20. 10. 6. 4. 2. 5. 7 }.
+	aGame := Game
+		         withBoardSize: 50
+		         withSpaceShips: 1
+		         withDiceSet: aDiceSet
+		         withWormHole: { 35. 4 }
+		         withAmountOfLaps: 2
+		         withCellConfigurations: aConfigureDiceSet.
+
+	aGame start.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 4.
+
+]
+
+{ #category : 'tests' }
 PowerCellsTest >> testWhenShipMovesToAAtomicBombCellThenAllShipsReturnToBeguiningAndLose1Shield [
 
 	| aGame aDiceSet aConfigureDiceSet |
@@ -375,26 +396,6 @@ PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf6ThenShipWithNegativePositio
 	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
 	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
 	self assert: (aGame positionOfSpaceShip: 3) equals: 46.
-]
-
-{ #category : 'tests' }
-PowerCellsTest >> testWhenShipMovesToAWormHoleThenTheEffectOfThePowerCellIsActualyTheOneInTheOtherEnd [
-
-	| aGame aDiceSet aConfigureDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 20 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 100. 3. 30. 20. 10. 6. 4. 2. 5. 7 }.
-	aGame := Game
-		         withBoardSize: 50
-		         withSpaceShips: 1
-		         withDiceSet: aDiceSet
-		         withWormHole: { 21. 4 }
-		         withAmountOfLaps: 2
-		         withCellConfigurations: aConfigureDiceSet.
-
-	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 4.
-
 ]
 
 { #category : 'tests' }
