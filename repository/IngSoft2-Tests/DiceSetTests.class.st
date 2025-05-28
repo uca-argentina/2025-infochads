@@ -6,6 +6,28 @@ Class {
 }
 
 { #category : 'tests' }
+DiceSetTests >> testWhenADiceSetIsRiggedWithNextMovementAs1ThenTheNextMovementIs1 [
+
+	| diceSet movement |
+
+	diceSet := RiggedDice new initializeWith: {1}.
+	movement := diceSet toss.
+	self assert: movement equals: 1
+]
+
+{ #category : 'tests' }
+DiceSetTests >> testWhenARiggedDiceWithNextMovements1And2ThenThoseAreTheNextMovements [
+
+	| diceSet movement1  movement2 |
+	
+	diceSet := RiggedDice new initializeWith: {1. 2}.
+	movement1 := diceSet toss.
+	movement2 := diceSet toss.
+	self assert: movement1 equals: 1.
+	self assert: movement2 equals: 2
+]
+
+{ #category : 'tests' }
 DiceSetTests >> testWhenASackOfDicesWithOneD6AndOneD8IsTossedThenResultBetween1And14 [
 
 	| diceSet |
@@ -35,75 +57,15 @@ DiceSetTests >> testWhenASackOfDicesWithTwoD6IsTossedThenResultBetween1And6 [
 ]
 
 { #category : 'tests' }
-DiceSetTests >> testWhenASetOfDiceWith2D6TossThenSpaceShip1MovesToPositionBetween1And12 [
+DiceSetTests >> testWhenRiggedDiceWithNumberOfMovementsThenTheyWillBeMoved [
 
-	| aGame diceSet |
-	diceSet := DiceSet new initializeWith.
-	diceSet add: (Dice withSides: 6).
-	diceSet add: (Dice withSides: 6).
-	aGame := Game withBoardSize: 20 withSpaceShips: 1.
-
-	aGame moveSpaceShip: 1 numberOfPositions: diceSet toss.
-
-	self assert: ((aGame positionOfSpaceShip: 1) between: 1 and: 12)
-]
-
-{ #category : 'tests' }
-DiceSetTests >> testWhenASetOfDiceWithAD6AndD8TossThenSpaceShip1MovesToPositionBetween1And14 [
-
-	| aGame diceSet |
-	diceSet := DiceSet new initializeWith.
-	diceSet add: (Dice withSides: 6).
-	diceSet add: (Dice withSides: 8).
-
-	aGame := Game withBoardSize: 20 withSpaceShips: 1.
-
-	aGame moveSpaceShip: 1 numberOfPositions: diceSet toss.
-
-	self assert: ((aGame positionOfSpaceShip: 1) between: 1 and: 14).
-]
-
-{ #category : 'tests' }
-DiceSetTests >> testWhenASetOfDiceWithAD6TossAfter1RoundThenSpaceShip1MovesToPositionBetween2And12 [
-
-	| aGame diceSet |
-	diceSet := DiceSet new initializeWith.
-	diceSet add: (Dice withSides: 6).
-
-	aGame := Game withBoardSize: 20 withSpaceShips: 2.
-
-	aGame moveSpaceShip: 1 numberOfPositions: diceSet toss.
-	aGame moveSpaceShip: 2 numberOfPositions: diceSet toss.
-	aGame moveSpaceShip: 1 numberOfPositions: diceSet toss.
-		
-	self assert: ((aGame positionOfSpaceShip: 1) between: 2 and: 12).
-]
-
-{ #category : 'tests' }
-DiceSetTests >> testWhenASetOfDiceWithAD6TossThenSpaceShip1MovesToPositionBetween1And6 [
-
-	| aGame diceSet |
-	diceSet := DiceSet new initializeWith.
-	diceSet add: (Dice withSides: 6).
-
-	aGame := Game withBoardSize: 10 withSpaceShips: 1.
-
-	aGame moveSpaceShip: 1 numberOfPositions: diceSet toss.
-
-	self assert: ((aGame positionOfSpaceShip: 1) between: 1 and: 6)
-]
-
-{ #category : 'tests' }
-DiceSetTests >> testWhenASetOfDiceWithAD6TossThenSpaceShip2MovesToPositionBetween1And6 [
-
-	| aGame diceSet |
-	diceSet := DiceSet new initializeWith.
-	diceSet add: (Dice withSides: 6).
-
-	aGame := Game withBoardSize: 10 withSpaceShips: 1.
-
-	aGame moveSpaceShip: 1 numberOfPositions: diceSet toss.
-
-	
-	self assert: ((aGame positionOfSpaceShip: 1) between: 1 and: 6).
+	| diceSet aSetOfMovements movement1 movement2 movement3 |
+	aSetOfMovements := OrderedCollection withAll: #( 1 2 3 ).
+	diceSet := RiggedDice new initializeWith: aSetOfMovements.
+	movement1 := diceSet toss.
+	movement2 := diceSet toss.
+	movement3 := diceSet toss.
+	self assert: movement1 equals: 1.
+	self assert: movement2 equals: 2.
+	self assert: movement3 equals: 3
 ]

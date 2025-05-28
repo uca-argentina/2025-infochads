@@ -3,7 +3,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'boardSize',
-		'wormHole'
+		'wormHole',
+		'gameBoard'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -23,21 +24,42 @@ Board class >> boardSizeMustBePositiveOverZero: aBoardSize [
 ]
 
 { #category : 'as yet unclassified' }
-Board class >> withSize: aBoardSize [
+Board class >> withSize: aBoardSize andWormHolePosition: aWormHolePosition andCellConfiguration: aConfigDiceSet [
 
 	self boardSizeMustBePositiveInteger: aBoardSize.
 	self boardSizeMustBePositiveOverZero: aBoardSize.
-
-	^ self new initializeWithSize: aBoardSize
+	^ self new
+		  initializeWithSize: aBoardSize
+		  andWormHolePosition: aWormHolePosition
+		  andCellConfiguration: aConfigDiceSet
 ]
 
 { #category : 'as yet unclassified' }
-Board >> boardLimitAdjustment: newPosition [
+Board >> adjust: spaceShips positionAnd: laps [
 
-	| aPosition |
-	aPosition := newPosition.
-	newPosition > boardSize ifTrue: [ aPosition := boardSize ].
-	^ aPosition
+	spaceShips do: [ :ship |
+		self boardLimitAdjustment: ship withTotalLaps: laps.
+		ship updatePosition ]
+]
+
+{ #category : 'as yet unclassified' }
+Board >> boardLimitAdjustment: aSpaceShip withTotalLaps: totalLaps [
+	
+	aSpaceShip getTemporaryPosition <= 0 ifTrue: [
+		aSpaceShip updateTemporaryPosition: 1 ].
+	
+	(aSpaceShip hasReachedMaxProgressFor: totalLaps boardSize: boardSize)
+		ifTrue: [
+			aSpaceShip finishAt: boardSize withLaps: totalLaps.
+			^ self ].
+
+	(aSpaceShip isBeforeBoardStart: boardSize) ifTrue: [ ^ self ].
+
+	
+
+	aSpaceShip adjustLapAndPositionRelativeTo: boardSize.
+
+	^ self
 ]
 
 { #category : 'accessing' }
@@ -48,63 +70,38 @@ Board >> boardSize [
 ]
 
 { #category : 'as yet unclassified' }
-Board >> checkForWormHole: aPosition [
+Board >> checkForPowerUps: aSpaceShip andAllSpaceShips: allSpaceShips [
 
-	| aNewPosition |
-	aNewPosition := aPosition.
+	| cell |
+	gameBoard ifNotNil: [
+		cell := gameBoard at: aSpaceShip getTemporaryPosition.
+		cell takeAction: aSpaceShip andOtherSpaceShips: allSpaceShips ].
 
-	(wormHole anySatisfy: [ :aHole | aHole = aPosition ]) ifTrue: [
-		aNewPosition := (wormHole copyWithout: aPosition) first ].
+	self checkForWormHole: aSpaceShip
+]
 
-	^ aNewPosition
+{ #category : 'as yet unclassified' }
+Board >> checkForWormHole: aSpaceShip [
+
+	wormHole positions isNil ifTrue: [ ^ self ].
+	aSpaceShip updateTemporaryPosition:
+		(wormHole verifyPosition: aSpaceShip getTemporaryPosition)
 ]
 
 { #category : 'initialization' }
-Board >> initializeWithSize: aBoardSize [
+Board >> initializeWithSize: aBoardSize andWormHolePosition: aWormHolePosition andCellConfiguration: aConfigDiceSet [
 
 	boardSize := aBoardSize.
-	wormHole := #(  ).
+	gameBoard := CellPlacement new createBoardWithCellConfiguration: aConfigDiceSet andSize: boardSize.
+
+	wormHole := WormHole withGates: aWormHolePosition.
+	wormHole mustBeWithInLimits: aBoardSize.
 	^ self
 ]
 
 { #category : 'as yet unclassified' }
-Board >> placeWormHole: aWormHole [
+Board >> withWormHole: aWormHole [
 
-	self wormHoleExitMustBePositiveInteger: aWormHole first.
-	self wormHoleExitMustBePositiveInteger: aWormHole second.
-
-	self wormHoleMustBeWithinLimits: aWormHole.
-	self wormHoleExitMustNotBeEntry: aWormHole.
-
-	wormHole := aWormHole
-]
-
-{ #category : 'path commands' }
-Board >> spaceShipWillMoveTo: posibleNextPosition [
-
-	| aNewPosition |
-	aNewPosition := self boardLimitAdjustment: posibleNextPosition.
-	aNewPosition := self checkForWormHole: aNewPosition.
-	^ aNewPosition
-]
-
-{ #category : 'as yet unclassified' }
-Board >> wormHoleExitMustBePositiveInteger: aWormHoleExit [
-
-	aWormHoleExit isInteger ifFalse: [
-		Error signal: 'WormHole must be a pair of integers.' ]
-]
-
-{ #category : 'as yet unclassified' }
-Board >> wormHoleExitMustNotBeEntry: aWormHole [
-
-	aWormHole first = aWormHole second ifTrue: [
-		Error signal: 'The WormHole Entry cannot be the exit.' ]
-]
-
-{ #category : 'as yet unclassified' }
-Board >> wormHoleMustBeWithinLimits: aWormHole [
-
-	(aWormHole anySatisfy: [ :hole | hole >= boardSize or: hole <= 0 ])
-		ifTrue: [ self error: 'WormHole exit must be within board limits.' ]
+	wormHole := WormHole withGates: aWormHole.
+	wormHole wormHoleMustBeWithinLimits: boardSize
 ]
