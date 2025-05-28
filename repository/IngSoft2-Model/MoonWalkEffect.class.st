@@ -17,7 +17,7 @@ MoonWalkEffect >> modify: aSpaceShip orMaybe: allSpaceShips [
 	| otherShips |
 	otherShips := allSpaceShips select: [ :ship | ship ~= aSpaceShip ].
 
-	otherShips isNil ifFalse: [ self moveBack: otherShips ]
+	otherShips ifNotNil: [ self moveBack: otherShips ]
 ]
 
 { #category : 'as yet unclassified' }

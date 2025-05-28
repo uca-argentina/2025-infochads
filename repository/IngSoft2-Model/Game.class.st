@@ -14,23 +14,23 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Game class >> lapsMustBePositiveInteger: aLapsCount [
+Game class >> lapsMustBePositiveInteger: arg1 [
 
-	(aLapsCount isInteger and: [ aLapsCount > 0 ]) ifFalse: [
+	(arg1 isInteger and: [ arg1 > 0 ]) ifFalse: [
 		self error: 'Laps must be a positive integer.' ]
 ]
 
 { #category : 'as yet unclassified' }
-Game class >> numberOfSpaceShipsMustBeAtLeastOne: aNumberOfSpaceShips [
+Game class >> numberOfSpaceShipsMustBeAtLeastOne: arg1 [
 
-	aNumberOfSpaceShips <= 0 ifTrue: [
+	arg1 <= 0 ifTrue: [
 		Error signal: 'The number of space ships must be at least 1.' ]
 ]
 
 { #category : 'as yet unclassified' }
-Game class >> numberOfSpaceShipsMustBePositiveInteger: boardSize [
+Game class >> numberOfSpaceShipsMustBePositiveInteger: arg1 [
 
-	(boardSize isInteger not or: [ boardSize negative ]) ifTrue: [
+	(arg1 isInteger not or: [ arg1 negative ]) ifTrue: [
 		Error signal:
 			'The number of space ships should be a positive integer.' ]
 ]
@@ -52,17 +52,16 @@ Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips with
 ]
 
 { #category : 'as yet unclassified' }
-Game >> battleBetween: attacker and: defendant [
+Game >> battleBetween: arg1 and: arg2 [
 
-	| attackDiceRollAttacker attackDiceRollDefendant |
+	| tmp1 tmp2 |
 	[
-	attackDiceRollDefendant := diceSet toss.
-	attackDiceRollAttacker := diceSet toss.
-	attackDiceRollAttacker = attackDiceRollDefendant ] whileTrue.
-
-	attackDiceRollAttacker < attackDiceRollDefendant
-		ifTrue: [ attacker lostBattle ]
-		ifFalse: [ defendant lostBattle ]
+	tmp2 := diceSet toss.
+	tmp1 := diceSet toss.
+	tmp1 = tmp2 ] whileTrue: [  ].
+	tmp1 < tmp2
+		ifTrue: [ arg1 lostBattle ]
+		ifFalse: [ arg2 lostBattle ]
 ]
 
 { #category : 'informationTest' }
@@ -175,17 +174,17 @@ Game >> start [
 ]
 
 { #category : 'whats left of race positions' }
-Game >> startingPositions: aNumberOfSpaceShips [
+Game >> startingPositions: arg1 [
 
-	| initialPositions |
-	initialPositions := OrderedCollection new.
-	1 to: aNumberOfSpaceShips do: [ :position |
-		initialPositions add: (SpaceShip new
+	| tmp1 |
+	tmp1 := OrderedCollection new.
+	1 to: arg1 do: [ :tmp2 |
+		tmp1 add: (SpaceShip new
 				 initializeWithShield: 3
 				 andInitialPosition: 1
-				 andID: position) ].
-
-	^ initialPositions
+				 andID: tmp2) ].
+	1.
+	^ tmp1
 ]
 
 { #category : 'as yet unclassified' }
