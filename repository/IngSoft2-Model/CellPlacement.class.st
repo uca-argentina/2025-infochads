@@ -13,9 +13,11 @@ Class {
 { #category : 'adding' }
 CellPlacement >> addNormalCellAtBeguiningAndEndOfBoard: netCellDistibution [
 
-    netCellDistibution at: 1 put: (rawCellDistribution at: 1).
-    netCellDistibution at: boardSize put: (rawCellDistribution at: 1).
-    ^ netCellDistibution
+	| safeCell |
+	safeCell := Cell new initializeWithType: #normal effect: nil.
+	netCellDistibution at: 1 put: safeCell.
+	netCellDistibution at: boardSize put: safeCell.
+	^ netCellDistibution
 ]
 
 { #category : 'creation' }
@@ -51,7 +53,6 @@ CellPlacement >> createBoardWithCellConfiguration: aConfigDice andSize: aBoardSi
 	boardSize := aBoardSize.
 	rawCellDistribution := OrderedCollection new.
 	aConfigDice isEmpty ifTrue: [ ^ nil ].
-	distribution := aConfigDice toss.
 	self generateUniverse: aConfigDice.
 	^ self extractSample.
 
@@ -62,9 +63,12 @@ CellPlacement >> createBoardWithCellConfiguration: aConfigDice andSize: aBoardSi
 CellPlacement >> extractSample [
 
 	| netCellDistibution |
-	netCellDistibution := distribution = 0
+	
+	netCellDistibution := self randomCellPicking.
+
+	"netCellDistibution := distribution = 0
 		                      ifTrue: [ self randomCellPicking ]
-		                      ifFalse: [ self selectiveCellPicking ].
+		                      ifFalse: [ self selectiveCellPicking ]."
 
 	^ self addNormalCellAtBeguiningAndEndOfBoard: netCellDistibution
 ]
@@ -72,18 +76,20 @@ CellPlacement >> extractSample [
 { #category : 'as yet unclassified' }
 CellPlacement >> generateUniverse: aConfigDice [
 
-	self normalCellsWithPercentage: 40.
-	self blackHoleCellsWithPercentage: 20 andDesplacemets: -4.
+	| percentages |
+	percentages := self obtainPercentages: aConfigDice.
+	self normalCellsWithPercentage: (percentages at: 1).
+	self blackHoleCellsWithPercentage: (percentages at: 2) andDesplacemets: -4.
 	self
-		hyperSpaceJumpCellsWithPercantage: 20
+		hyperSpaceJumpCellsWithPercantage: (percentages at: 3)
 		andDesplacements: 4
 		andShieldsLost: -1.
 	self
-		hyperJumpCellsWithPercentage: 8
+		hyperJumpCellsWithPercentage: (percentages at: 4)
 		andParsecValue: aConfigDice toss
 		andJumpList: aConfigDice.
-	self atomicBombCellsWithPercentage: 2 andShieldsSacrificed: -1.
-	self moonWalkCellsWithPercentage: 10 andDisplacements: aConfigDice
+	self atomicBombCellsWithPercentage: (percentages at: 5) andShieldsSacrificed: -1.
+	self moonWalkCellsWithPercentage: (percentages at: 6) andDisplacements: aConfigDice
 ]
 
 { #category : 'creation' }
@@ -122,13 +128,19 @@ CellPlacement >> hyperSpaceJumpCellsWithPercantage: aPercentage andDesplacements
 { #category : 'creation' }
 CellPlacement >> moonWalkCellsWithPercentage: aPercentage andDisplacements: aConfigDice [
 
-	| newCells |
+	| newCells stepBackwards allStepBackwards repeat |
+	stepBackwards := self obtainNextDisplacement: aConfigDice.
+	repeat:= boardSize.
+	
+	allStepBackwards := Array streamContents: [ :s |
+		             repeat timesRepeat: [ s nextPutAll: stepBackwards ] ].
+	
 	newCells := (1 to: aPercentage) collect: [ :i |
 		            Cell new
 			            initializeWithType: #moonWalk
 			            effect:
 			            (MoonWalkEffect new withDesplacementValue:
-				             aConfigDice toss * -1) ].
+				             (allStepBackwards at: i) * -1) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
@@ -143,6 +155,25 @@ CellPlacement >> normalCellsWithPercentage: aPercentage [
 CellPlacement >> obtainFragmentOfCellsFromRawCellDistribution: range [
 
     ^ rawCellDistribution copyFrom: range first to: range second
+]
+
+{ #category : 'as yet unclassified' }
+CellPlacement >> obtainNextDisplacement: aConfigDice [
+
+	| results throw |
+	results := OrderedCollection new.
+	throw := aConfigDice toss.
+	[ throw = 0 or: (throw = -1) ] whileFalse: [
+		results add: throw.
+		throw := aConfigDice toss ].
+
+	^ results
+]
+
+{ #category : 'as yet unclassified' }
+CellPlacement >> obtainPercentages: aConfigureDice [
+
+^(1 to: 6) collect: [:effect | aConfigureDice  toss].
 ]
 
 { #category : 'as yet unclassified' }
