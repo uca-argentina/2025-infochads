@@ -196,7 +196,7 @@ CellPlacement >> obtainRange [
 CellPlacement >> randomCellPicking [
 
     ^ (1 to: boardSize) collect: [ :cell |
-          rawCellDistribution at: (Random new nextInteger: 100) ]
+          rawCellDistribution at: ((1 to: 100) atRandom) ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -206,22 +206,4 @@ CellPlacement >> repeat: netCellDistibution theseManyTimes: repetitions [
            repetitions timesRepeat: [ s nextPutAll: netCellDistibution ] ])
           copyFrom: 1
           to: boardSize
-]
-
-{ #category : 'as yet unclassified' }
-CellPlacement >> selectiveCellPicking [
-
-	| range netCellDistibution fragmentLength repetitions |
-	range := self obtainRange.
-	netCellDistibution := self
-		                      obtainFragmentOfCellsFromRawCellDistribution:
-		                      range.
-
-	fragmentLength := range second - range first + 1.
-	repetitions := (boardSize / fragmentLength) ceiling.
-
-	netCellDistibution := self
-		                      repeat: netCellDistibution
-		                      theseManyTimes: repetitions.
-	^ netCellDistibution
 ]
