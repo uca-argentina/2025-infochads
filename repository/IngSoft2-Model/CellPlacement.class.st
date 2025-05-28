@@ -66,10 +66,6 @@ CellPlacement >> extractSample [
 	
 	netCellDistibution := self randomCellPicking.
 
-	"netCellDistibution := distribution = 0
-		                      ifTrue: [ self randomCellPicking ]
-		                      ifFalse: [ self selectiveCellPicking ]."
-
 	^ self addNormalCellAtBeguiningAndEndOfBoard: netCellDistibution
 ]
 
@@ -152,12 +148,6 @@ CellPlacement >> normalCellsWithPercentage: aPercentage [
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> obtainFragmentOfCellsFromRawCellDistribution: range [
-
-    ^ rawCellDistribution copyFrom: range first to: range second
-]
-
-{ #category : 'as yet unclassified' }
 CellPlacement >> obtainNextDisplacement: aConfigDice [
 
 	| results throw |
@@ -173,23 +163,7 @@ CellPlacement >> obtainNextDisplacement: aConfigDice [
 { #category : 'as yet unclassified' }
 CellPlacement >> obtainPercentages: aConfigureDice [
 
-^(1 to: 6) collect: [:effect | aConfigureDice  toss].
-]
-
-{ #category : 'as yet unclassified' }
-CellPlacement >> obtainRange [
-
-	distribution = 1 ifTrue: [ ^ { 1. 40 } ]. "Normal"
-
-	distribution = 2 ifTrue: [ ^ { 41. 60 } ]. "Black Hole"
-
-	distribution = 3 ifTrue: [ ^ { 61. 80 } ]. "Hyper Space Jump"
-
-	distribution = 4 ifTrue: [ ^ { 81. 88 } ]. "Hyper Jump"
-
-	distribution = 5 ifTrue: [ ^ { 89. 90 } ]. "Atomic Bomb"
-
-	distribution = 6 ifTrue: [ ^ { 91. 100 } ] "Moon Walk"
+	^ (1 to: 6) collect: [ :effect | aConfigureDice toss ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -197,13 +171,4 @@ CellPlacement >> randomCellPicking [
 
     ^ (1 to: boardSize) collect: [ :cell |
           rawCellDistribution at: ((1 to: 100) atRandom) ]
-]
-
-{ #category : 'as yet unclassified' }
-CellPlacement >> repeat: netCellDistibution theseManyTimes: repetitions [
-
-    ^ (Array streamContents: [ :s |
-           repetitions timesRepeat: [ s nextPutAll: netCellDistibution ] ])
-          copyFrom: 1
-          to: boardSize
 ]
