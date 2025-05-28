@@ -7,10 +7,13 @@ Class {
 
 { #category : 'as yet unclassified' }
 PowerCellsTest >> readme [
-   " Para testeo de posiciones de celdas en tablero (board size 50)"
-	"Effects:       Normal     | BlackHole (4) | HyperSpaceJump (4,1) | HyperJump (parsecs , length M of list, jump1, jump2, ... ,jumpM) | AtomicBomb (1) | MoonWalk (N positions back) ..."
-	"% -> n cells:  40% -> 20c | 20% -> 10c    | 20% -> 10c           | 8% -> 4c                                                         | 2% -> 1        | 10% -> 5c "
-	"Cells:         (1 - 20)   | (21 - 30)     | (31 - 40)            | (41 - 44)                                                        | (45 )          | (46 - 50)"
+	"{ %Normal. %BlackHole. %HyperSpaceJump. %HyperJump. %AtomicBomb. %MoonWalk. -> (The sum of the values must be %100)
+
+	Parsecs. Len Array HyperJump. jump1. jump2. ... jumpN. -> (Jumps are the values in the array)
+	
+	MoonWalk1. MoonWalk2. ... MoonWalkM.  } -> Config MoonWalk (Deduct values to ships)"
+
+	
 ]
 
 { #category : 'tests' }
