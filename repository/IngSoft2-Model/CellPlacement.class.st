@@ -3,12 +3,20 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'boardSize',
-		'gameBoard',
+		'rawCellDistribution',
 		'distribution'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
+
+{ #category : 'adding' }
+CellPlacement >> addNormalCellAtBeguiningAndEndOfBoard: netCellDistibution [
+
+    netCellDistibution at: 1 put: (rawCellDistribution at: 1).
+    netCellDistibution at: boardSize put: (rawCellDistribution at: 1).
+    ^ netCellDistibution
+]
 
 { #category : 'creation' }
 CellPlacement >> atomicBombCellsWithPercentage: aPercentage andShieldsSacrificed: aNumberOfShields [
@@ -20,7 +28,7 @@ CellPlacement >> atomicBombCellsWithPercentage: aPercentage andShieldsSacrificed
 			            effect:
 			            (AtomicBombEffect new shieldsSacrificed:
 				             aNumberOfShields) ].
-	gameBoard := gameBoard , newCells
+	rawCellDistribution := rawCellDistribution , newCells
 ]
 
 { #category : 'creation' }
@@ -33,7 +41,7 @@ CellPlacement >> blackHoleCellsWithPercentage: aPercentage andDesplacemets: aDes
 			            effect:
 			            (BlackHoleEffect new withDesplacementValue:
 				             aDesplacement) ].
-	gameBoard := gameBoard , newCells
+	rawCellDistribution := rawCellDistribution , newCells
 ]
 
 { #category : 'as yet unclassified' }
@@ -41,7 +49,7 @@ CellPlacement >> createBoardWithCellConfiguration: aConfigDice andSize: aBoardSi
 
  
 	boardSize := aBoardSize.
-	gameBoard := OrderedCollection new.
+	rawCellDistribution := OrderedCollection new.
 	aConfigDice isEmpty ifTrue: [ ^ nil ].
 	distribution := aConfigDice toss.
 	self generateUniverse: aConfigDice.
@@ -53,17 +61,12 @@ CellPlacement >> createBoardWithCellConfiguration: aConfigDice andSize: aBoardSi
 { #category : 'as yet unclassified' }
 CellPlacement >> extractSample [
 
-	| range aux |
-	distribution = 0
-		ifTrue: [
-			^ (1 to: boardSize) collect: [ :subject |
-				  gameBoard at: (Random new nextInteger: 100) ] ]
-		ifFalse: [
-			range := self obtainRange.
-			aux := gameBoard copyFrom: range first to: range second.
-			^ Array streamContents: [ :s |
-				  boardSize / (range second - range first + 1) timesRepeat: [
-					  s nextPutAll: aux ] ] ]
+	| netCellDistibution |
+	netCellDistibution := distribution = 0
+		                      ifTrue: [ self randomCellPicking ]
+		                      ifFalse: [ self selectiveCellPicking ].
+
+	^ self addNormalCellAtBeguiningAndEndOfBoard: netCellDistibution
 ]
 
 { #category : 'as yet unclassified' }
@@ -100,7 +103,7 @@ CellPlacement >> hyperJumpCellsWithPercentage: aPercentage andParsecValue: aPars
 					             withParsecValue: aParsecValue
 					             totalBoardSize: boardSize
 					             andParsecJumps: jumps) ].
-	gameBoard := gameBoard , newCells
+	rawCellDistribution := rawCellDistribution , newCells
 ]
 
 { #category : 'creation' }
@@ -113,7 +116,7 @@ CellPlacement >> hyperSpaceJumpCellsWithPercantage: aPercentage andDesplacements
 			            effect: (HyperSpaceJumpEffect new
 					             withDesplacementValue: aDesplacement
 					             andShieldsSacrificed: aShieldNumber) ].
-	gameBoard := gameBoard , newCells
+	rawCellDistribution := rawCellDistribution , newCells
 ]
 
 { #category : 'creation' }
@@ -126,28 +129,68 @@ CellPlacement >> moonWalkCellsWithPercentage: aPercentage andDisplacements: aCon
 			            effect:
 			            (MoonWalkEffect new withDesplacementValue:
 				             aConfigDice toss * -1) ].
-	gameBoard := gameBoard , newCells
+	rawCellDistribution := rawCellDistribution , newCells
 ]
 
 { #category : 'creation' }
 CellPlacement >> normalCellsWithPercentage: aPercentage [
 
 	1 to: aPercentage do: [ :cell |
-		gameBoard add: (Cell new initializeWithType: #normal effect: nil) ]
+		rawCellDistribution add: (Cell new initializeWithType: #normal effect: nil) ]
+]
+
+{ #category : 'as yet unclassified' }
+CellPlacement >> obtainFragmentOfCellsFromRawCellDistribution: range [
+
+    ^ rawCellDistribution copyFrom: range first to: range second
 ]
 
 { #category : 'as yet unclassified' }
 CellPlacement >> obtainRange [
 
-	distribution = 1 ifTrue: [ ^ { 1. 40 } ].
+	distribution = 1 ifTrue: [ ^ { 1. 40 } ]. "Normal"
 
-	distribution = 2 ifTrue: [ ^ { 41. 60 } ].
+	distribution = 2 ifTrue: [ ^ { 41. 60 } ]. "Black Hole"
 
-	distribution = 3 ifTrue: [ ^ { 61. 80 } ].
+	distribution = 3 ifTrue: [ ^ { 61. 80 } ]. "Hyper Space Jump"
 
-	distribution = 4 ifTrue: [ ^ { 81. 88 } ].
+	distribution = 4 ifTrue: [ ^ { 81. 88 } ]. "Hyper Jump"
 
-	distribution = 5 ifTrue: [ ^ { 89. 90 } ].
+	distribution = 5 ifTrue: [ ^ { 89. 90 } ]. "Atomic Bomb"
 
-	distribution = 6 ifTrue: [ ^ { 91. 100 } ]
+	distribution = 6 ifTrue: [ ^ { 91. 100 } ] "Moon Walk"
+]
+
+{ #category : 'as yet unclassified' }
+CellPlacement >> randomCellPicking [
+
+    ^ (1 to: boardSize) collect: [ :cell |
+          rawCellDistribution at: (Random new nextInteger: 100) ]
+]
+
+{ #category : 'as yet unclassified' }
+CellPlacement >> repeat: netCellDistibution theseManyTimes: repetitions [
+
+    ^ (Array streamContents: [ :s |
+           repetitions timesRepeat: [ s nextPutAll: netCellDistibution ] ])
+          copyFrom: 1
+          to: boardSize
+]
+
+{ #category : 'as yet unclassified' }
+CellPlacement >> selectiveCellPicking [
+
+	| range netCellDistibution fragmentLength repetitions |
+	range := self obtainRange.
+	netCellDistibution := self
+		                      obtainFragmentOfCellsFromRawCellDistribution:
+		                      range.
+
+	fragmentLength := range second - range first + 1.
+	repetitions := (boardSize / fragmentLength) ceiling.
+
+	netCellDistibution := self
+		                      repeat: netCellDistibution
+		                      theseManyTimes: repetitions.
+	^ netCellDistibution
 ]

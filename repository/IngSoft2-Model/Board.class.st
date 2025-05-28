@@ -100,16 +100,6 @@ Board >> initializeWithSize: aBoardSize andWormHolePosition: aWormHolePosition a
 ]
 
 { #category : 'as yet unclassified' }
-Board >> shuffle [
-
-	| range randomizedBoard |
-	range := Random new.
-	randomizedBoard := gameBoard asSortedCollection: [ :a :b |
-		               range next < 0.5 ].
-	gameBoard := randomizedBoard.
-]
-
-{ #category : 'as yet unclassified' }
 Board >> withWormHole: aWormHole [
 
 	wormHole := WormHole withGates: aWormHole.

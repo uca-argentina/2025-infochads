@@ -148,12 +148,6 @@ Game >> shieldStatus: aSpaceShipID [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> shuffleBoard [
-	aBoard shuffle.
-	^true.
-]
-
-{ #category : 'as yet unclassified' }
 Game >> skippingTurns: aSpaceShip withRoll: aDiceRoll [
 
 	^ aSpaceShip skipTurns or: (aSpaceShip skipATurn: aDiceRoll)
