@@ -19,15 +19,17 @@ SpaceShipMovementTests >> should: anErrorBlock raise: anErrorClass withMessageTe
 { #category : 'tests' }
 SpaceShipMovementTests >> testWhenARiggedDiceToss6ThenShipMovesTo7 [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 6 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 1
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
 	aGame start.
 
@@ -37,15 +39,17 @@ SpaceShipMovementTests >> testWhenARiggedDiceToss6ThenShipMovesTo7 [
 { #category : 'tests' }
 SpaceShipMovementTests >> testWhenDiceRolls5ThenMovesSpaceShipToPosition6 [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 5 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 1
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-		         withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
 	aGame start.
 
@@ -55,15 +59,17 @@ SpaceShipMovementTests >> testWhenDiceRolls5ThenMovesSpaceShipToPosition6 [
 { #category : 'tests' }
 SpaceShipMovementTests >> testWhenRiggedDiceToss1_2ThenShip1MovesTo4 [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 1. 2 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 1
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-		         withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
 	aGame start.
 
@@ -73,16 +79,17 @@ SpaceShipMovementTests >> testWhenRiggedDiceToss1_2ThenShip1MovesTo4 [
 { #category : 'tests' }
 SpaceShipMovementTests >> testWhenRiggedDiceToss1_2_3ThenShip1MovesTo7 [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 1. 2. 3 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 1
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-		         withAmountOfLaps: 1
-					withCellConfigurations: { }.
-
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 1.
 	aGame start.
 
 	self assert: (aGame positionOfSpaceShip: 1) equals: 7

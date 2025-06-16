@@ -11,27 +11,20 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Board class >> boardSizeMustBePositiveInteger: aBoardSize [
+Board class >> boardSizeMustBePositiveOverZero: aBoardSize [
 
-	aBoardSize isInteger ifFalse: [
+	(aBoardSize isInteger and: [ aBoardSize > 0 ]) ifFalse: [
 		Error signal: 'Board Size must be a positive interger.' ]
 ]
 
 { #category : 'as yet unclassified' }
-Board class >> boardSizeMustBePositiveOverZero: aBoardSize [
+Board class >> withSize: aBoardSize composedOf: aWormHole andACellConfiguration: aConfigDiceSet [
 
-	aBoardSize <= 0 ifTrue: [ Error signal: 'Board Size must be over 0.' ]
-]
-
-{ #category : 'as yet unclassified' }
-Board class >> withSize: aBoardSize andWormHolePosition: aWormHolePosition andCellConfiguration: aConfigDiceSet [
-
-	self boardSizeMustBePositiveInteger: aBoardSize.
 	self boardSizeMustBePositiveOverZero: aBoardSize.
 	^ self new
 		  initializeWithSize: aBoardSize
-		  andWormHolePosition: aWormHolePosition
-		  andCellConfiguration: aConfigDiceSet
+		  composedOf: aWormHole
+		  andConfiguration: aConfigDiceSet
 ]
 
 { #category : 'as yet unclassified' }
@@ -65,7 +58,6 @@ Board >> boardLimitAdjustment: aSpaceShip withTotalLaps: totalLaps [
 { #category : 'accessing' }
 Board >> boardSize [
 
-	boardSize ifNil: [ Error signal: 'Board size not initialized' ].
 	^ boardSize
 ]
 
@@ -83,25 +75,19 @@ Board >> checkForPowerUps: aSpaceShip andAllSpaceShips: allSpaceShips [
 { #category : 'as yet unclassified' }
 Board >> checkForWormHole: aSpaceShip [
 
-	wormHole positions isNil ifTrue: [ ^ self ].
 	aSpaceShip updateTemporaryPosition:
 		(wormHole verifyPosition: aSpaceShip getTemporaryPosition)
 ]
 
 { #category : 'initialization' }
-Board >> initializeWithSize: aBoardSize andWormHolePosition: aWormHolePosition andCellConfiguration: aConfigDiceSet [
+Board >> initializeWithSize: aBoardSize composedOf: aWormHole andConfiguration: aConfigDiceSet [
 
 	boardSize := aBoardSize.
-	gameBoard := CellPlacement new createBoardWithCellConfiguration: aConfigDiceSet andSize: boardSize.
+	gameBoard := CellPlacement new
+		             createBoardWithCellConfiguration: aConfigDiceSet
+		             andSize: boardSize.
 
-	wormHole := WormHole withGates: aWormHolePosition.
+	wormHole := aWormHole.
 	wormHole mustBeWithInLimits: aBoardSize.
-	^ self
-]
 
-{ #category : 'as yet unclassified' }
-Board >> withWormHole: aWormHole [
-
-	wormHole := WormHole withGates: aWormHole.
-	wormHole wormHoleMustBeWithinLimits: boardSize
 ]

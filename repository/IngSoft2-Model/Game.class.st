@@ -2,53 +2,52 @@ Class {
 	#name : 'Game',
 	#superclass : 'Object',
 	#instVars : [
-		'aBoard',
 		'spaceShips',
 		'diceSet',
 		'nextSpaceShipToMove',
 		'numberOfSpaceShips',
-		'laps'
+		'laps',
+		'board'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-Game class >> lapsMustBePositiveInteger: arg1 [
+Game class >> lapsMustBePositiveInteger: aNumberOfLaps [
 
-	(arg1 isInteger and: [ arg1 > 0 ]) ifFalse: [
+	(aNumberOfLaps isInteger and: [ aNumberOfLaps > 0 ]) ifFalse: [
 		self error: 'Laps must be a positive integer.' ]
 ]
 
 { #category : 'as yet unclassified' }
-Game class >> numberOfSpaceShipsMustBeAtLeastOne: arg1 [
+Game class >> numberOfSpaceShipsMustBeAtLeastOne: aNumberOfSpaceShips [
 
-	arg1 <= 0 ifTrue: [
+	aNumberOfSpaceShips <= 0 ifTrue: [
 		Error signal: 'The number of space ships must be at least 1.' ]
 ]
 
 { #category : 'as yet unclassified' }
-Game class >> numberOfSpaceShipsMustBePositiveInteger: arg1 [
+Game class >> numberOfSpaceShipsMustBePositive: aNumberOfSpaceShips [
 
-	(arg1 isInteger not or: [ arg1 negative ]) ifTrue: [
+	(aNumberOfSpaceShips isInteger not or: [
+		 aNumberOfSpaceShips negative ]) ifTrue: [
 		Error signal:
 			'The number of space ships should be a positive integer.' ]
 ]
 
 { #category : 'as yet unclassified' }
-Game class >> withBoardSize: aBoardSize withSpaceShips: aNumberOfSpaceShips withDiceSet: aDiceSet withWormHole: aWormHolePosition withAmountOfLaps: aLapsCount withCellConfigurations: boardCellConfiguration [
+Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAfter: aNumberOfLaps [
 
-	self numberOfSpaceShipsMustBePositiveInteger: aNumberOfSpaceShips.
+	self numberOfSpaceShipsMustBePositive: aNumberOfSpaceShips.
 	self numberOfSpaceShipsMustBeAtLeastOne: aNumberOfSpaceShips.
-	self lapsMustBePositiveInteger: aLapsCount.
+	self lapsMustBePositiveInteger: aNumberOfLaps.
 
 	^ self new
-		  initializeWithBoardSize: aBoardSize
-		  AndNumberOfSpaceShips: aNumberOfSpaceShips
-		  AndDiceSet: aDiceSet
-		  AndWormHole: aWormHolePosition
-		  Andlaps: aLapsCount
-		  AndConfiguration: boardCellConfiguration
+		  initializeWithBoardSize: aBoard
+		  by: aNumberOfSpaceShips
+		  thorwing: aDiceSet
+		  wonAfter: aNumberOfLaps
 ]
 
 { #category : 'as yet unclassified' }
@@ -79,17 +78,14 @@ Game >> getRanking [
 ]
 
 { #category : 'initialization' }
-Game >> initializeWithBoardSize: aBoardSize AndNumberOfSpaceShips: aNumberOfSpaceShips AndDiceSet: aDiceSet AndWormHole: aWormHolePosition Andlaps: aLapsCount AndConfiguration: aConfigDiceSet [
+Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceSet wonAfter: aNumberOfLaps [
 
-	aBoard := Board
-		          withSize: aBoardSize
-		          andWormHolePosition: aWormHolePosition
-		          andCellConfiguration: aConfigDiceSet.
-	spaceShips := self startingPositions: aNumberOfSpaceShips.
+	board := aBoard.
+	self startingPositions: aNumberOfSpaceShips.
 	diceSet := aDiceSet.
 	nextSpaceShipToMove := 1.
 	numberOfSpaceShips := aNumberOfSpaceShips.
-	laps := aLapsCount.
+	laps := aNumberOfLaps.
 	^ self
 ]
 
@@ -97,7 +93,7 @@ Game >> initializeWithBoardSize: aBoardSize AndNumberOfSpaceShips: aNumberOfSpac
 Game >> isGameOver [
 
 	^ spaceShips anySatisfy: [ :aShip |
-		  aShip getPosition = aBoard boardSize and: aShip getLaps = laps ]
+		  aShip getPosition = board boardSize and: aShip getLaps = laps ]
 ]
 
 { #category : 'informationTest' }
@@ -168,17 +164,15 @@ Game >> start [
 ]
 
 { #category : 'whats left of race positions' }
-Game >> startingPositions: arg1 [
-
-	| tmp1 |
-	tmp1 := OrderedCollection new.
-	1 to: arg1 do: [ :tmp2 |
-		tmp1 add: (SpaceShip new
+Game >> startingPositions: aNumberOfSpaceShips [
+	
+	spaceShips := OrderedCollection new.
+	1 to: aNumberOfSpaceShips do: [ :id |
+		spaceShips add: (SpaceShip new
 				 initializeWithShield: 3
 				 andInitialPosition: 1
-				 andID: tmp2) ].
+				 andID: id) ].
 	1.
-	^ tmp1
 ]
 
 { #category : 'as yet unclassified' }
@@ -188,11 +182,11 @@ Game >> the: aSpaceShip hasRolled: diceRoll [
 
 	aSpaceShip goToTemporaryPosition: diceRoll.
 
-	aBoard adjust: spaceShips positionAnd: laps.
+	board adjust: spaceShips positionAnd: laps.
 
-	aBoard checkForPowerUps: aSpaceShip andAllSpaceShips: spaceShips.
+	board checkForPowerUps: aSpaceShip andAllSpaceShips: spaceShips.
 
-	aBoard adjust: spaceShips positionAnd: laps.
+	board adjust: spaceShips positionAnd: laps.
 
 	self lookForBattle: aSpaceShip
 ]

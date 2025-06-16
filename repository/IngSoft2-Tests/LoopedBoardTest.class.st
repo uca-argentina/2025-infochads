@@ -18,15 +18,17 @@ LoopedBoardTest >> should: anErrorBlock raise: anErrorClass withMessageText: anE
 { #category : 'tests' }
 LoopedBoardTest >> testWhenASpaceShipGetsToTheEndMadeTheMaxLapsFromGameThenIsOver [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 6 }.
+	aBoard := Board
+		          withSize: 11
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 11
-		         withSpaceShips: 2
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-		         withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
 	aGame start.
 
@@ -38,15 +40,17 @@ LoopedBoardTest >> testWhenASpaceShipGetsToTheEndMadeTheMaxLapsFromGameThenIsOve
 { #category : 'tests' }
 LoopedBoardTest >> testWhenGameStartsAndSpaceShipsHaventMadeALap [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 1. 2 }.
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 100
-		         withSpaceShips: 2
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-		         withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
 	aGame start.
 
@@ -57,114 +61,127 @@ LoopedBoardTest >> testWhenGameStartsAndSpaceShipsHaventMadeALap [
 { #category : 'tests' }
 LoopedBoardTest >> testWhenShip1MakesALapAndExceedsTheEndOfBoardInFinalLapUsingMultipleThrowsThenGameIsOver [
 
-	| aGame aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 5. 1. 5. 3. 10}.
+	| aGame aDiceSet aBoard |
+	aDiceSet := RiggedDice new initializeWith: { 5. 1. 5. 3. 10 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 2
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-		         withAmountOfLaps: 2
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 2.
 
 	aGame start.
 
 	self assert: (aGame lapOfSpaceShip: 1) equals: 2.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 10.
-	self assert: aGame isOver 
+	self assert: aGame isOver
 ]
 
 { #category : 'tests' }
 LoopedBoardTest >> testWhenShip1MakesALapAndExceedsTheEndOfBoardInFinalLapUsingSingleThrowThenGameIsOver [
 
-	| aGame aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 30}.
+	| aGame aDiceSet aBoard |
+	aDiceSet := RiggedDice new initializeWith: { 30 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 1
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-		         withAmountOfLaps: 2
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 2.
 
 	aGame start.
 
 	self assert: (aGame lapOfSpaceShip: 1) equals: 2.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 10.
-	self assert: aGame isOver 
+	self assert: aGame isOver
 ]
 
 { #category : 'tests' }
 LoopedBoardTest >> testWhenShip1MakesALapAndGetToTheEndOfLap2UsingASingleThrowThenGameIsOver [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 19 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 1
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-		         withAmountOfLaps: 2
-					withCellConfigurations: { }.
-
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 2.
 	aGame start.
 
 	self assert: (aGame lapOfSpaceShip: 1) equals: 2.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 10.
-	self assert: aGame isOver 
+	self assert: aGame isOver
 ]
 
 { #category : 'tests' }
 LoopedBoardTest >> testWhenShip1MakesALapAndGetToTheEndOfLap2UsingMultipleThrowsThenGameIsOver [
 
-	| aGame aDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 5. 1. 5. 3. 9}.
+	| aGame aDiceSet aBoard |
+	aDiceSet := RiggedDice new initializeWith: { 5. 1. 5. 3. 9 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 2
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-		         withAmountOfLaps: 2
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 2.
 
 	aGame start.
 
 	self assert: (aGame lapOfSpaceShip: 1) equals: 2.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 10.
-	self assert: aGame isOver 
+	self assert: aGame isOver
 ]
 
 { #category : 'tests' }
 LoopedBoardTest >> testWhenSpaceShipMakesALapTheExcessThrowIsUsedToMoveInTheNextLapWhenReturningToStart [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 7 }.
+	aBoard := Board
+		          withSize: 11
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 11
-		         withSpaceShips: 2
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-		         withAmountOfLaps: 2
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 2.
 
 	aGame start.
 
 	self assert: (aGame lapOfSpaceShip: 1) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
+	self assert: (aGame positionOfSpaceShip: 1) equals: 4
 ]
 
 { #category : 'tests' }
 LoopedBoardTest >> testWhenTheInputtedLapIsNegativeThenIsInvalid [
 
+	| aBoard aDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 0. }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	self
 		should: [
 			Game
-				withBoardSize: 10
-				withSpaceShips: 2
-				withDiceSet: {  }
-				withWormHole: { 10. 2 }
-				withAmountOfLaps: -1
-				withCellConfigurations: {  } ]
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: -1. ]
 		raise: Error
 		withMessageText: 'Laps must be a positive integer.'
 ]

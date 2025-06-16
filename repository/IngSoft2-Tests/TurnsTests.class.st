@@ -18,16 +18,18 @@ TurnsTests >> should: anErrorBlock raise: anErrorClass withMessageText: anErrorM
 { #category : 'tests' }
 TurnsTests >> testWhenSpaceShip1IsTheOnlyPlayerThenCanPlayAlone [
 
-	| aGame diceSet |
-	diceSet := DiceSet new initializeWith.
-	diceSet add: (Dice withSides: 6).
+	| aGame aDiceSet aBoard |
+	aDiceSet := DiceSet withDices: { (Dice withSides: 6) }.
+
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 1
-		         withDiceSet: diceSet
-		         withWormHole: {  }
-		         withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 1.
 	aGame start.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 10
 ]
@@ -35,15 +37,17 @@ TurnsTests >> testWhenSpaceShip1IsTheOnlyPlayerThenCanPlayAlone [
 { #category : 'tests' }
 TurnsTests >> testWhenSpaceShip1IsToPlayAndSpaceShip1PlaysThenIsValid [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 2 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 3
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 3
+		         throwing: aDiceSet
+		         wonAfter: 1.
 	aGame start.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 3
 ]
@@ -51,15 +55,17 @@ TurnsTests >> testWhenSpaceShip1IsToPlayAndSpaceShip1PlaysThenIsValid [
 { #category : 'tests' }
 TurnsTests >> testWhenSpaceShip2IsToPlayAndSpaceShip2PlaysThenIsValid [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 2. 3 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 3
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 3
+		         throwing: aDiceSet
+		         wonAfter: 1.
 	aGame start.
 	self assert: (aGame positionOfSpaceShip: 1) equals: 3.
 	self assert: (aGame positionOfSpaceShip: 2) equals: 4
@@ -68,15 +74,17 @@ TurnsTests >> testWhenSpaceShip2IsToPlayAndSpaceShip2PlaysThenIsValid [
 { #category : 'tests' }
 TurnsTests >> testWhenSpaceShip3IsToPlayAndSpaceShip3PlaysThenIsValid [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 1. 2. 3 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 3
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 3
+		         throwing: aDiceSet
+		         wonAfter: 1.
 	aGame start.
 
 	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
@@ -87,15 +95,17 @@ TurnsTests >> testWhenSpaceShip3IsToPlayAndSpaceShip3PlaysThenIsValid [
 { #category : 'tests' }
 TurnsTests >> testWhenTheFirstRoundIsPlayedThenSpaceShip1IsToPlayThenIsValid [
 
-		| aGame aDiceSet |
+		| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 2. 1. 3. 2 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 3
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 3
+		         throwing: aDiceSet
+		         wonAfter: 1.
 	aGame start.
 
 	self assert: (aGame positionOfSpaceShip: 1) equals: 5.

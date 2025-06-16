@@ -18,16 +18,17 @@ WormHoleTest >> should: anErrorBlock raise: anErrorClass withMessageText: anErro
 { #category : 'tests' }
 WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnFirstWormHoleThenTeleportsToSecondWormHoleThenIsValid [
 
-	| aGame aWormHole aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 2 }.
-	aWormHole := { 3. 7 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 3 endingAt: 7)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 1
-		         withDiceSet: aDiceSet
-		         withWormHole: aWormHole
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
 	aGame start.
 
@@ -37,16 +38,18 @@ WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnFirstWormHoleThenTeleportsToSec
 { #category : 'tests' }
 WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnSecondWormHoleThenTeleportsToFirstWormHoleThenIsValid [
 
-	| aGame aWormHole aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 6 }.
-	aWormHole := { 3. 7 }.
+
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 3 endingAt: 7)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 1
-		         withDiceSet: aDiceSet
-		         withWormHole: aWormHole
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
 	aGame start.
 
@@ -57,7 +60,7 @@ WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnSecondWormHoleThenTeleportsToFi
 WormHoleTest >> testWhenEntryHoleIs1ThenIsInvalid [
 
 	self
-		should: [ WormHole withGates: { 1. 7 } ]
+		should: [ WormHole startingAt: 1 endingAt: 7 ]
 		raise: Error
 		withMessageText: 'WormHole must be a pair of integers.'
 ]
@@ -66,7 +69,7 @@ WormHoleTest >> testWhenEntryHoleIs1ThenIsInvalid [
 WormHoleTest >> testWhenEntryHoleIsNegativeThenIsInvalid [
 
 	self
-		should: [ WormHole withGates: { -1. 7 } ]
+		should: [ WormHole startingAt: -1 endingAt: 7 ]
 		raise: Error
 		withMessageText: 'WormHole must be a pair of integers.'
 ]
@@ -75,7 +78,7 @@ WormHoleTest >> testWhenEntryHoleIsNegativeThenIsInvalid [
 WormHoleTest >> testWhenEntryWormHoleIsEqualsToExitWormHoleThenIsInvalid [
 
 	self
-		should: [ WormHole withGates: { 7. 7 } ]
+		should: [ WormHole startingAt: 7 endingAt: 7 ]
 		raise: Error
 		withMessageText: 'The WormHole Entry cannot be the exit.'
 ]
@@ -85,13 +88,10 @@ WormHoleTest >> testWhenExitHoleIsEqualToBoardSizeThenIsInvalid [
 
 	self
 		should: [
-			Game
-				withBoardSize: 10
-				withSpaceShips: 2
-				withDiceSet: {  }
-				withWormHole: { 10. 2 }
-				withAmountOfLaps: 1
-				withCellConfigurations: {  } ]
+			Board
+				withSize: 100
+				composedOf: (WormHole startingAt: 100 endingAt: 4)
+				andACellConfiguration: {  } ]
 		raise: Error
 		withMessageText: 'WormHole exit must be within board limits.'
 ]
@@ -101,13 +101,10 @@ WormHoleTest >> testWhenExitHoleIsHigherThanABoardSizeThenIsInvalid [
 
 	self
 		should: [
-			Game
-				withBoardSize: 10
-				withSpaceShips: 2
-				withDiceSet: {  }
-				withWormHole: { 100. 2 }
-				withAmountOfLaps: 1
-				withCellConfigurations: {  } ]
+			Board
+				withSize: 100
+				composedOf: (WormHole startingAt: 1000 endingAt: 4)
+				andACellConfiguration: {  } ]
 		raise: Error
 		withMessageText: 'WormHole exit must be within board limits.'
 ]
@@ -116,7 +113,7 @@ WormHoleTest >> testWhenExitHoleIsHigherThanABoardSizeThenIsInvalid [
 WormHoleTest >> testWhenWormHoleIsNotAnIntThenIsInvalid [
 
 	self
-		should: [ WormHole withGates: '2' ]
+		should: [ WormHole startingAt: 4 endingAt: '7' ]
 		raise: Error
-		withMessageText: 'The Worm Hole Position Must have at least 2 positions.'
+		withMessageText: 'WormHole must be a pair of integers.'
 ]

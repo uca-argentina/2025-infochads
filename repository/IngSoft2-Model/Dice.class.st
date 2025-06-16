@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Dice class >> sidesMustBePositiveInteger: aNumberOfSides [
+Dice class >> theSidesMustBePositive: aNumberOfSides [
 
 	(aNumberOfSides isInteger not or: [ aNumberOfSides negative ])
 		ifTrue: [
@@ -19,7 +19,7 @@ Dice class >> sidesMustBePositiveInteger: aNumberOfSides [
 { #category : 'as yet unclassified' }
 Dice class >> withSides: aNumberOfSides [
 
-	self sidesMustBePositiveInteger: aNumberOfSides.
+	self theSidesMustBePositive: aNumberOfSides.
 	^ self new initializeWithSides: aNumberOfSides
 ]
 
@@ -27,11 +27,11 @@ Dice class >> withSides: aNumberOfSides [
 Dice >> initializeWithSides: aNumberOfSides [
 
 	numberOfSides := aNumberOfSides.
-	^ self
+
 ]
 
 { #category : 'as yet unclassified' }
 Dice >> roll [
 
-	^ (1 to: numberOfSides) atRandom
+	^ numberOfSides atRandom
 ]

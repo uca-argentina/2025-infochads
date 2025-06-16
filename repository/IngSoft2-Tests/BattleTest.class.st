@@ -19,16 +19,18 @@ BattleTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMes
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2Turns [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith:
 		            { 5. 5. 1. 2. 6. 1. 1. 2. 7. 1. 1. 2. 1. 1. 1. 1 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 100
-		         withSpaceShips: 2
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
 	aGame start.
 
@@ -39,16 +41,18 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2TurnsAndThenItMoves1 [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith:
 		            { 5. 5. 1. 2. 6. 1. 1. 2. 7. 1. 1. 2. 1. 1. 1. 1. 1. 1 }.
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 100
-		         withSpaceShips: 2
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-		         withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 1.
 	aGame start.
 
 	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
@@ -58,15 +62,17 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2EnconterAfterOneRoundAndShip1WinsThenShip2ReturnsToStart [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 2. 5. 5. 2. 2. 1 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 20
-		         withSpaceShips: 2
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
 	aGame start.
 
@@ -77,33 +83,37 @@ BattleTest >> testWhenShip1AndShip2EnconterAfterOneRoundAndShip1WinsThenShip2Ret
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsAndShip2Loses1ShieldThenShip2Toss0ToRecoverTo3Shields [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 5. 5. 3. 2. 1. 0 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 20
-		         withSpaceShips: 2
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
 	aGame start.
 
-	self assert: (aGame shieldStatus: 2) equals: 3.
+	self assert: (aGame shieldStatus: 2) equals: 3
 ]
 
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2NowHas2Shields [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 5. 5. 2. 1 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 2
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
 	aGame start.
 
@@ -114,15 +124,17 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2NowHas2Shields [
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2ReturnsToStart [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 5. 5. 2. 1 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 2
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
 	aGame start.
 
@@ -133,15 +145,17 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2ReturnsToStart [
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip1ReturnsToStart [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 5. 5. 1. 2 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 2
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
 	aGame start.
 
@@ -152,15 +166,17 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip1ReturnsToStart [
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip2NowHas2Shields [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 5. 5. 1. 2 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 2
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
 	aGame start.
 
@@ -171,15 +187,17 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip2NowHas2Shields [
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip2EnconterAndTheyTossTheSameNumberThenTheyTossTillTheyAreDifferent [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 5. 5. 2. 2. 3. 3. 3. 1 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 2
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
 	aGame start.
 
@@ -190,15 +208,17 @@ BattleTest >> testWhenShip1AndShip2EnconterAndTheyTossTheSameNumberThenTheyTossT
 { #category : 'tests' }
 BattleTest >> testWhenShip1AndShip3EnconterAndShip1WinsThenShip3ReturnsToStart [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 5. 1. 5. 2. 1 }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 3
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 3
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
 	aGame start.
 
@@ -210,15 +230,17 @@ BattleTest >> testWhenShip1AndShip3EnconterAndShip1WinsThenShip3ReturnsToStart [
 { #category : 'tests' }
 BattleTest >> testWhenShip1Has3ShieldsThenShip1CantSkipTurns [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 0. }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 20
-		         withSpaceShips: 2
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 3
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
 	self
 		should: [ aGame start ]
