@@ -34,8 +34,8 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 10
+	self assert: (aGame positionOf: 1) equals: 1.
+	self assert: (aGame positionOf: 2) equals: 10
 ]
 
 { #category : 'tests' }
@@ -55,8 +55,8 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 		         wonAfter: 1.
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 11
+	self assert: (aGame positionOf: 1) equals: 2.
+	self assert: (aGame positionOf: 2) equals: 11
 ]
 
 { #category : 'tests' }
@@ -76,8 +76,8 @@ BattleTest >> testWhenShip1AndShip2EnconterAfterOneRoundAndShip1WinsThenShip2Ret
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 8.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 1
+	self assert: (aGame positionOf: 1) equals: 8.
+	self assert: (aGame positionOf: 2) equals: 1
 ]
 
 { #category : 'tests' }
@@ -97,7 +97,7 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsAndShip2Loses1ShieldThenS
 
 	aGame start.
 
-	self assert: (aGame shieldStatus: 2) equals: 3
+	self assert: (aGame shieldOf: 2) equals: 3
 ]
 
 { #category : 'tests' }
@@ -117,8 +117,8 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2NowHas2Shields [
 
 	aGame start.
 
-	self assert: (aGame shieldStatus: 2) equals: 2.
-	self assert: (aGame shieldStatus: 1) equals: 3.
+	self assert: (aGame shieldOf: 2) equals: 2.
+	self assert: (aGame shieldOf: 1) equals: 3.
 ]
 
 { #category : 'tests' }
@@ -138,8 +138,8 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2ReturnsToStart [
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 6.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 1
+	self assert: (aGame positionOf: 1) equals: 6.
+	self assert: (aGame positionOf: 2) equals: 1
 ]
 
 { #category : 'tests' }
@@ -159,8 +159,8 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip1ReturnsToStart [
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 6
+	self assert: (aGame positionOf: 1) equals: 1.
+	self assert: (aGame positionOf: 2) equals: 6
 ]
 
 { #category : 'tests' }
@@ -180,8 +180,8 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip2NowHas2Shields [
 
 	aGame start.
 
-	self assert: (aGame shieldStatus: 1) equals: 2.
-	self assert: (aGame shieldStatus: 2) equals: 3.
+	self assert: (aGame shieldOf: 1) equals: 2.
+	self assert: (aGame shieldOf: 2) equals: 3.
 ]
 
 { #category : 'tests' }
@@ -201,8 +201,8 @@ BattleTest >> testWhenShip1AndShip2EnconterAndTheyTossTheSameNumberThenTheyTossT
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 6.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 1
+	self assert: (aGame positionOf: 1) equals: 6.
+	self assert: (aGame positionOf: 2) equals: 1
 ]
 
 { #category : 'tests' }
@@ -222,9 +222,9 @@ BattleTest >> testWhenShip1AndShip3EnconterAndShip1WinsThenShip3ReturnsToStart [
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 6.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 2.
-	self assert: (aGame positionOfSpaceShip: 3) equals: 1
+	self assert: (aGame positionOf: 1) equals: 6.
+	self assert: (aGame positionOf: 2) equals: 2.
+	self assert: (aGame positionOf: 3) equals: 1
 ]
 
 { #category : 'tests' }

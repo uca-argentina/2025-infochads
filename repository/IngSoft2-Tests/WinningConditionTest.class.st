@@ -43,8 +43,8 @@ WinningConditionTest >> testWhenAfterARoundSpaceShip1WinsGameIsOverThenInformsSp
 	aGame start.
 
 	self assert: aGame isOver.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 4.
-	self assert: (aGame positionOfSpaceShip: 3) equals: 8
+	self assert: (aGame positionOf: 2) equals: 4.
+	self assert: (aGame positionOf: 3) equals: 8
 ]
 
 { #category : 'tests' }
@@ -84,7 +84,7 @@ WinningConditionTest >> testWhenSpaceShip1HasMovedToTheEndOfThenGameIsOver [
 
 	aGame start.
 	self assert: aGame isOver.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 10
+	self assert: (aGame positionOf: 1) equals: 10
 ]
 
 { #category : 'tests' }
@@ -125,7 +125,7 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsGameThenInformsS
 	aGame start.
 
 	self assert: aGame isOver.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 4
+	self assert: (aGame positionOf: 1) equals: 4
 ]
 
 { #category : 'tests' }
@@ -166,9 +166,9 @@ WinningConditionTest >> testWhenSpaceShip1WinsAndInformsSpaceShip1_2And3Position
 	aGame start.
 
 	self assert: aGame isOver.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 10.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 3) equals: 1
+	self assert: (aGame positionOf: 1) equals: 10.
+	self assert: (aGame positionOf: 2) equals: 1.
+	self assert: (aGame positionOf: 3) equals: 1
 ]
 
 { #category : 'tests' }
@@ -191,6 +191,6 @@ WinningConditionTest >> testWhenSpaceShip3WinsGameIsOverThenInformsSpaceShip1And
 	self assert: aGame isOver.
 
 	self assert: aGame isOver.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 2.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 3
+	self assert: (aGame positionOf: 1) equals: 2.
+	self assert: (aGame positionOf: 2) equals: 3
 ]

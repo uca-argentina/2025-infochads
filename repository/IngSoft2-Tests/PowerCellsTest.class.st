@@ -56,10 +56,10 @@ PowerCellsTest >> testWhenAForthShipMovesToAHyperJumpWith100ParsecDivisionAnd30_
 		         wonAfter: 4.
 
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 33.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 23.
-	self assert: (aGame positionOfSpaceShip: 3) equals: 13.
-	self assert: (aGame positionOfSpaceShip: 4) equals: 1
+	self assert: (aGame positionOf: 1) equals: 33.
+	self assert: (aGame positionOf: 2) equals: 23.
+	self assert: (aGame positionOf: 3) equals: 13.
+	self assert: (aGame positionOf: 4) equals: 1
 ]
 
 { #category : 'tests' }
@@ -121,8 +121,8 @@ PowerCellsTest >> testWhenARandomizedBoardThenTheFirstAndLastPositionsAreNormalC
 		         wonAfter: 2.
 
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 50
+	self assert: (aGame positionOf: 1) equals: 1.
+	self assert: (aGame positionOf: 2) equals: 50
 ]
 
 { #category : 'tests' }
@@ -145,7 +145,7 @@ PowerCellsTest >> testWhenAShipMovesLandsOnAPowerCellAndMovesDueToItThenTheNextP
 
 
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 42
+	self assert: (aGame positionOf: 1) equals: 42
 ]
 
 { #category : 'tests' }
@@ -167,7 +167,7 @@ PowerCellsTest >> testWhenAShipMovesToAHyperJumpWith50ParsecDivisionAnd30_20_10J
 		         wonAfter: 2.
 
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 21
+	self assert: (aGame positionOf: 1) equals: 21
 ]
 
 { #category : 'tests' }
@@ -189,9 +189,9 @@ PowerCellsTest >> testWhenAThirdShipMovesToAHyperJumpWith100ParsecDivisionAnd30_
 		         wonAfter: 2.
 
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 6.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 3) equals: 46
+	self assert: (aGame positionOf: 1) equals: 6.
+	self assert: (aGame positionOf: 2) equals: 1.
+	self assert: (aGame positionOf: 3) equals: 46
 ]
 
 { #category : 'tests' }
@@ -213,8 +213,8 @@ PowerCellsTest >> testWhenAnotherShipMovesToAHyperJumpWith100ParsecDivisionAnd30
 		         wonAfter: 2.
 
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 6.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 1
+	self assert: (aGame positionOf: 1) equals: 6.
+	self assert: (aGame positionOf: 2) equals: 1
 ]
 
 { #category : 'tests' }
@@ -251,7 +251,7 @@ PowerCellsTest >> testWhenShipIsMovedByAnEffectToAWormHoleThenIsTPdToACellThatHa
 		         wonAfter: 2.
 
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 4
+	self assert: (aGame positionOf: 1) equals: 4
 ]
 
 { #category : 'tests' }
@@ -272,10 +272,10 @@ PowerCellsTest >> testWhenShipMovesToAAtomicBombCellThenAllShipsReturnToBeguinin
 		         wonAfter: 2.
 
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
-	self assert: (aGame shieldStatus: 1) equals: 2.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
-	self assert: (aGame shieldStatus: 2) equals: 2
+	self assert: (aGame positionOf: 1) equals: 1.
+	self assert: (aGame shieldOf: 1) equals: 2.
+	self assert: (aGame positionOf: 2) equals: 1.
+	self assert: (aGame shieldOf: 2) equals: 2
 ]
 
 { #category : 'tests' }
@@ -297,7 +297,7 @@ PowerCellsTest >> testWhenShipMovesToABlackHoleCellThenItGoesBack4Spaces [
 		         wonAfter: 1.
 
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 17
+	self assert: (aGame positionOf: 1) equals: 17
 ]
 
 { #category : 'tests' }
@@ -319,7 +319,7 @@ PowerCellsTest >> testWhenShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10J
 		         wonAfter: 2.
 
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 6
+	self assert: (aGame positionOf: 1) equals: 6
 ]
 
 { #category : 'tests' }
@@ -341,8 +341,8 @@ PowerCellsTest >> testWhenShipMovesToAHyperSpaceJumpCellThenItMovesForward4Space
 		         wonAfter: 2.
 
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 35.
-	self assert: (aGame shieldStatus: 1) equals: 2
+	self assert: (aGame positionOf: 1) equals: 35.
+	self assert: (aGame shieldOf: 1) equals: 2
 ]
 
 { #category : 'tests' }
@@ -364,9 +364,9 @@ PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf4ThenItMovesEveryShipExceptF
 		         wonAfter: 1.
 
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 3.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 8.
-	self assert: (aGame positionOfSpaceShip: 3) equals: 47
+	self assert: (aGame positionOf: 1) equals: 3.
+	self assert: (aGame positionOf: 2) equals: 8.
+	self assert: (aGame positionOf: 3) equals: 47
 ]
 
 { #category : 'tests' }
@@ -388,9 +388,9 @@ PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf6ThenItMovesEveryShipExceptF
 		         wonAfter: 1.
 
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 39.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 55.
-	self assert: (aGame positionOfSpaceShip: 3) equals: 71
+	self assert: (aGame positionOf: 1) equals: 39.
+	self assert: (aGame positionOf: 2) equals: 55.
+	self assert: (aGame positionOf: 3) equals: 71
 ]
 
 { #category : 'tests' }
@@ -412,9 +412,9 @@ PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf6ThenShipWithNegativePositio
 		         wonAfter: 1.
 
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 3) equals: 46
+	self assert: (aGame positionOf: 1) equals: 1.
+	self assert: (aGame positionOf: 2) equals: 1.
+	self assert: (aGame positionOf: 3) equals: 46
 ]
 
 { #category : 'tests' }
@@ -436,7 +436,7 @@ PowerCellsTest >> testWhenShipMovesToNormalCellThenItStaysThere [
 		         wonAfter: 1.
 
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 2
+	self assert: (aGame positionOf: 1) equals: 2
 ]
 
 { #category : 'tests' }
@@ -458,5 +458,5 @@ PowerCellsTest >> testWhenShipMovesToNormalInABiggerBoardCellThenItStaysThere [
 		         wonAfter: 1.
 
 	aGame start.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 39
+	self assert: (aGame positionOf: 1) equals: 39
 ]

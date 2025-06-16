@@ -51,16 +51,16 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 ]
 
 { #category : 'as yet unclassified' }
-Game >> battleBetween: arg1 and: arg2 [
+Game >> battleBetween: spaceShip1 and: spaceShip2 [
 
-	| tmp1 tmp2 |
+	| throwSpaceShip1 throwSpaceShip2 |
 	[
-	tmp2 := diceSet toss.
-	tmp1 := diceSet toss.
-	tmp1 = tmp2 ] whileTrue: [  ].
-	tmp1 < tmp2
-		ifTrue: [ arg1 lostBattle ]
-		ifFalse: [ arg2 lostBattle ]
+	throwSpaceShip2 := diceSet toss.
+	throwSpaceShip1 := diceSet toss.
+	throwSpaceShip1 = throwSpaceShip2 ] whileTrue: [  ].
+	throwSpaceShip1 < throwSpaceShip2
+		ifTrue: [ spaceShip1 lostBattle ]
+		ifFalse: [ spaceShip2 lostBattle ]
 ]
 
 { #category : 'informationTest' }
@@ -73,7 +73,7 @@ Game >> getRanking [
 		           ship1 getLaps -> ship1 getPosition
 		           > (ship2 getLaps -> ship2 getPosition) ].
 
-	^ ((ranking first: (ranking size min: 3)) collect: [ :each |
+	^ (ranking collect: [ :each |
 		   each getID ]) asArray
 ]
 
@@ -103,7 +103,7 @@ Game >> isOver [
 ]
 
 { #category : 'informationTest' }
-Game >> lapOfSpaceShip: aSpaceShipID [
+Game >> lapOf: aSpaceShipID [
 
 	^ (spaceShips at: aSpaceShipID) getLaps
 ]
@@ -116,35 +116,53 @@ Game >> lookForBattle: aSpaceShip [
 
 	opponentShip := self obtainOponentShip: aSpaceShip.
 
-	opponentShip ifNotNil: [
+	(opponentShip == aSpaceShip) ifFalse: [
 		self battleBetween: aSpaceShip and: opponentShip ]
+]
+
+{ #category : 'as yet unclassified' }
+Game >> move: aSpaceShip after: diceRoll [
+
+	(self skippingTurn: aSpaceShip after: diceRoll) ifTrue: [ ^ self ].
+
+	aSpaceShip goToTemporaryPosition: diceRoll.
+
+	board adjust: spaceShips positionAnd: laps.
+
+	board checkForPowerUps: aSpaceShip andAllSpaceShips: spaceShips.
+
+	board adjust: spaceShips positionAnd: laps.
+
+	self lookForBattle: aSpaceShip
 ]
 
 { #category : 'as yet unclassified' }
 Game >> obtainOponentShip: aSpaceShip [
 
 	| otherShips |
-	otherShips := spaceShips select: [ :ship | ship ~= aSpaceShip ].
+	otherShips := spaceShips reject: [ :ship | ship = aSpaceShip ].
+
+	otherShips ifEmpty: [ ^ aSpaceShip ].
 
 	^ otherShips
 		  detect: [ :ship | ship getPosition = aSpaceShip getPosition ]
-		  ifNone: [ nil ]
+		  ifNone: [ aSpaceShip ]
 ]
 
 { #category : 'informationTest' }
-Game >> positionOfSpaceShip: aSpaceShipID [
+Game >> positionOf: aSpaceShipID [
 
 	^ (spaceShips at: aSpaceShipID) getPosition.
 ]
 
 { #category : 'informationTest' }
-Game >> shieldStatus: aSpaceShipID [
+Game >> shieldOf: aSpaceShipID [
 
 	^ (spaceShips at: aSpaceShipID) getShield
 ]
 
 { #category : 'as yet unclassified' }
-Game >> skippingTurns: aSpaceShip withRoll: aDiceRoll [
+Game >> skippingTurn: aSpaceShip after: aDiceRoll [
 
 	^ aSpaceShip skipTurns or: (aSpaceShip skipATurn: aDiceRoll)
 ]
@@ -154,10 +172,11 @@ Game >> start [
 
 	| diceRoll spaceShip |
 	diceRoll := diceSet toss.
+	"-1 allows to stop the rigged dice"
 	[ self isGameOver or: diceRoll = -1 ] whileFalse: [
 		spaceShip := spaceShips at: nextSpaceShipToMove.
 
-		self the: spaceShip hasRolled: diceRoll.
+		self move: spaceShip after: diceRoll.
 		
 		self updateNextShipToMove: nextSpaceShipToMove.
 		diceRoll := diceSet toss ]
@@ -173,22 +192,6 @@ Game >> startingPositions: aNumberOfSpaceShips [
 				 andInitialPosition: 1
 				 andID: id) ].
 	1.
-]
-
-{ #category : 'as yet unclassified' }
-Game >> the: aSpaceShip hasRolled: diceRoll [
-
-	(self skippingTurns: aSpaceShip withRoll: diceRoll) ifTrue: [ ^ self ].
-
-	aSpaceShip goToTemporaryPosition: diceRoll.
-
-	board adjust: spaceShips positionAnd: laps.
-
-	board checkForPowerUps: aSpaceShip andAllSpaceShips: spaceShips.
-
-	board adjust: spaceShips positionAnd: laps.
-
-	self lookForBattle: aSpaceShip
 ]
 
 { #category : 'as yet unclassified' }

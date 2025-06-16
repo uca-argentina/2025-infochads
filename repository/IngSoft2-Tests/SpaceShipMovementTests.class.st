@@ -33,7 +33,7 @@ SpaceShipMovementTests >> testWhenARiggedDiceToss6ThenShipMovesTo7 [
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 7
+	self assert: (aGame positionOf: 1) equals: 7
 ]
 
 { #category : 'tests' }
@@ -53,7 +53,7 @@ SpaceShipMovementTests >> testWhenDiceRolls5ThenMovesSpaceShipToPosition6 [
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 6
+	self assert: (aGame positionOf: 1) equals: 6
 ]
 
 { #category : 'tests' }
@@ -73,7 +73,7 @@ SpaceShipMovementTests >> testWhenRiggedDiceToss1_2ThenShip1MovesTo4 [
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 4
+	self assert: (aGame positionOf: 1) equals: 4
 ]
 
 { #category : 'tests' }
@@ -92,5 +92,5 @@ SpaceShipMovementTests >> testWhenRiggedDiceToss1_2_3ThenShip1MovesTo7 [
 		         wonAfter: 1.
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 7
+	self assert: (aGame positionOf: 1) equals: 7
 ]

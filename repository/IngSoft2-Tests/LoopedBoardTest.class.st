@@ -32,8 +32,8 @@ LoopedBoardTest >> testWhenASpaceShipGetsToTheEndMadeTheMaxLapsFromGameThenIsOve
 
 	aGame start.
 
-	self assert: (aGame lapOfSpaceShip: 1) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 11.
+	self assert: (aGame lapOf: 1) equals: 1.
+	self assert: (aGame positionOf: 1) equals: 11.
 	self assert: aGame isOver
 ]
 
@@ -54,8 +54,8 @@ LoopedBoardTest >> testWhenGameStartsAndSpaceShipsHaventMadeALap [
 
 	aGame start.
 
-	self assert: (aGame lapOfSpaceShip: 1) equals: 0.
-	self assert: (aGame lapOfSpaceShip: 2) equals: 0
+	self assert: (aGame lapOf: 1) equals: 0.
+	self assert: (aGame lapOf: 2) equals: 0
 ]
 
 { #category : 'tests' }
@@ -75,8 +75,8 @@ LoopedBoardTest >> testWhenShip1MakesALapAndExceedsTheEndOfBoardInFinalLapUsingM
 
 	aGame start.
 
-	self assert: (aGame lapOfSpaceShip: 1) equals: 2.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 10.
+	self assert: (aGame lapOf: 1) equals: 2.
+	self assert: (aGame positionOf: 1) equals: 10.
 	self assert: aGame isOver
 ]
 
@@ -97,8 +97,8 @@ LoopedBoardTest >> testWhenShip1MakesALapAndExceedsTheEndOfBoardInFinalLapUsingS
 
 	aGame start.
 
-	self assert: (aGame lapOfSpaceShip: 1) equals: 2.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 10.
+	self assert: (aGame lapOf: 1) equals: 2.
+	self assert: (aGame positionOf: 1) equals: 10.
 	self assert: aGame isOver
 ]
 
@@ -118,8 +118,8 @@ LoopedBoardTest >> testWhenShip1MakesALapAndGetToTheEndOfLap2UsingASingleThrowTh
 		         wonAfter: 2.
 	aGame start.
 
-	self assert: (aGame lapOfSpaceShip: 1) equals: 2.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 10.
+	self assert: (aGame lapOf: 1) equals: 2.
+	self assert: (aGame positionOf: 1) equals: 10.
 	self assert: aGame isOver
 ]
 
@@ -140,8 +140,8 @@ LoopedBoardTest >> testWhenShip1MakesALapAndGetToTheEndOfLap2UsingMultipleThrows
 
 	aGame start.
 
-	self assert: (aGame lapOfSpaceShip: 1) equals: 2.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 10.
+	self assert: (aGame lapOf: 1) equals: 2.
+	self assert: (aGame positionOf: 1) equals: 10.
 	self assert: aGame isOver
 ]
 
@@ -162,8 +162,8 @@ LoopedBoardTest >> testWhenSpaceShipMakesALapTheExcessThrowIsUsedToMoveInTheNext
 
 	aGame start.
 
-	self assert: (aGame lapOfSpaceShip: 1) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 4
+	self assert: (aGame lapOf: 1) equals: 1.
+	self assert: (aGame positionOf: 1) equals: 4
 ]
 
 { #category : 'tests' }

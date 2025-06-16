@@ -32,7 +32,7 @@ WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnFirstWormHoleThenTeleportsToSec
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 7
+	self assert: (aGame positionOf: 1) equals: 7
 ]
 
 { #category : 'tests' }
@@ -53,7 +53,7 @@ WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnSecondWormHoleThenTeleportsToFi
 
 	aGame start.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 3
+	self assert: (aGame positionOf: 1) equals: 3
 ]
 
 { #category : 'tests' }

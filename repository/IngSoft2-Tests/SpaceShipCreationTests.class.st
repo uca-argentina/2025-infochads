@@ -30,9 +30,9 @@ SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPosi
 		         throwing: aDiceSet
 		         wonAfter: 1.
 
-	self assert: (aGame positionOfSpaceShip: 3) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 1
+	self assert: (aGame positionOf: 3) equals: 1.
+	self assert: (aGame positionOf: 2) equals: 1.
+	self assert: (aGame positionOf: 1) equals: 1
 ]
 
 { #category : 'tests' }
@@ -112,7 +112,7 @@ SpaceShipCreationTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs1
 		         throwing: aDiceSet
 		         wonAfter: 1.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 1
+	self assert: (aGame positionOf: 1) equals: 1
 ]
 
 { #category : 'tests' }
@@ -130,6 +130,6 @@ SpaceShipCreationTests >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositions
 		         throwing: aDiceSet
 		         wonAfter: 1.
 
-	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 1
+	self assert: (aGame positionOf: 2) equals: 1.
+	self assert: (aGame positionOf: 1) equals: 1
 ]
