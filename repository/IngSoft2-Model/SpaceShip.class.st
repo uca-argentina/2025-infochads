@@ -57,22 +57,16 @@ SpaceShip >> getLaps [
 	^ laps
 ]
 
-{ #category : 'getters' }
+{ #category : 'accessing' }
 SpaceShip >> getPosition [
 
-	^ position
+	^ position position
 ]
 
 { #category : 'getters' }
 SpaceShip >> getShield [
 
 	^ shield
-]
-
-{ #category : 'positions' }
-SpaceShip >> goToPosition: aPosition [
-	
-	position := position + aPosition.
 ]
 
 { #category : 'initialization' }
@@ -96,8 +90,14 @@ SpaceShip >> loseShield [
 { #category : 'accessing' }
 SpaceShip >> lostBattle [
 
-	self returnToBeginingOfLap.
+	position toBeginningOfLap.
 	self loseShield
+]
+
+{ #category : 'accessing' }
+SpaceShip >> position [
+
+	^ position
 ]
 
 { #category : 'shield' }
@@ -106,12 +106,6 @@ SpaceShip >> rechargableShield: aDiceRoll [
 	(shield = 3 and: aDiceRoll = 0) ifTrue: [
 		Error signal: 
 			'The Shield is already full, it cant be recharged.' ]
-]
-
-{ #category : 'laps and position' }
-SpaceShip >> returnToBeginingOfLap [
-
-	position := 1.
 ]
 
 { #category : 'accessing' }
@@ -135,14 +129,8 @@ SpaceShip >> skipTurns [
 		ifFalse: [ ^ false ]
 ]
 
-{ #category : 'laps' }
-SpaceShip >> updateLap: numberOfLaps [
-
-	laps := laps + numberOfLaps
-]
-
-{ #category : 'positions' }
+{ #category : 'as yet unclassified' }
 SpaceShip >> updatePosition: aPosition [
 
-	position := aPosition.
+	position := aPosition
 ]

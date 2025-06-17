@@ -28,28 +28,11 @@ Board class >> withSize: aBoardSize composedOf: aWormHole andACellConfiguration:
 ]
 
 { #category : 'as yet unclassified' }
-Board >> adjust: spaceShips positionAnd: laps [
+Board >> adjust: spaceShips positionAnd: totalLaps [
 
 	spaceShips do: [ :ship |
-		self boardLimitAdjustment: ship withTotalLaps: laps ]
-]
-
-{ #category : 'as yet unclassified' }
-Board >> boardLimitAdjustment: aSpaceShip withTotalLaps: totalLaps [
-
-	aSpaceShip getPosition <= 0 ifTrue: [
-		aSpaceShip updateTemporaryPosition: 1 ].
-	
-	(self the: aSpaceShip hasReached: totalLaps) ifTrue: [
-		aSpaceShip finishAt: boardSize withLaps: totalLaps.
-		^ self ].
-
-	(aSpaceShip getPosition <= boardSize ) ifTrue: [ ^ self ].
-
-
-	aSpaceShip updateLap: (aSpaceShip getPosition) // boardSize.
-	aSpaceShip updatePosition:
-		(aSpaceShip getPosition) \\ boardSize
+		ship updatePosition:
+			(self limitAdjustment: ship position withTotalLaps: totalLaps) ]
 ]
 
 { #category : 'accessing' }
@@ -63,10 +46,9 @@ Board >> checkForPowerUps: aSpaceShip andAllSpaceShips: allSpaceShips [
 
 	| cell |
 	gameBoard ifNotEmpty: [
-		cell := gameBoard at: aSpaceShip getTemporaryPosition.
+		cell := gameBoard at: aSpaceShip getPosition.
 		cell takeAction: aSpaceShip andOtherSpaceShips: allSpaceShips ].
 
-	self checkForWormHole: aSpaceShip
 ]
 
 { #category : 'as yet unclassified' }
@@ -91,8 +73,29 @@ Board >> initializeWithSize: aBoardSize composedOf: aWormHole andConfiguration: 
 ]
 
 { #category : 'as yet unclassified' }
-Board >> the: aSpaceShip hasReached: totalLaps [
+Board >> limitAdjustment: aPosition withTotalLaps: totalLaps [
 
-	^ aSpaceShip getPosition + (aSpaceShip getLaps * boardSize)
+	aPosition position <= 0 ifTrue: [
+		aPosition toBeginningOfLap.
+		^ aPosition ].
+
+	(self the: aPosition position hasReached: totalLaps) ifTrue: [
+		aPosition migrateToPosition: boardSize.
+		aPosition migrateToLap: totalLaps.
+		^ aPosition ].
+
+	aPosition position <= boardSize ifTrue: [ ^ aPosition ].
+
+
+	aPosition migrateToLap: aPosition position // boardSize.
+	aPosition migrateToPosition: aPosition position \\ boardSize.
+
+	^ aPosition
+]
+
+{ #category : 'as yet unclassified' }
+Board >> the: aPosition hasReached: totalLaps [
+
+	^ aPosition position + (aPosition lap * boardSize)
 	  >= (totalLaps * boardSize)
 ]

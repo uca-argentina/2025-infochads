@@ -121,15 +121,20 @@ Game >> lookForBattle: aSpaceShip [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> move: aSpaceShip after: diceRoll [
+Game >> move: aSpaceShip after: aDiceRoll [
 
-	(self skippingTurn: aSpaceShip after: diceRoll) ifTrue: [ ^ self ].
+	| aPosition |
+	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
+	aPosition := Position at: aDiceRoll.
+	"aSpaceShip goToPosition: aDiceRoll."
+	aPosition sumTo: (aSpaceShip position).
 
-	aSpaceShip goToPosition: diceRoll.
-
-	board adjust: spaceShips positionAnd: laps.
+	aPosition := board limitAdjustment: aPosition withTotalLaps: laps.
+	
+	aSpaceShip setPosition: aPosition.
 
 	board checkForPowerUps: aSpaceShip andAllSpaceShips: spaceShips.
+	board checkForWormHole: aSpaceShip.
 
 	board adjust: spaceShips positionAnd: laps.
 
@@ -170,23 +175,23 @@ Game >> skippingTurn: aSpaceShip after: aDiceRoll [
 { #category : 'accessing' }
 Game >> start [
 
-	| diceRoll spaceShip |
-	diceRoll := diceSet toss.
+	| aDiceRoll spaceShip |
+	aDiceRoll := diceSet toss.
 	"-1 allows to stop the rigged dice"
-	[ self isGameOver or: diceRoll = -1 ] whileFalse: [
+	[ self isGameOver or: aDiceRoll = -1 ] whileFalse: [
 		spaceShip := spaceShips at: nextSpaceShipToMove.
 
-		self move: spaceShip after: diceRoll.
-		
+		self move: spaceShip after: aDiceRoll.
+
 		self updateNextShipToMove: nextSpaceShipToMove.
-		diceRoll := diceSet toss ]
+		aDiceRoll := diceSet toss ]
 ]
 
 { #category : 'whats left of race positions' }
 Game >> startingPositions: aNumberOfSpaceShips [
 
 	| aPosition aShield |
-	aPosition := 1"Position at: 1.".
+	aPosition := Position at: 1 withLaps: 1.
 	aShield := 3.
 
 	spaceShips := OrderedCollection new.
