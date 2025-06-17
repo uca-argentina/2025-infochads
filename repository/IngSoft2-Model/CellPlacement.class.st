@@ -3,8 +3,7 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'boardSize',
-		'rawCellDistribution',
-		'distribution'
+		'rawCellDistribution'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'

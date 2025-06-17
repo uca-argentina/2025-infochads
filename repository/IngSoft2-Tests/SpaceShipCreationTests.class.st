@@ -143,24 +143,6 @@ SpaceShipCreationTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs1
 ]
 
 { #category : 'tests' }
-SpaceShipCreationTests >> testWhenSpaceShipDoesntHaveANumberAsPositionThenCreationFails [
-
-	self
-		should: [ SpaceShip with: 1 initial: '1' andStartingWith: 3 ]
-		raise: Error
-		withMessageText: 'The ship must start at the beguinning.'
-]
-
-{ #category : 'tests' }
-SpaceShipCreationTests >> testWhenSpaceShipDoesntStartAtTheBeguinningThenCreationFails [
-
-	self
-		should: [ SpaceShip with: 1 initial: 11 andStartingWith: 3 ]
-		raise: Error
-		withMessageText: 'The ship must start at the beguinning.'
-]
-
-{ #category : 'tests' }
 SpaceShipCreationTests >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositionsAre1 [
 
 	| aGame aDiceSet aBoard |

@@ -28,17 +28,9 @@ SpaceShip class >> itMustHaveThree: aShield [
 ]
 
 { #category : 'as yet unclassified' }
-SpaceShip class >> itMustStartAtTheBeguining: aPosition [
-	
-	(aPosition isInteger and: [ aPosition = 1 ]) ifFalse: [
-		Error signal: 'The ship must start at the beguinning.' ]
-]
-
-{ #category : 'as yet unclassified' }
 SpaceShip class >> with: anId initial: aPosition andStartingWith: aShield [
 
 	self itMustHaveThree: aShield.
-	self itMustStartAtTheBeguining: aPosition.
 	self itMustHaveAnID: anId.
 
 	^ self new
