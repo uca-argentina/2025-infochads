@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Board class >> boardSizeMustBePositiveOverZero: aBoardSize [
+Board class >> assertIsPositiveOverZero: aBoardSize [
 
 	(aBoardSize isInteger and: [ aBoardSize > 0 ]) ifFalse: [
 		Error signal: 'Board Size must be a positive interger.' ]
@@ -20,7 +20,7 @@ Board class >> boardSizeMustBePositiveOverZero: aBoardSize [
 { #category : 'as yet unclassified' }
 Board class >> withSize: aBoardSize composedOf: aWormHole andACellConfiguration: aConfigDiceSet [
 
-	self boardSizeMustBePositiveOverZero: aBoardSize.
+	self assertIsPositiveOverZero: aBoardSize.
 	^ self new
 		  initializeWithSize: aBoardSize
 		  composedOf: aWormHole
@@ -37,22 +37,20 @@ Board >> adjust: spaceShips positionAnd: laps [
 
 { #category : 'as yet unclassified' }
 Board >> boardLimitAdjustment: aSpaceShip withTotalLaps: totalLaps [
-	
+
 	aSpaceShip getTemporaryPosition <= 0 ifTrue: [
 		aSpaceShip updateTemporaryPosition: 1 ].
 	
-	(aSpaceShip hasReachedMaxProgressFor: totalLaps boardSize: boardSize)
-		ifTrue: [
-			aSpaceShip finishAt: boardSize withLaps: totalLaps.
-			^ self ].
+	(self the: aSpaceShip hasReached: totalLaps) ifTrue: [
+		aSpaceShip finishAt: boardSize withLaps: totalLaps.
+		^ self ].
 
-	(aSpaceShip isBeforeBoardStart: boardSize) ifTrue: [ ^ self ].
+	(aSpaceShip getTemporaryPosition <= boardSize ) ifTrue: [ ^ self ].
 
-	
 
-	aSpaceShip adjustLapAndPositionRelativeTo: boardSize.
-
-	^ self
+	aSpaceShip updateLap: aSpaceShip getTemporaryPosition // boardSize.
+	aSpaceShip updateTemporaryPosition:
+		aSpaceShip getTemporaryPosition \\ boardSize
 ]
 
 { #category : 'accessing' }
@@ -65,7 +63,7 @@ Board >> boardSize [
 Board >> checkForPowerUps: aSpaceShip andAllSpaceShips: allSpaceShips [
 
 	| cell |
-	gameBoard ifNotNil: [
+	gameBoard ifNotEmpty: [
 		cell := gameBoard at: aSpaceShip getTemporaryPosition.
 		cell takeAction: aSpaceShip andOtherSpaceShips: allSpaceShips ].
 
@@ -76,13 +74,14 @@ Board >> checkForPowerUps: aSpaceShip andAllSpaceShips: allSpaceShips [
 Board >> checkForWormHole: aSpaceShip [
 
 	aSpaceShip updateTemporaryPosition:
-		(wormHole verifyPosition: aSpaceShip getTemporaryPosition)
+		(wormHole moveifWormHole: aSpaceShip getTemporaryPosition)
 ]
 
 { #category : 'initialization' }
 Board >> initializeWithSize: aBoardSize composedOf: aWormHole andConfiguration: aConfigDiceSet [
 
 	boardSize := aBoardSize.
+
 	gameBoard := CellPlacement new
 		             createBoardWithCellConfiguration: aConfigDiceSet
 		             andSize: boardSize.
@@ -90,4 +89,11 @@ Board >> initializeWithSize: aBoardSize composedOf: aWormHole andConfiguration: 
 	wormHole := aWormHole.
 	wormHole mustBeWithInLimits: aBoardSize.
 
+]
+
+{ #category : 'as yet unclassified' }
+Board >> the: aSpaceShip hasReached: totalLaps [
+
+	^ aSpaceShip getTemporaryPosition + (aSpaceShip getLaps * boardSize)
+	  >= (totalLaps * boardSize)
 ]

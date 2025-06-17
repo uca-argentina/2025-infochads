@@ -49,14 +49,11 @@ CellPlacement >> blackHoleCellsWithPercentage: aPercentage andDesplacemets: aDes
 { #category : 'as yet unclassified' }
 CellPlacement >> createBoardWithCellConfiguration: aConfigDice andSize: aBoardSize [
 
- 
 	boardSize := aBoardSize.
 	rawCellDistribution := OrderedCollection new.
-	aConfigDice isEmpty ifTrue: [ ^ nil ].
+	aConfigDice isEmpty ifTrue: [ ^ rawCellDistribution ].
 	self generateUniverse: aConfigDice.
-	^ self extractSample.
-
-	 
+	^ self extractSample
 ]
 
 { #category : 'as yet unclassified' }

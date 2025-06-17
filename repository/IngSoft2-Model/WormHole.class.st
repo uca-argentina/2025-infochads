@@ -53,6 +53,24 @@ WormHole >> intializeStartingAt: aPosition endingAt: anotherPosition [
 ]
 
 { #category : 'as yet unclassified' }
+WormHole >> moveifWormHole: aPosition [
+
+	| auxiliaryPosition |
+	auxiliaryPosition := self
+		                     if: aPosition
+		                     isPlacedAt: entry
+		                     mustComeOutAt: exit.
+	aPosition = entry ifFalse: [
+		auxiliaryPosition := self
+			                     if: auxiliaryPosition
+			                     isPlacedAt: exit
+			                     mustComeOutAt: entry ].
+
+
+	^ auxiliaryPosition
+]
+
+{ #category : 'as yet unclassified' }
 WormHole >> mustBeWithInLimits: aBoardSize [
 
 	self verifyExistanceOfWormHole ifFalse: [ ^ self ].
@@ -81,22 +99,4 @@ WormHole >> verifyExistanceOfWormHole [
 	^ (exit = entry and: entry = 0)
 		  ifTrue: [ ^ false ]
 		  ifFalse: [ ^ true ]
-]
-
-{ #category : 'as yet unclassified' }
-WormHole >> verifyPosition: aPosition [
-
-	| auxiliaryPosition |
-	auxiliaryPosition := self
-		                     if: aPosition
-		                     isPlacedAt: entry
-		                     mustComeOutAt: exit.
-	aPosition = entry ifFalse: [
-		auxiliaryPosition := self
-			                     if: auxiliaryPosition
-			                     isPlacedAt: exit
-			                     mustComeOutAt: entry ].
-
-
-	^ auxiliaryPosition
 ]

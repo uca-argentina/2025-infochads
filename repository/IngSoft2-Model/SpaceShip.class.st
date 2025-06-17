@@ -14,13 +14,6 @@ Class {
 }
 
 { #category : 'laps and position' }
-SpaceShip >> adjustLapAndPositionRelativeTo: boardSize [
-
-	self updateLap: temporaryPosition // boardSize.
-	self updateTemporaryPosition: temporaryPosition \\ boardSize
-]
-
-{ #category : 'laps and position' }
 SpaceShip >> finishAt: finalPosition withLaps: finalLaps [
 
 	temporaryPosition := finalPosition.
@@ -63,13 +56,6 @@ SpaceShip >> goToTemporaryPosition: positionsToSum [
 	temporaryPosition := position + positionsToSum
 ]
 
-{ #category : 'laps and position' }
-SpaceShip >> hasReachedMaxProgressFor: totalLaps boardSize: boardSize [
-
-	^ temporaryPosition + (laps * boardSize)
-	  >= (totalLaps * boardSize)
-]
-
 { #category : 'initialization' }
 SpaceShip >> initializeWithShield: aNumberOfShields andInitialPosition: aPosition andID: aSpaceShipID [
 
@@ -80,12 +66,6 @@ SpaceShip >> initializeWithShield: aNumberOfShields andInitialPosition: aPositio
 	loseTurn := 0.
 	laps := 0.
 	^ self
-]
-
-{ #category : 'positions' }
-SpaceShip >> isBeforeBoardStart: aBoardSize [
-
-	^ self getTemporaryPosition <= aBoardSize
 ]
 
 { #category : 'shield' }

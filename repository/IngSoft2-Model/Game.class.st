@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Game class >> lapsMustBePositiveInteger: aNumberOfLaps [
+Game class >> lapsMustBePositive: aNumberOfLaps [
 
 	(aNumberOfLaps isInteger and: [ aNumberOfLaps > 0 ]) ifFalse: [
 		self error: 'Laps must be a positive integer.' ]
@@ -41,7 +41,7 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 
 	self numberOfSpaceShipsMustBePositive: aNumberOfSpaceShips.
 	self numberOfSpaceShipsMustBeAtLeastOne: aNumberOfSpaceShips.
-	self lapsMustBePositiveInteger: aNumberOfLaps.
+	self lapsMustBePositive: aNumberOfLaps.
 
 	^ self new
 		  initializeWithBoardSize: aBoard

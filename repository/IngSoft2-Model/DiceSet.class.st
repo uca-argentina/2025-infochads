@@ -20,12 +20,6 @@ DiceSet >> initializeWith: aSackOfDices [
 	sackOfDices := aSackOfDices.
 ]
 
-{ #category : 'testing' }
-DiceSet >> isEmpty [
-
-	^ false
-]
-
 { #category : 'as yet unclassified' }
 DiceSet >> toss [
 
