@@ -24,7 +24,7 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 		            { 5. 5. 1. 2. 6. 1. 1. 2. 7. 1. 1. 2. 1. 1. 1. 1 }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -46,7 +46,7 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 		            { 5. 5. 1. 2. 6. 1. 1. 2. 7. 1. 1. 2. 1. 1. 1. 1. 1. 1 }.
 	aBoard := Board
 		          withSize: 100
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -66,7 +66,7 @@ BattleTest >> testWhenShip1AndShip2EnconterAfterOneRoundAndShip1WinsThenShip2Ret
 	aDiceSet := RiggedDice new initializeWith: { 2. 5. 5. 2. 2. 1 }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -87,7 +87,7 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsAndShip2Loses1ShieldThenS
 	aDiceSet := RiggedDice new initializeWith: { 5. 5. 3. 2. 1. 0 }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -107,7 +107,7 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2NowHas2Shields [
 	aDiceSet := RiggedDice new initializeWith: { 5. 5. 2. 1 }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -128,7 +128,7 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2ReturnsToStart [
 	aDiceSet := RiggedDice new initializeWith: { 5. 5. 2. 1 }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -149,7 +149,7 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip1ReturnsToStart [
 	aDiceSet := RiggedDice new initializeWith: { 5. 5. 1. 2 }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -170,7 +170,7 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip2NowHas2Shields [
 	aDiceSet := RiggedDice new initializeWith: { 5. 5. 1. 2 }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -191,7 +191,7 @@ BattleTest >> testWhenShip1AndShip2EnconterAndTheyTossTheSameNumberThenTheyTossT
 	aDiceSet := RiggedDice new initializeWith: { 5. 5. 2. 2. 3. 3. 3. 1 }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -212,7 +212,7 @@ BattleTest >> testWhenShip1AndShip3EnconterAndShip1WinsThenShip3ReturnsToStart [
 	aDiceSet := RiggedDice new initializeWith: { 5. 1. 5. 2. 1 }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -234,7 +234,7 @@ BattleTest >> testWhenShip1Has3ShieldsThenShip1CantSkipTurns [
 	aDiceSet := RiggedDice new initializeWith: { 0. }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard

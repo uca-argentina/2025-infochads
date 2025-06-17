@@ -31,7 +31,7 @@ SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPosi
 	aDiceSet := RiggedDice new initializeWith: {  }.
 	aBoard := Board
 		          withSize: 100
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -69,7 +69,7 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsAStringThenCreationFails [
 	aDiceSet := RiggedDice new initializeWith: {  }.
 	aBoard := Board
 		          withSize: 100
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	self
 		should: [
@@ -90,7 +90,7 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
 	aDiceSet := RiggedDice new initializeWith: {  }.
 	aBoard := Board
 		          withSize: 100
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	self
 		should: [
@@ -110,7 +110,7 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails 
 	aDiceSet := RiggedDice new initializeWith: {  }.
 	aBoard := Board
 		          withSize: 100
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	self
 		should: [
@@ -131,7 +131,7 @@ SpaceShipCreationTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs1
 	aDiceSet := RiggedDice new initializeWith: {  }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -149,7 +149,7 @@ SpaceShipCreationTests >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositions
 	aDiceSet := RiggedDice new initializeWith: {  }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard

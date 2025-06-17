@@ -21,8 +21,7 @@ WormHole class >> startingAt: aPosition endingAt: anotherPosition [
 { #category : 'as yet unclassified' }
 WormHole class >> wormHoleExitMustBePositive: aWormHoleExit [
 
-	(aWormHoleExit isInteger and: [
-		 aWormHoleExit = 0 or: [ aWormHoleExit > 1 ] ]) ifFalse: [
+	(aWormHoleExit isInteger and: [ aWormHoleExit >= 1 ] ) ifFalse: [
 		Error signal:
 			'WormHole must be a pair of integers.' ]
 ]
@@ -96,7 +95,7 @@ WormHole >> the: position mustBeInside: aBoardsize [
 { #category : 'as yet unclassified' }
 WormHole >> verifyExistanceOfWormHole [
 
-	^ (exit = entry and: entry = 0)
+	^ (exit = entry and: entry = 1)
 		  ifTrue: [ ^ false ]
 		  ifFalse: [ ^ true ]
 ]

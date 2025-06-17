@@ -57,10 +57,10 @@ WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnSecondWormHoleThenTeleportsToFi
 ]
 
 { #category : 'tests' }
-WormHoleTest >> testWhenEntryHoleIs1ThenIsInvalid [
+WormHoleTest >> testWhenEntryHoleIsCeroThenIsInvalid [
 
 	self
-		should: [ WormHole startingAt: 1 endingAt: 7 ]
+		should: [ WormHole startingAt: 0 endingAt: 7 ]
 		raise: Error
 		withMessageText: 'WormHole must be a pair of integers.'
 ]

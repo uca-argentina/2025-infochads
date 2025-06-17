@@ -31,7 +31,7 @@ BoardTest >> testWhenBoardIsCreatedWithASizeZeroThenIsNotValid [
 		should: [
 			Board
 				withSize: 0
-				composedOf: (WormHole startingAt: 0 endingAt: 0)
+				composedOf: (WormHole startingAt: 1 endingAt: 1)
 				andACellConfiguration: {  } ]
 		raise: Error
 		withMessageText: 'Board Size must be a positive interger.'
@@ -44,7 +44,7 @@ BoardTest >> testWhenBoardIsCreatedWithAStringSizeThenIsNotValid [
 		should: [
 			Board
 				withSize: '3'
-				composedOf: (WormHole startingAt: 0 endingAt: 0)
+				composedOf: (WormHole startingAt: 1 endingAt: 1)
 				andACellConfiguration: {  } ]
 		raise: Error
 		withMessageText: 'Board Size must be a positive interger.'
@@ -56,7 +56,7 @@ BoardTest >> testWhenBoardIsCreatedWithCertainSize [
 	| aBoard |
 	aBoard := Board
 		          withSize: 13
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	self assert: aBoard boardSize equals: 13
 ]
@@ -68,7 +68,7 @@ BoardTest >> testWhenBoardIsCreatedWithNegativeSizeThenIsNotValid [
 		should: [
 			Board
 				withSize: -5
-				composedOf: (WormHole startingAt: 0 endingAt: 0)
+				composedOf: (WormHole startingAt: 1 endingAt: 1)
 				andACellConfiguration: {  } ]
 		raise: Error
 		withMessageText: 'Board Size must be a positive interger.'

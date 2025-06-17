@@ -125,7 +125,7 @@ Game >> move: aSpaceShip after: diceRoll [
 
 	(self skippingTurn: aSpaceShip after: diceRoll) ifTrue: [ ^ self ].
 
-	aSpaceShip goToTemporaryPosition: diceRoll.
+	aSpaceShip goToPosition: diceRoll.
 
 	board adjust: spaceShips positionAnd: laps.
 
@@ -186,7 +186,7 @@ Game >> start [
 Game >> startingPositions: aNumberOfSpaceShips [
 
 	| aPosition aShield |
-	aPosition := 1.
+	aPosition := 1"Position at: 1.".
 	aShield := 3.
 
 	spaceShips := OrderedCollection new.

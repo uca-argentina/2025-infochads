@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'shield',
 		'position',
-		'temporaryPosition',
 		'spaceShipID',
 		'loseTurn',
 		'laps'
@@ -42,7 +41,7 @@ SpaceShip class >> with: anId initial: aPosition andStartingWith: aShield [
 { #category : 'laps and position' }
 SpaceShip >> finishAt: finalPosition withLaps: finalLaps [
 
-	temporaryPosition := finalPosition.
+	position := finalPosition.
 	laps := finalLaps
 ]
 
@@ -70,16 +69,10 @@ SpaceShip >> getShield [
 	^ shield
 ]
 
-{ #category : 'getters' }
-SpaceShip >> getTemporaryPosition [
-
-	^ temporaryPosition
-]
-
 { #category : 'positions' }
-SpaceShip >> goToTemporaryPosition: positionsToSum [
-
-	temporaryPosition := position + positionsToSum
+SpaceShip >> goToPosition: aPosition [
+	
+	position := position + aPosition.
 ]
 
 { #category : 'initialization' }
@@ -88,7 +81,6 @@ SpaceShip >> initializeWithShield: aNumberOfShields andInitial: aPosition and: a
 	spaceShipID := aSpaceShipID.
 	shield := aNumberOfShields.
 	position := aPosition.
-	temporaryPosition := aPosition.
 	loseTurn := 0.
 	laps := 0.
 	^ self
@@ -120,7 +112,6 @@ SpaceShip >> rechargableShield: aDiceRoll [
 SpaceShip >> returnToBeginingOfLap [
 
 	position := 1.
-	temporaryPosition := position
 ]
 
 { #category : 'accessing' }
@@ -151,13 +142,7 @@ SpaceShip >> updateLap: numberOfLaps [
 ]
 
 { #category : 'positions' }
-SpaceShip >> updatePosition [
+SpaceShip >> updatePosition: aPosition [
 
-	position := temporaryPosition.
-]
-
-{ #category : 'positions' }
-SpaceShip >> updateTemporaryPosition: aNewTemporaryPosition [
-
-	temporaryPosition := aNewTemporaryPosition
+	position := aPosition.
 ]

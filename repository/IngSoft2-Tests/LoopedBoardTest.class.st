@@ -22,7 +22,7 @@ LoopedBoardTest >> testWhenASpaceShipGetsToTheEndMadeTheMaxLapsFromGameThenIsOve
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 6 }.
 	aBoard := Board
 		          withSize: 11
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -44,7 +44,7 @@ LoopedBoardTest >> testWhenGameStartsAndSpaceShipsHaventMadeALap [
 	aDiceSet := RiggedDice new initializeWith: { 1. 2 }.
 	aBoard := Board
 		          withSize: 100
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -65,7 +65,7 @@ LoopedBoardTest >> testWhenShip1MakesALapAndExceedsTheEndOfBoardInFinalLapUsingM
 	aDiceSet := RiggedDice new initializeWith: { 5. 1. 5. 3. 10 }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -87,7 +87,7 @@ LoopedBoardTest >> testWhenShip1MakesALapAndExceedsTheEndOfBoardInFinalLapUsingS
 	aDiceSet := RiggedDice new initializeWith: { 30 }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -109,7 +109,7 @@ LoopedBoardTest >> testWhenShip1MakesALapAndGetToTheEndOfLap2UsingASingleThrowTh
 	aDiceSet := RiggedDice new initializeWith: { 19 }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -130,7 +130,7 @@ LoopedBoardTest >> testWhenShip1MakesALapAndGetToTheEndOfLap2UsingMultipleThrows
 	aDiceSet := RiggedDice new initializeWith: { 5. 1. 5. 3. 9 }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -152,7 +152,7 @@ LoopedBoardTest >> testWhenSpaceShipMakesALapTheExcessThrowIsUsedToMoveInTheNext
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 7 }.
 	aBoard := Board
 		          withSize: 11
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -173,7 +173,7 @@ LoopedBoardTest >> testWhenTheInputtedLapIsNegativeThenIsInvalid [
 	aDiceSet := RiggedDice new initializeWith: { 0. }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	self
 		should: [

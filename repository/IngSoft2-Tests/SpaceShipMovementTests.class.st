@@ -23,7 +23,7 @@ SpaceShipMovementTests >> testWhenARiggedDiceToss6ThenShipMovesTo7 [
 	aDiceSet := RiggedDice new initializeWith: { 6 }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -43,7 +43,7 @@ SpaceShipMovementTests >> testWhenDiceRolls5ThenMovesSpaceShipToPosition6 [
 	aDiceSet := RiggedDice new initializeWith: { 5 }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -63,7 +63,7 @@ SpaceShipMovementTests >> testWhenRiggedDiceToss1_2ThenShip1MovesTo4 [
 	aDiceSet := RiggedDice new initializeWith: { 1. 2 }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -83,7 +83,7 @@ SpaceShipMovementTests >> testWhenRiggedDiceToss1_2_3ThenShip1MovesTo7 [
 	aDiceSet := RiggedDice new initializeWith: { 1. 2. 3 }.
 	aBoard := Board
 		          withSize: 10
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard

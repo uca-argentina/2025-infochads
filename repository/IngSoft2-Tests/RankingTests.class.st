@@ -12,7 +12,7 @@ RankingTests >> testWhenGameIsNotOverThereIsNoRanking [
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 3 }.
 	aBoard := Board
 		          withSize: 11
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -32,7 +32,7 @@ RankingTests >> testWhenGameIsOverAndShip1WinsAndShip2IsSecond [
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 6. 9 }.
 	aBoard := Board
 		          withSize: 11
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -53,7 +53,7 @@ RankingTests >> testWhenGameIsOverAndShip1WinsAndShip3IsSecondAndShip2IsThird [
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 3. 6 }.
 	aBoard := Board
 		          withSize: 11
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -74,7 +74,7 @@ RankingTests >> testWhenGameIsOverAndSpaceShip2Wins [
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 3. 9 }.
 	aBoard := Board
 		          withSize: 11
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -95,7 +95,7 @@ RankingTests >> testWhenGameIsOverAndWinnerIsShip1 [
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 6 }.
 	aBoard := Board
 		          withSize: 11
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -116,7 +116,7 @@ RankingTests >> testWhenGameIsOverInformsSpaceShipsPositionAndWhichLap [
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 6 }.
 	aBoard := Board
 		          withSize: 11
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
@@ -140,7 +140,7 @@ RankingTests >> testWhenGameThereAre4ShipsTheRankingShowsAllTheShips [
 	aDiceSet := RiggedDice new initializeWith: { 5. 2. 3. 7. 7 }.
 	aBoard := Board
 		          withSize: 11
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard

@@ -31,26 +31,25 @@ Board class >> withSize: aBoardSize composedOf: aWormHole andACellConfiguration:
 Board >> adjust: spaceShips positionAnd: laps [
 
 	spaceShips do: [ :ship |
-		self boardLimitAdjustment: ship withTotalLaps: laps.
-		ship updatePosition ]
+		self boardLimitAdjustment: ship withTotalLaps: laps ]
 ]
 
 { #category : 'as yet unclassified' }
 Board >> boardLimitAdjustment: aSpaceShip withTotalLaps: totalLaps [
 
-	aSpaceShip getTemporaryPosition <= 0 ifTrue: [
+	aSpaceShip getPosition <= 0 ifTrue: [
 		aSpaceShip updateTemporaryPosition: 1 ].
 	
 	(self the: aSpaceShip hasReached: totalLaps) ifTrue: [
 		aSpaceShip finishAt: boardSize withLaps: totalLaps.
 		^ self ].
 
-	(aSpaceShip getTemporaryPosition <= boardSize ) ifTrue: [ ^ self ].
+	(aSpaceShip getPosition <= boardSize ) ifTrue: [ ^ self ].
 
 
-	aSpaceShip updateLap: aSpaceShip getTemporaryPosition // boardSize.
-	aSpaceShip updateTemporaryPosition:
-		aSpaceShip getTemporaryPosition \\ boardSize
+	aSpaceShip updateLap: (aSpaceShip getPosition) // boardSize.
+	aSpaceShip updatePosition:
+		(aSpaceShip getPosition) \\ boardSize
 ]
 
 { #category : 'accessing' }
@@ -73,8 +72,8 @@ Board >> checkForPowerUps: aSpaceShip andAllSpaceShips: allSpaceShips [
 { #category : 'as yet unclassified' }
 Board >> checkForWormHole: aSpaceShip [
 
-	aSpaceShip updateTemporaryPosition:
-		(wormHole moveifWormHole: aSpaceShip getTemporaryPosition)
+	aSpaceShip updatePosition:
+		(wormHole moveifWormHole: aSpaceShip getPosition)
 ]
 
 { #category : 'initialization' }
@@ -94,6 +93,6 @@ Board >> initializeWithSize: aBoardSize composedOf: aWormHole andConfiguration: 
 { #category : 'as yet unclassified' }
 Board >> the: aSpaceShip hasReached: totalLaps [
 
-	^ aSpaceShip getTemporaryPosition + (aSpaceShip getLaps * boardSize)
+	^ aSpaceShip getPosition + (aSpaceShip getLaps * boardSize)
 	  >= (totalLaps * boardSize)
 ]
