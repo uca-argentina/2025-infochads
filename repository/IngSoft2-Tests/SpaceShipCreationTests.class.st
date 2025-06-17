@@ -16,6 +16,15 @@ SpaceShipCreationTests >> should: anErrorBlock raise: anErrorClass withMessageTe
 ]
 
 { #category : 'tests' }
+SpaceShipCreationTests >> testWhenAShipDoesntHaveANameThenCreationFails [
+
+	self
+		should: [ SpaceShip with: '' initial: 1 andStartingWith: 3 ]
+		raise: Error
+		withMessageText: 'The ship must be identifiable.'
+]
+
+{ #category : 'tests' }
 SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPositionsAre1 [
 
 	| aGame aDiceSet aBoard |
@@ -51,15 +60,6 @@ SpaceShipCreationTests >> testWhenNumberOfShieldsAssignedToTheShipIsNotAnInteger
 		should: [ SpaceShip with: 1 initial: 1 andStartingWith: '11' ]
 		raise: Error
 		withMessageText: 'The ship must initialize with 3 shield.'
-]
-
-{ #category : 'tests' }
-SpaceShipCreationTests >> testWhenNumberOfShieldsDoesntStartAtTheBeguinningThenCreationFails [
-
-	self
-		should: [ SpaceShip with: 1 initial: 10 andStartingWith: 3 ]
-		raise: Error
-		withMessageText: 'The ship must start at the beguinning.'
 ]
 
 { #category : 'tests' }
@@ -140,6 +140,24 @@ SpaceShipCreationTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs1
 		         wonAfter: 1.
 
 	self assert: (aGame positionOf: 1) equals: 1
+]
+
+{ #category : 'tests' }
+SpaceShipCreationTests >> testWhenSpaceShipDoesntHaveANumberAsPositionThenCreationFails [
+
+	self
+		should: [ SpaceShip with: 1 initial: '1' andStartingWith: 3 ]
+		raise: Error
+		withMessageText: 'The ship must start at the beguinning.'
+]
+
+{ #category : 'tests' }
+SpaceShipCreationTests >> testWhenSpaceShipDoesntStartAtTheBeguinningThenCreationFails [
+
+	self
+		should: [ SpaceShip with: 1 initial: 11 andStartingWith: 3 ]
+		raise: Error
+		withMessageText: 'The ship must start at the beguinning.'
 ]
 
 { #category : 'tests' }

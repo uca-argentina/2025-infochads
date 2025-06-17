@@ -14,6 +14,13 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+SpaceShip class >> itMustHaveAnID: anId [
+
+	(anId = '') ifTrue: [
+		Error signal: 'The ship must be identifiable.' ]
+]
+
+{ #category : 'as yet unclassified' }
 SpaceShip class >> itMustHaveThree: aShield [
 
 	(aShield isInteger and: [ aShield = 3 ]) ifFalse: [
@@ -23,20 +30,21 @@ SpaceShip class >> itMustHaveThree: aShield [
 { #category : 'as yet unclassified' }
 SpaceShip class >> itMustStartAtTheBeguining: aPosition [
 	
-	(aPosition isInteger and: [ aPosition = 3 ]) ifFalse: [
+	(aPosition isInteger and: [ aPosition = 1 ]) ifFalse: [
 		Error signal: 'The ship must start at the beguinning.' ]
 ]
 
 { #category : 'as yet unclassified' }
-SpaceShip class >> with: id initial: aPosition andStartingWith: aShield [
+SpaceShip class >> with: anId initial: aPosition andStartingWith: aShield [
 
 	self itMustHaveThree: aShield.
 	self itMustStartAtTheBeguining: aPosition.
+	self itMustHaveAnID: anId.
 
 	^ self new
 		  initializeWithShield: aShield
 		  andInitial: aPosition
-		  and: id
+		  and: anId
 ]
 
 { #category : 'laps and position' }
