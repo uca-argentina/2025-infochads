@@ -31,7 +31,7 @@ Board class >> withSize: aBoardSize composedOf: aWormHole andACellConfiguration:
 Board >> adjust: spaceShips positionAnd: totalLaps [
 
 	spaceShips do: [ :ship |
-		ship updatePosition:
+		ship storeageNewPosition:
 			(self limitAdjustment: ship position withTotalLaps: totalLaps) ]
 ]
 
@@ -52,10 +52,9 @@ Board >> checkForPowerUps: aSpaceShip andAllSpaceShips: allSpaceShips [
 ]
 
 { #category : 'as yet unclassified' }
-Board >> checkForWormHole: aSpaceShip [
+Board >> checkForWormHole: aPosition [
 
-	aSpaceShip updatePosition:
-		(wormHole moveifWormHole: aSpaceShip getPosition)
+	^ Position at: (wormHole moveifWormHole: aPosition position) withLaps: 0.
 ]
 
 { #category : 'initialization' }
@@ -74,23 +73,24 @@ Board >> initializeWithSize: aBoardSize composedOf: aWormHole andConfiguration: 
 
 { #category : 'as yet unclassified' }
 Board >> limitAdjustment: aPosition withTotalLaps: totalLaps [
+	"Position < 0 -> position 0, lap n"
 
 	aPosition position <= 0 ifTrue: [
-		aPosition toBeginningOfLap.
-		^ aPosition ].
+		^ Position at: aPosition position - 1 withLaps: 0 ].
 
-	(self the: aPosition position hasReached: totalLaps) ifTrue: [
-		aPosition migrateToPosition: boardSize.
-		aPosition migrateToLap: totalLaps.
-		^ aPosition ].
+	(self the: aPosition hasReached: totalLaps) ifTrue: [
+		^ Position
+			  at: boardSize - aPosition position
+			  withLaps: totalLaps - aPosition lap ].
 
-	aPosition position <= boardSize ifTrue: [ ^ aPosition ].
+	" Position < board size & lap < max laps -> nothing"
+	aPosition position <= boardSize ifTrue: [
+		^ Position at: 0 withLaps: 0 ].
 
-
-	aPosition migrateToLap: aPosition position // boardSize.
-	aPosition migrateToPosition: aPosition position \\ boardSize.
-
-	^ aPosition
+	" Position > board size & lap < max laps -> assigns correspondign"
+	^ Position
+		  at: boardSize * (aPosition position // boardSize) negated
+		  withLaps: aPosition position // boardSize
 ]
 
 { #category : 'as yet unclassified' }

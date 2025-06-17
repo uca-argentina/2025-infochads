@@ -12,23 +12,21 @@ Class {
 { #category : 'accessing' }
 Position class >> at: aPlaceInSpace withLaps: aNumberOfLaps [
 
-	self mustBePositive: aPlaceInSpace.
 
 	^ self new initializeWith: aPlaceInSpace  andLaps: aNumberOfLaps
-]
-
-{ #category : 'as yet unclassified' }
-Position class >> mustBePositive: aPlaceInSpace [
-
-	(aPlaceInSpace isInteger and: [ aPlaceInSpace >= 1 ]) ifFalse: [
-		Error signal: 'The position must be positive' ]
 ]
 
 { #category : 'initialization' }
 Position >> initializeWith: aPlaceInSpace andLaps: aNumberOfLaps [
 
 	position := aPlaceInSpace.
-	lap := 0.
+	lap := aNumberOfLaps.
+]
+
+{ #category : 'testing' }
+Position >> isPositionEqualTo: aPosition [
+
+	^ position = aPosition position
 ]
 
 { #category : 'accessing' }
@@ -37,32 +35,22 @@ Position >> lap [
 	^ lap
 ]
 
-{ #category : 'as yet unclassified' }
-Position >> migrateTo: aNewPosition [
+{ #category : 'accessing' }
+Position >> position [
 
-	position := aNewPosition position.
-	position := aNewPosition lap
+	^ position
 ]
 
 { #category : 'as yet unclassified' }
-Position >> migrateToLap: aNewLap [
-	lap := aNewLap
-]
+Position >> sumPositionTo: aPosition [
 
-{ #category : 'as yet unclassified' }
-Position >> migrateToPosition: aNewPosition [
-
-	position := aNewPosition
+	^ self class at: aPosition position withLaps: lap
 ]
 
 { #category : 'as yet unclassified' }
 Position >> sumTo: aPosition [
 
-	position := position + aPosition position.
-	lap := lap + aPosition lap
-]
-
-{ #category : 'as yet unclassified' }
-Position >> toBeginningOfLap [
-	position := 1.
+	^ self class
+		  at: position + aPosition position
+		  withLaps: lap + aPosition lap
 ]

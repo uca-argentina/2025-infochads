@@ -70,8 +70,8 @@ Game >> getRanking [
 	self isOver ifFalse: [ ^ #(  ) ].
 
 	ranking := spaceShips sorted: [ :ship1 :ship2 |
-		           ship1 getLaps -> ship1 getPosition
-		           > (ship2 getLaps -> ship2 getPosition) ].
+		           ((ship1 position) lap -> (ship1 position) position)
+		           > ((ship2 position) lap -> (ship2 position) position) ].
 
 	^ (ranking collect: [ :each |
 		   each getID ]) asArray
@@ -93,7 +93,8 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 Game >> isGameOver [
 
 	^ spaceShips anySatisfy: [ :aShip |
-		  aShip getPosition = board boardSize and: aShip getLaps = laps ]
+		  aShip position position = board boardSize and:
+			  aShip position lap = laps ]
 ]
 
 { #category : 'informationTest' }
@@ -105,36 +106,35 @@ Game >> isOver [
 { #category : 'informationTest' }
 Game >> lapOf: aSpaceShipID [
 
-	^ (spaceShips at: aSpaceShipID) getLaps
+	^ (spaceShips at: aSpaceShipID) position lap
 ]
 
 { #category : 'as yet unclassified' }
 Game >> lookForBattle: aSpaceShip [
 
 	| opponentShip |
-	aSpaceShip getPosition = 1 ifTrue: [ ^ self ].
+	(aSpaceShip position isPositionEqualTo: (Position at: 1 withLaps: 0))
+		ifTrue: [ ^ self ].
 
 	opponentShip := self obtainOponentShip: aSpaceShip.
 
-	(opponentShip == aSpaceShip) ifFalse: [
+	opponentShip == aSpaceShip ifFalse: [
 		self battleBetween: aSpaceShip and: opponentShip ]
 ]
 
 { #category : 'as yet unclassified' }
 Game >> move: aSpaceShip after: aDiceRoll [
 
-	| aPosition |
 	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
-	aPosition := Position at: aDiceRoll.
-	"aSpaceShip goToPosition: aDiceRoll."
-	aPosition sumTo: (aSpaceShip position).
 
-	aPosition := board limitAdjustment: aPosition withTotalLaps: laps.
-	
-	aSpaceShip setPosition: aPosition.
+	aSpaceShip storeageNewPosition: (Position at: aDiceRoll withLaps: 0).
 
-	board checkForPowerUps: aSpaceShip andAllSpaceShips: spaceShips.
-	board checkForWormHole: aSpaceShip.
+	aSpaceShip storeageNewPosition:
+		(board limitAdjustment: aSpaceShip position withTotalLaps: laps). "Done" "Done"
+
+	"board checkForPowerUps: aSpaceShip andAllSpaceShips: spaceShips." "Polimorfism"
+	aSpaceShip replacePositionWith:
+		(board checkForWormHole: aSpaceShip position).
 
 	board adjust: spaceShips positionAnd: laps.
 
@@ -150,14 +150,15 @@ Game >> obtainOponentShip: aSpaceShip [
 	otherShips ifEmpty: [ ^ aSpaceShip ].
 
 	^ otherShips
-		  detect: [ :ship | ship getPosition = aSpaceShip getPosition ]
+		  detect: [ :ship |
+		  ship position isPositionEqualTo: aSpaceShip position ]
 		  ifNone: [ aSpaceShip ]
 ]
 
 { #category : 'informationTest' }
 Game >> positionOf: aSpaceShipID [
 
-	^ (spaceShips at: aSpaceShipID) getPosition.
+	^ ((spaceShips at: aSpaceShipID) position) position.
 ]
 
 { #category : 'informationTest' }
@@ -191,7 +192,7 @@ Game >> start [
 Game >> startingPositions: aNumberOfSpaceShips [
 
 	| aPosition aShield |
-	aPosition := Position at: 1 withLaps: 1.
+	aPosition := Position at: 1 withLaps: 0.
 	aShield := 3.
 
 	spaceShips := OrderedCollection new.
