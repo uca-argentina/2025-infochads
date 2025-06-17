@@ -13,6 +13,32 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'as yet unclassified' }
+SpaceShip class >> itMustHaveThree: aShield [
+
+	(aShield isInteger and: [ aShield = 3 ]) ifFalse: [
+		Error signal: 'The ship must initialize with 3 shield.' ]
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip class >> itMustStartAtTheBeguining: aPosition [
+	
+	(aPosition isInteger and: [ aPosition = 3 ]) ifFalse: [
+		Error signal: 'The ship must start at the beguinning.' ]
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip class >> with: id initial: aPosition andStartingWith: aShield [
+
+	self itMustHaveThree: aShield.
+	self itMustStartAtTheBeguining: aPosition.
+
+	^ self new
+		  initializeWithShield: aShield
+		  andInitial: aPosition
+		  and: id
+]
+
 { #category : 'laps and position' }
 SpaceShip >> finishAt: finalPosition withLaps: finalLaps [
 
@@ -57,7 +83,7 @@ SpaceShip >> goToTemporaryPosition: positionsToSum [
 ]
 
 { #category : 'initialization' }
-SpaceShip >> initializeWithShield: aNumberOfShields andInitialPosition: aPosition andID: aSpaceShipID [
+SpaceShip >> initializeWithShield: aNumberOfShields andInitial: aPosition and: aSpaceShipID [
 
 	spaceShipID := aSpaceShipID.
 	shield := aNumberOfShields.

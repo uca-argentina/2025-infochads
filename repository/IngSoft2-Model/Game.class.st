@@ -184,14 +184,15 @@ Game >> start [
 
 { #category : 'whats left of race positions' }
 Game >> startingPositions: aNumberOfSpaceShips [
-	
+
+	| aPosition aShield |
+	aPosition := 1.
+	aShield := 3.
+
 	spaceShips := OrderedCollection new.
 	1 to: aNumberOfSpaceShips do: [ :id |
-		spaceShips add: (SpaceShip new
-				 initializeWithShield: 3
-				 andInitialPosition: 1
-				 andID: id) ].
-	1.
+		spaceShips add:
+			(SpaceShip with: id initial: aPosition andStartingWith: aShield) ]
 ]
 
 { #category : 'as yet unclassified' }
