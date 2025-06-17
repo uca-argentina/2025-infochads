@@ -38,23 +38,16 @@ SpaceShip class >> with: anId initial: aPosition andStartingWith: aShield [
 		  and: anId
 ]
 
-{ #category : 'laps and position' }
-SpaceShip >> finishAt: finalPosition withLaps: finalLaps [
+{ #category : 'testing' }
+SpaceShip >> canBattle [
 
-	position := finalPosition.
-	laps := finalLaps
+	^ shield > 0 and: loseTurn = 0
 ]
 
 { #category : 'getters' }
 SpaceShip >> getID [
 
 	^ spaceShipID
-]
-
-{ #category : 'getters' }
-SpaceShip >> getLaps [
-
-	^ laps
 ]
 
 { #category : 'getters' }
@@ -112,12 +105,15 @@ SpaceShip >> replacePositionWith: aPosition [
 { #category : 'accessing' }
 SpaceShip >> skipATurn: aDiceRoll [
 
+	| doSkip |
 	self rechargableShield: aDiceRoll.
-	aDiceRoll = 0
-		ifTrue: [
-			shield := 3.
-			^ true ]
-		ifFalse: [ ^ false ]
+
+	doSkip := false.
+	aDiceRoll = 0 ifTrue: [
+		shield := 3.
+		doSkip := true ].
+
+	^ doSkip
 ]
 
 { #category : 'accessing' }

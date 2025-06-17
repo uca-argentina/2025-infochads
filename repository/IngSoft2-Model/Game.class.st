@@ -151,7 +151,7 @@ Game >> obtainOponentShip: aSpaceShip [
 
 	^ otherShips
 		  detect: [ :ship |
-		  ship position isPositionEqualTo: aSpaceShip position ]
+		  (ship position isPositionEqualTo: (aSpaceShip position)) and: (ship canBattle)]
 		  ifNone: [ aSpaceShip ]
 ]
 

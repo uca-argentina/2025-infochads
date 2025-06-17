@@ -73,7 +73,6 @@ Board >> initializeWithSize: aBoardSize composedOf: aWormHole andConfiguration: 
 
 { #category : 'as yet unclassified' }
 Board >> limitAdjustment: aPosition withTotalLaps: totalLaps [
-	"Position < 0 -> position 0, lap n"
 
 	aPosition position <= 0 ifTrue: [
 		^ Position at: aPosition position - 1 withLaps: 0 ].
@@ -83,11 +82,9 @@ Board >> limitAdjustment: aPosition withTotalLaps: totalLaps [
 			  at: boardSize - aPosition position
 			  withLaps: totalLaps - aPosition lap ].
 
-	" Position < board size & lap < max laps -> nothing"
 	aPosition position <= boardSize ifTrue: [
 		^ Position at: 0 withLaps: 0 ].
 
-	" Position > board size & lap < max laps -> assigns correspondign"
 	^ Position
 		  at: boardSize * (aPosition position // boardSize) negated
 		  withLaps: aPosition position // boardSize
