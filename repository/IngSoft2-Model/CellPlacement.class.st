@@ -20,12 +20,12 @@ CellPlacement >> addNormalCellAtBeguiningAndEndOfBoard: netCellDistibution [
 ]
 
 { #category : 'creation' }
-CellPlacement >> atomicBombCellsWithPercentage: aPercentage andShieldsSacrificed: aNumberOfShields [
+CellPlacement >> atomicBombCellsWithPercentage: aPercentage and: aDesplacement [
 
 	| newCells |
 	newCells := (1 to: aPercentage) collect: [ :i |
 		            Cell has:
-			            (AtomicBombEffect withSacrified: aNumberOfShields) ].
+			            (AtomicBombEffect with: aDesplacement) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
@@ -62,22 +62,22 @@ CellPlacement >> extractSample [
 { #category : 'as yet unclassified' }
 CellPlacement >> generateUniverse: aConfigDice [
 
-	| percentages |
-	percentages := self obtainPercentages: aConfigDice.
-	self thePercentagesMustSum100: percentages.
+	| probabilities |
+	probabilities := self obtainProbabilities: aConfigDice.
+	self theProbabilitiesMustSum100: probabilities.
 	
-	self normalCellsWithPercentage: (percentages at: 1).
-	self blackHoleCellsWithPercentage: (percentages at: 2) andDesplacemets: 4.
+	self normalCellsWithPercentage: (probabilities at: 1).
+	self blackHoleCellsWithPercentage: (probabilities at: 2) andDesplacemets: 4.
 	self
-		hyperSpaceJumpCellsWithPercantage: (percentages at: 3)
+		hyperSpaceJumpCellsWithPercantage: (probabilities at: 3)
 		andDesplacements: 4
 		andShieldsLost: -1.
 	self
-		hyperJumpCellsWithPercentage: (percentages at: 4)
+		hyperJumpCellsWithPercentage: (probabilities at: 4)
 		andParsecValue: aConfigDice toss
 		andJumpList: aConfigDice.
-	self atomicBombCellsWithPercentage: (percentages at: 5) andShieldsSacrificed: 1.
-	self moonWalkCellsWithPercentage: (percentages at: 6) andDisplacements: aConfigDice
+	self atomicBombCellsWithPercentage: (probabilities at: 5) and: 0.
+	self moonWalkCellsWithPercentage: (probabilities at: 6) andDisplacements: aConfigDice
 ]
 
 { #category : 'creation' }
@@ -147,7 +147,7 @@ CellPlacement >> obtainNextDisplacement: aConfigDice [
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> obtainPercentages: aConfigureDice [
+CellPlacement >> obtainProbabilities: aConfigureDice [
 
 	^ (1 to: 6) collect: [ :effect | aConfigureDice toss ]
 ]
@@ -160,7 +160,7 @@ CellPlacement >> randomCellPicking [
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> thePercentagesMustSum100: percentajes [
+CellPlacement >> theProbabilitiesMustSum100: percentajes [
 
 	(percentajes sum: [ :proba | proba ]) = 100 ifFalse: [
 		Error signal: 'The probabilites dont sum 100.' ]

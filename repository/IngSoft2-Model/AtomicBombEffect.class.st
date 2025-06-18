@@ -1,6 +1,9 @@
 Class {
 	#name : 'AtomicBombEffect',
 	#superclass : 'NoEffect',
+	#instVars : [
+		'desplacement'
+	],
 	#classInstVars : [
 		'shieldScrificed'
 	],
@@ -9,9 +12,11 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-AtomicBombEffect class >> withSacrified: shields [
+AtomicBombEffect class >> with: aDesplacement [
 
-	^self new initializedWithSacrified: shields
+	(aDesplacement isInteger not or: [ aDesplacement ~= 0 ]) ifTrue: [
+		Error signal: 'The desplacement must be 0.' ].
+	^ self new initializedWith: aDesplacement
 ]
 
 { #category : 'as yet unclassified' }
@@ -33,7 +38,7 @@ AtomicBombEffect >> damageAllShields [
 ]
 
 { #category : 'as yet unclassified' }
-AtomicBombEffect >> initializedWithSacrified: shields [
+AtomicBombEffect >> initializedWith: aDesplacement [
 
-	
+	desplacement := aDesplacement
 ]
