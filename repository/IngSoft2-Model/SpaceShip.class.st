@@ -3,10 +3,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'shield',
-		'position',
 		'spaceShipID',
-		'loseTurn',
-		'laps'
+		'loseTurn'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -27,15 +25,12 @@ SpaceShip class >> itMustHaveThree: aShield [
 ]
 
 { #category : 'as yet unclassified' }
-SpaceShip class >> with: anId initial: aPosition andStartingWith: aShield [
+SpaceShip class >> with: anId andStartingWith: aShield [
 
 	self itMustHaveThree: aShield.
 	self itMustHaveAnID: anId.
 
-	^ self new
-		  initializeWithShield: aShield
-		  andInitial: aPosition
-		  and: anId
+	^ self new initializeWithShield: aShield and: anId
 ]
 
 { #category : 'testing' }
@@ -45,25 +40,23 @@ SpaceShip >> canBattle [
 ]
 
 { #category : 'getters' }
-SpaceShip >> getID [
-
-	^ spaceShipID
-]
-
-{ #category : 'getters' }
 SpaceShip >> getShield [
 
 	^ shield
 ]
 
+{ #category : 'getters' }
+SpaceShip >> id [
+
+	^ spaceShipID
+]
+
 { #category : 'initialization' }
-SpaceShip >> initializeWithShield: aNumberOfShields andInitial: aPosition and: aSpaceShipID [
+SpaceShip >> initializeWithShield: aNumberOfShields and: aSpaceShipID [
 
 	spaceShipID := aSpaceShipID.
 	shield := aNumberOfShields.
-	position := aPosition.
 	loseTurn := 0.
-	laps := 0.
 	^ self
 ]
 
@@ -74,32 +67,12 @@ SpaceShip >> loseShield [
 	shield = 0 ifTrue: [ loseTurn := 2 ]
 ]
 
-{ #category : 'accessing' }
-SpaceShip >> lostBattle [
-
-	self storeageNewPosition:
-		(Position at: (position position negated + 1) withLaps: 0).
-	self loseShield
-]
-
-{ #category : 'accessing' }
-SpaceShip >> position [
-
-	^ position
-]
-
 { #category : 'shield' }
 SpaceShip >> rechargableShield: aDiceRoll [
 
 	(shield = 3 and: aDiceRoll = 0) ifTrue: [
 		Error signal: 
 			'The Shield is already full, it cant be recharged.' ]
-]
-
-{ #category : 'as yet unclassified' }
-SpaceShip >> replacePositionWith: aPosition [
-
-	position:= position sumPositionTo: aPosition
 ]
 
 { #category : 'accessing' }
@@ -124,10 +97,4 @@ SpaceShip >> skipTurns [
 			loseTurn := loseTurn - 1.
 			^ true ]
 		ifFalse: [ ^ false ]
-]
-
-{ #category : 'as yet unclassified' }
-SpaceShip >> storeageNewPosition: aPosition [
-
-	position := position sumTo: aPosition
 ]

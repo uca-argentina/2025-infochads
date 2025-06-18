@@ -19,7 +19,7 @@ SpaceShipCreationTests >> should: anErrorBlock raise: anErrorClass withMessageTe
 SpaceShipCreationTests >> testWhenAShipDoesntHaveANameThenCreationFails [
 
 	self
-		should: [ SpaceShip with: '' initial: 1 andStartingWith: 3 ]
+		should: [ SpaceShip with: '' andStartingWith: 3 ]
 		raise: Error
 		withMessageText: 'The ship must be identifiable.'
 ]
@@ -48,7 +48,7 @@ SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPosi
 SpaceShipCreationTests >> testWhenNumberOfShieldsAssignedToTheShipIsNot3ThenCreationFails [
 
 	self
-		should: [ SpaceShip with: 1 initial: 1 andStartingWith: 11 ]
+		should: [ SpaceShip with: 1 andStartingWith: 11 ]
 		raise: Error
 		withMessageText: 'The ship must initialize with 3 shield.'
 ]
@@ -57,7 +57,7 @@ SpaceShipCreationTests >> testWhenNumberOfShieldsAssignedToTheShipIsNot3ThenCrea
 SpaceShipCreationTests >> testWhenNumberOfShieldsAssignedToTheShipIsNotAnIntegerThenCreationFails [
 
 	self
-		should: [ SpaceShip with: 1 initial: 1 andStartingWith: '11' ]
+		should: [ SpaceShip with: 1 andStartingWith: '11' ]
 		raise: Error
 		withMessageText: 'The ship must initialize with 3 shield.'
 ]

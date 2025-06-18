@@ -7,7 +7,8 @@ Class {
 		'nextSpaceShipToMove',
 		'numberOfSpaceShips',
 		'laps',
-		'board'
+		'board',
+		'spaceShipPositions'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -51,7 +52,7 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 ]
 
 { #category : 'as yet unclassified' }
-Game >> battleBetween: spaceShip1 and: spaceShip2 [
+Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 
 	| throwSpaceShip1 throwSpaceShip2 |
 	[
@@ -59,8 +60,24 @@ Game >> battleBetween: spaceShip1 and: spaceShip2 [
 	throwSpaceShip1 := diceSet toss.
 	throwSpaceShip1 = throwSpaceShip2 ] whileTrue: [  ].
 	throwSpaceShip1 < throwSpaceShip2
-		ifTrue: [ spaceShip1 lostBattle ]
-		ifFalse: [ spaceShip2 lostBattle ]
+		ifTrue: [ self lostBattle: aSpaceShip1 ]
+		ifFalse: [ self lostBattle: aSpaceShip2 ]
+]
+
+{ #category : 'whats left of race positions' }
+Game >> create: aNumberOfSpaceShips [
+
+	| aPosition aShield |
+	aPosition := Position at: 1 withLaps: 0.
+	aShield := 3.
+
+	spaceShips := OrderedCollection new.
+	spaceShipPositions := OrderedDictionary new.
+
+	1 to: aNumberOfSpaceShips do: [ :id |
+		spaceShips add:
+			(SpaceShip with: id andStartingWith: aShield).
+		spaceShipPositions at: id put: aPosition ]
 ]
 
 { #category : 'informationTest' }
@@ -70,18 +87,22 @@ Game >> getRanking [
 	self isOver ifFalse: [ ^ #(  ) ].
 
 	ranking := spaceShips sorted: [ :ship1 :ship2 |
-		           ((ship1 position) lap -> (ship1 position) position)
-		           > ((ship2 position) lap -> (ship2 position) position) ].
+		           (spaceShipPositions at: ship1 id) lap
+		           -> (spaceShipPositions at: ship1 id) position
+		           > ((spaceShipPositions at: ship2 id) lap
+			            -> (spaceShipPositions at: ship2 id) position) ].
 
-	^ (ranking collect: [ :each |
-		   each getID ]) asArray
+	^ (ranking collect: [ :each | each id ]) asArray
 ]
 
 { #category : 'initialization' }
 Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceSet wonAfter: aNumberOfLaps [
 
 	board := aBoard.
-	self startingPositions: aNumberOfSpaceShips.
+	
+	spaceShipPositions := OrderedDictionary new.
+	self create: aNumberOfSpaceShips.
+	
 	diceSet := aDiceSet.
 	nextSpaceShipToMove := 1.
 	numberOfSpaceShips := aNumberOfSpaceShips.
@@ -93,8 +114,8 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 Game >> isGameOver [
 
 	^ spaceShips anySatisfy: [ :aShip |
-		  aShip position position = board boardSize and:
-			  aShip position lap = laps ]
+		  (spaceShipPositions at: aShip id) isEqualTo:
+			  (Position at: board boardSize withLaps: laps) ]
 ]
 
 { #category : 'informationTest' }
@@ -106,15 +127,15 @@ Game >> isOver [
 { #category : 'informationTest' }
 Game >> lapOf: aSpaceShipID [
 
-	^ (spaceShips at: aSpaceShipID) position lap
+	^ (spaceShipPositions at: aSpaceShipID) lap
 ]
 
 { #category : 'as yet unclassified' }
 Game >> lookForBattle: aSpaceShip [
 
 	| opponentShip |
-	(aSpaceShip position isPositionEqualTo: (Position at: 1 withLaps: 0))
-		ifTrue: [ ^ self ].
+	((spaceShipPositions at: aSpaceShip id) isPositionEqualTo:
+		 (Position at: 1 withLaps: 0)) ifTrue: [ ^ self ].
 
 	opponentShip := self obtainOponentShip: aSpaceShip.
 
@@ -123,20 +144,38 @@ Game >> lookForBattle: aSpaceShip [
 ]
 
 { #category : 'as yet unclassified' }
+Game >> lostBattle: aSpaceShip [
+
+	spaceShipPositions
+		at: aSpaceShip id
+		put: ((spaceShipPositions at: aSpaceShip id) sumTo: (Position
+					  at: (spaceShipPositions at: aSpaceShip id) position negated + 1
+					  withLaps: 0)).
+	aSpaceShip loseShield
+]
+
+{ #category : 'as yet unclassified' }
 Game >> move: aSpaceShip after: aDiceRoll [
 
 	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
 
-	aSpaceShip storeageNewPosition: (Position at: aDiceRoll withLaps: 0).
+	self sumTo: aSpaceShip the: (Position at: aDiceRoll withLaps: 0).
 
-	aSpaceShip storeageNewPosition:
-		(board limitAdjustment: aSpaceShip position withTotalLaps: laps). "Done" "Done"
+	self sumTo: aSpaceShip the: (board
+			 limitAdjustment: (spaceShipPositions at: aSpaceShip id)
+			 withTotalLaps: laps).
 
-	"board checkForPowerUps: aSpaceShip andAllSpaceShips: spaceShips." "Polimorfism"
-	aSpaceShip replacePositionWith:
-		(board checkForWormHole: aSpaceShip position).
+	"board checkForPowerUps: aSpaceShip andAllSpaceShips: spaceShips."
 
-	board adjust: spaceShips positionAnd: laps.
+	self
+		replacePositionOf: aSpaceShip
+		with:
+		(board checkForWormHole: (spaceShipPositions at: aSpaceShip id)).
+
+	spaceShips do: [ :ship |
+		self sumTo: ship the: (board
+				 limitAdjustment: (spaceShipPositions at: ship id)
+				 withTotalLaps: laps) ].
 
 	self lookForBattle: aSpaceShip
 ]
@@ -151,14 +190,25 @@ Game >> obtainOponentShip: aSpaceShip [
 
 	^ otherShips
 		  detect: [ :ship |
-		  (ship position isPositionEqualTo: (aSpaceShip position)) and: (ship canBattle)]
+			  ((spaceShipPositions at: ship id) isPositionEqualTo:
+				   (spaceShipPositions at: aSpaceShip id)) and: ship canBattle ]
 		  ifNone: [ aSpaceShip ]
 ]
 
 { #category : 'informationTest' }
 Game >> positionOf: aSpaceShipID [
 
-	^ ((spaceShips at: aSpaceShipID) position) position.
+	^ (spaceShipPositions at: aSpaceShipID) position
+]
+
+{ #category : 'as yet unclassified' }
+Game >> replacePositionOf: aSpaceShip with: aPosition [
+
+	spaceShipPositions
+		at: aSpaceShip id
+		put:
+		((spaceShipPositions at: aSpaceShip id) replacePositionWith:
+			 aPosition)
 ]
 
 { #category : 'informationTest' }
@@ -188,17 +238,12 @@ Game >> start [
 		aDiceRoll := diceSet toss ]
 ]
 
-{ #category : 'whats left of race positions' }
-Game >> startingPositions: aNumberOfSpaceShips [
+{ #category : 'as yet unclassified' }
+Game >> sumTo: aSpaceShip the: aPosition [
 
-	| aPosition aShield |
-	aPosition := Position at: 1 withLaps: 0.
-	aShield := 3.
-
-	spaceShips := OrderedCollection new.
-	1 to: aNumberOfSpaceShips do: [ :id |
-		spaceShips add:
-			(SpaceShip with: id initial: aPosition andStartingWith: aShield) ]
+	spaceShipPositions
+		at: aSpaceShip id
+		put: ((spaceShipPositions at: aSpaceShip id) sumTo: aPosition)
 ]
 
 { #category : 'as yet unclassified' }

@@ -24,6 +24,12 @@ Position >> initializeWith: aPlaceInSpace andLaps: aNumberOfLaps [
 ]
 
 { #category : 'testing' }
+Position >> isEqualTo: aPosition [
+
+	^ position = aPosition position and: lap = aPosition lap
+]
+
+{ #category : 'testing' }
 Position >> isPositionEqualTo: aPosition [
 
 	^ position = aPosition position
@@ -39,6 +45,12 @@ Position >> lap [
 Position >> position [
 
 	^ position
+]
+
+{ #category : 'as yet unclassified' }
+Position >> replacePositionWith: aPosition [
+
+	^ self class at: aPosition position withLaps: lap
 ]
 
 { #category : 'as yet unclassified' }
