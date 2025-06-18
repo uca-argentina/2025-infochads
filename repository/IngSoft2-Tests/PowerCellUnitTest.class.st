@@ -87,3 +87,30 @@ PowerCellUnitTest >> testWhenHyperSpaceJumpReceiveADesplacementOtherThan0ThenCre
 		raise: Error
 		withMessageText: 'The desplacement must be 4.'
 ]
+
+{ #category : 'tests' }
+PowerCellUnitTest >> testWhenMoonWalkReceiveADesplacementNegativeThenCreationFails [
+
+	self
+		should: [ MoonWalkEffect with: -1 ]
+		raise: Error
+		withMessageText: 'The desplacement must be a posible value.'
+]
+
+{ #category : 'tests' }
+PowerCellUnitTest >> testWhenMoonWalkReceiveADesplacementOf0ThenCreationFails [
+
+	self
+		should: [ MoonWalkEffect with: 0 ]
+		raise: Error
+		withMessageText: 'The desplacement must be a posible value.'
+]
+
+{ #category : 'tests' }
+PowerCellUnitTest >> testWhenMoonWalkReceiveADesplacementOfNotAnIntegerThenCreationFails [
+
+	self
+		should: [ MoonWalkEffect with: 'a' ]
+		raise: Error
+		withMessageText: 'The desplacement must be a posible value.'
+]

@@ -11,10 +11,18 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'instance creation' }
-MoonWalkEffect class >> with: aDisplacement [
+{ #category : 'as yet unclassified' }
+MoonWalkEffect class >> mustBePositive: aDesplacement [
 
-	^ self new initializeWith: aDisplacement
+	(aDesplacement isInteger not or: [ aDesplacement <= 0]) ifTrue: [
+		Error signal: 'The desplacement must be a posible value.' ]
+]
+
+{ #category : 'instance creation' }
+MoonWalkEffect class >> with: aDesplacement [
+
+	self mustBePositive: aDesplacement.
+	^ self new initializeWith: aDesplacement
 ]
 
 { #category : 'as yet unclassified' }

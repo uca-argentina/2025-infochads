@@ -1,12 +1,12 @@
 Class {
-	#name : 'PowerCellsTest',
+	#name : 'PowerCellInteractionTest',
 	#superclass : 'TestCase',
 	#category : 'IngSoft2-Tests',
 	#package : 'IngSoft2-Tests'
 }
 
 { #category : 'as yet unclassified' }
-PowerCellsTest >> readme [
+PowerCellInteractionTest >> readme [
 	"{ %Normal. %BlackHole. %HyperSpaceJump. %HyperJump. %AtomicBomb. %MoonWalk. -> (The sum of the values must be %100)
 
 	Parsecs. Len Array HyperJump. jump1. jump2. ... jumpN. -> (Jumps are the values in the array)
@@ -17,7 +17,7 @@ PowerCellsTest >> readme [
 ]
 
 { #category : 'asserting' }
-PowerCellsTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+PowerCellInteractionTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
 
     self
         should: anErrorBlock
@@ -28,7 +28,7 @@ PowerCellsTest >> should: anErrorBlock raise: anErrorClass withMessageText: erro
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenAForthShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10JumpsThenItMoves30JumpsAndCombatsWithFirstShip [
+PowerCellInteractionTest >> testWhenAForthShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10JumpsThenItMoves30JumpsAndCombatsWithFirstShip [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 2. 2. 2. 2. 5 }.
@@ -52,7 +52,7 @@ PowerCellsTest >> testWhenAForthShipMovesToAHyperJumpWith100ParsecDivisionAnd30_
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenARandomizedBoardThenTheFirstAndLastPositionsAreNormalCells [
+PowerCellInteractionTest >> testWhenARandomizedBoardThenTheFirstAndLastPositionsAreNormalCells [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 50. 49 }.
@@ -77,7 +77,7 @@ PowerCellsTest >> testWhenARandomizedBoardThenTheFirstAndLastPositionsAreNormalC
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenAShipMovesLandsOnAPowerCellAndMovesDueToItThenTheNextPowerCellDoesNotAffect [
+PowerCellInteractionTest >> testWhenAShipMovesLandsOnAPowerCellAndMovesDueToItThenTheNextPowerCellDoesNotAffect [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 37 }.
@@ -100,7 +100,7 @@ PowerCellsTest >> testWhenAShipMovesLandsOnAPowerCellAndMovesDueToItThenTheNextP
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenAShipMovesToAHyperJumpWith50ParsecDivisionAnd30_20_10JumpsThenItMoves30Jumps [
+PowerCellInteractionTest >> testWhenAShipMovesToAHyperJumpWith50ParsecDivisionAnd30_20_10JumpsThenItMoves30Jumps [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 40 }.
@@ -122,7 +122,7 @@ PowerCellsTest >> testWhenAShipMovesToAHyperJumpWith50ParsecDivisionAnd30_20_10J
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenAThirdShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10JumpsThenItMoves10Jumps [
+PowerCellInteractionTest >> testWhenAThirdShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10JumpsThenItMoves10Jumps [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 40. 40. 40 }.
@@ -146,7 +146,7 @@ PowerCellsTest >> testWhenAThirdShipMovesToAHyperJumpWith100ParsecDivisionAnd30_
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenAnotherShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10JumpsThenItMoves20Jumps [
+PowerCellInteractionTest >> testWhenAnotherShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10JumpsThenItMoves20Jumps [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 40. 40 }.
@@ -169,7 +169,7 @@ PowerCellsTest >> testWhenAnotherShipMovesToAHyperJumpWith100ParsecDivisionAnd30
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenShipIsMovedByAnEffectToAWormHoleThenIsTPdToACellThatHasNoEffectOnTheShip [
+PowerCellInteractionTest >> testWhenShipIsMovedByAnEffectToAWormHoleThenIsTPdToACellThatHasNoEffectOnTheShip [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 30 }.
@@ -192,7 +192,7 @@ PowerCellsTest >> testWhenShipIsMovedByAnEffectToAWormHoleThenIsTPdToACellThatHa
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenShipMovesToAAtomicBombCellThenAllShipsReturnToBeguiningAndLose1Shield [
+PowerCellInteractionTest >> testWhenShipMovesToAAtomicBombCellThenAllShipsReturnToBeguiningAndLose1Shield [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 49. 10 }.
@@ -216,7 +216,7 @@ PowerCellsTest >> testWhenShipMovesToAAtomicBombCellThenAllShipsReturnToBeguinin
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenShipMovesToABlackHoleCellThenItGoesBack4Spaces [
+PowerCellInteractionTest >> testWhenShipMovesToABlackHoleCellThenItGoesBack4Spaces [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 20 }.
@@ -238,7 +238,7 @@ PowerCellsTest >> testWhenShipMovesToABlackHoleCellThenItGoesBack4Spaces [
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10JumpsThenItMoves30Moves [
+PowerCellInteractionTest >> testWhenShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10JumpsThenItMoves30Moves [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 40 }.
@@ -260,7 +260,7 @@ PowerCellsTest >> testWhenShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10J
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenShipMovesToAHyperSpaceJumpCellThenItMovesForward4SpacesAndLose1Shield [
+PowerCellInteractionTest >> testWhenShipMovesToAHyperSpaceJumpCellThenItMovesForward4SpacesAndLose1Shield [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 30 }.
@@ -283,7 +283,7 @@ PowerCellsTest >> testWhenShipMovesToAHyperSpaceJumpCellThenItMovesForward4Space
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf4ThenItMovesEveryShipExceptForSelectedBack4Steps [
+PowerCellInteractionTest >> testWhenShipMovesToAMoonWalkCellOf4ThenItMovesEveryShipExceptForSelectedBack4Steps [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 10. 11. 46 }.
@@ -307,7 +307,7 @@ PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf4ThenItMovesEveryShipExceptF
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf6ThenItMovesEveryShipExceptForSelectedBack6Steps [
+PowerCellInteractionTest >> testWhenShipMovesToAMoonWalkCellOf6ThenItMovesEveryShipExceptForSelectedBack6Steps [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 50. 60. 70 }.
@@ -331,7 +331,7 @@ PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf6ThenItMovesEveryShipExceptF
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf6ThenShipWithNegativePositionMoveToBeguiningOfLap [
+PowerCellInteractionTest >> testWhenShipMovesToAMoonWalkCellOf6ThenShipWithNegativePositionMoveToBeguiningOfLap [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 2. 3. 45 }.
@@ -355,7 +355,7 @@ PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf6ThenShipWithNegativePositio
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenShipMovesToNormalCellThenItStaysThere [
+PowerCellInteractionTest >> testWhenShipMovesToNormalCellThenItStaysThere [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 1 }.
@@ -377,7 +377,7 @@ PowerCellsTest >> testWhenShipMovesToNormalCellThenItStaysThere [
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenShipMovesToNormalInABiggerBoardCellThenItStaysThere [
+PowerCellInteractionTest >> testWhenShipMovesToNormalInABiggerBoardCellThenItStaysThere [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 38 }.
@@ -399,7 +399,7 @@ PowerCellsTest >> testWhenShipMovesToNormalInABiggerBoardCellThenItStaysThere [
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenTheProbabilitiesDontSum100ThenCreationFails [
+PowerCellInteractionTest >> testWhenTheProbabilitiesDontSum100ThenCreationFails [
 
 	| aDiceSet aConfigureDiceSet |
 	aDiceSet := RiggedDice new initializeWith: { 2. 2. 2. 2. 5 }.
