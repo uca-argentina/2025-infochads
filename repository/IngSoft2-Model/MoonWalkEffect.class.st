@@ -1,6 +1,6 @@
 Class {
 	#name : 'MoonWalkEffect',
-	#superclass : 'Object',
+	#superclass : 'NoEffect',
 	#instVars : [
 		'desplacement'
 	],
@@ -11,24 +11,20 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
-MoonWalkEffect >> modify: aSpaceShip orMaybe: allSpaceShips [
+{ #category : 'instance creation' }
+MoonWalkEffect class >> with: aDisplacement [
 
-	| otherShips |
-	otherShips := allSpaceShips select: [ :ship | ship ~= aSpaceShip ].
-
-	otherShips ifNotNil: [ self moveBack: otherShips ]
+	^ self new initializeWith: aDisplacement
 ]
 
 { #category : 'as yet unclassified' }
-MoonWalkEffect >> moveBack: otherSpaceShips [
+MoonWalkEffect >> applyToAllSpaceShips: aPosition [
 
-	otherSpaceShips do: [ :ship |
-		ship updateTemporaryPosition: (ship getTemporaryPosition + desplacement) ]
+	^ Position at: aPosition - desplacement withLaps: 0
 ]
 
 { #category : 'as yet unclassified' }
-MoonWalkEffect >> withDesplacementValue: aPosition [
+MoonWalkEffect >> initializeWith: aDisplacement [
 
-	desplacement := aPosition
+	desplacement := aDisplacement
 ]

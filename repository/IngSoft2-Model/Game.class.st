@@ -165,7 +165,10 @@ Game >> move: aSpaceShip after: aDiceRoll [
 			 limitAdjustment: (spaceShipPositions at: aSpaceShip id)
 			 withTotalLaps: laps).
 
-	"board checkForPowerUps: aSpaceShip andAllSpaceShips: spaceShips."
+	board
+		applyEffecOfPowerUpUponA: aSpaceShip
+		andAll: spaceShips
+		andIts: spaceShipPositions.
 
 	self
 		replacePositionOf: aSpaceShip

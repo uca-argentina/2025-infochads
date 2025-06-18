@@ -1,11 +1,10 @@
 Class {
 	#name : 'HyperJumpEffect',
-	#superclass : 'Object',
+	#superclass : 'NoEffect',
 	#instVars : [
-		'parsecs',
-		'parsecScale',
 		'listOfJumps',
-		'turn'
+		'turn',
+		'parsecsPerCell'
 	],
 	#classInstVars : [
 		'parsecs',
@@ -17,43 +16,25 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-HyperJumpEffect class >> withParsecValue: totalParsecs totalBoardSize: totalDistance andParsecJumps: aListOfJumps [
-
-	parsecs := totalParsecs.
-	parsecScale := totalDistance / totalParsecs.
-	listOfJumps := aListOfJumps
-]
-
-{ #category : 'as yet unclassified' }
-HyperJumpEffect >> getPositionToMove [
-
-	| actualTurn |
-	turn > listOfJumps size
-		ifTrue: [
-			actualTurn := 1.
-			turn := 1 ]
-		ifFalse: [
-			actualTurn := turn.
-			turn := turn + 1 ].
-	^ listOfJumps at: actualTurn
-]
-
-{ #category : 'as yet unclassified' }
-HyperJumpEffect >> modify: aSpaceShip orMaybe: allSpaceShips [
-
-	| positionToMove cells |
-	positionToMove := self getPositionToMove.
+HyperJumpEffect class >> with: aParsecValue andParsec: jumps [
 	
-	cells := (parsecScale*positionToMove rounded).
-	
-	aSpaceShip updateTemporaryPosition: (aSpaceShip getTemporaryPosition + cells)
+	^self new initializeWith: aParsecValue andParsec: jumps
 ]
 
 { #category : 'as yet unclassified' }
-HyperJumpEffect >> withParsecValue: totalParsecs totalBoardSize: totalDistance andParsecJumps: aListOfJumps [
+HyperJumpEffect >> applyToSpaceShip: aPosition [
 
-	parsecs := totalParsecs.
-	parsecScale := totalDistance / totalParsecs.
-	listOfJumps := aListOfJumps.
+	| aDisplacement |
+	aDisplacement := listOfJumps removeFirst.
+	listOfJumps add: aDisplacement.
+	
+	^ Position at: aPosition + (aDisplacement/parsecsPerCell) withLaps: 0
+]
+
+{ #category : 'as yet unclassified' }
+HyperJumpEffect >> initializeWith: aParsecValue andParsec: jumps [
+
+	parsecsPerCell := aParsecValue.
+	listOfJumps := jumps.
 	turn := 1.
 ]

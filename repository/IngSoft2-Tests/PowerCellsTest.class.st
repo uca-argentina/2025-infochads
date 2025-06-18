@@ -16,26 +16,15 @@ PowerCellsTest >> readme [
 	
 ]
 
-{ #category : 'tests' }
-PowerCellsTest >> testWhenAAtomicBombEffectIsAppliedToCellThenCanBeCreated [
+{ #category : 'asserting' }
+PowerCellsTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
 
-	| cell |
-	cell := Cell new
-		        initializeWithType: #atomicBomb
-		        effect: (AtomicBombEffect new shieldsSacrificed: 1).
-
-	self assert: cell type equals: #atomicBomb
-]
-
-{ #category : 'tests' }
-PowerCellsTest >> testWhenABlackHoleEffectIsAppliedToCellThenCanBeCreated [
-
-	| cell |
-	cell := Cell new
-		        initializeWithType: #blackHole
-		        effect: (BlackHoleEffect new withDesplacementValue: 4).
-
-	self assert: cell type equals: #blackHole
+    self
+        should: anErrorBlock
+        raise: anErrorClass
+        withExceptionDo: [ :error |
+            self assert: (error messageText) equals:
+                errorMessage ]
 ]
 
 { #category : 'tests' }
@@ -47,7 +36,7 @@ PowerCellsTest >> testWhenAForthShipMovesToAHyperJumpWith100ParsecDivisionAnd30_
 		                     { 0. 0. 0. 100. 0. 0. 100. 3. 30. 20. 10 }.
 	aBoard := Board
 		          withSize: 100
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -63,44 +52,6 @@ PowerCellsTest >> testWhenAForthShipMovesToAHyperJumpWith100ParsecDivisionAnd30_
 ]
 
 { #category : 'tests' }
-PowerCellsTest >> testWhenAHyperJumpEffectIsAppliedToCellThenCanBeCreated [
-
-	| cell |
-	cell := Cell new
-		        initializeWithType: #hyperJump
-		        effect: (HyperJumpEffect new
-				         withParsecValue: 100
-				         totalBoardSize: 10
-				         andParsecJumps: #( 10 7 2 )).
-
-	self assert: cell type equals: #hyperJump
-]
-
-{ #category : 'tests' }
-PowerCellsTest >> testWhenAMoonWalkEffectIsAppliedToCellThenCanBeCreated [
-
-	| cell |
-	cell := Cell new
-		        initializeWithType: #moonWalk
-		        effect: (MoonWalkEffect new withDesplacementValue: 4).
-		
-	self assert: cell type equals: #moonWalk.
-
-]
-
-{ #category : 'tests' }
-PowerCellsTest >> testWhenANormalEffectIsAppliedToCellThenCanBeCreated [
-
-	| cell |
-	cell := Cell new
-		        initializeWithType: #normal
-		        effect: nil.
-		
-	self assert: cell type equals: #normal.
-
-]
-
-{ #category : 'tests' }
 PowerCellsTest >> testWhenARandomizedBoardThenTheFirstAndLastPositionsAreNormalCells [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |
@@ -112,7 +63,7 @@ PowerCellsTest >> testWhenARandomizedBoardThenTheFirstAndLastPositionsAreNormalC
 
 	aBoard := Board
 		          withSize: 50
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -135,7 +86,7 @@ PowerCellsTest >> testWhenAShipMovesLandsOnAPowerCellAndMovesDueToItThenTheNextP
 		                     2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -158,7 +109,7 @@ PowerCellsTest >> testWhenAShipMovesToAHyperJumpWith50ParsecDivisionAnd30_20_10J
 		                     5. 7 }.
 	aBoard := Board
 		          withSize: 50
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -180,7 +131,7 @@ PowerCellsTest >> testWhenAThirdShipMovesToAHyperJumpWith100ParsecDivisionAnd30_
 		                     2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -204,7 +155,7 @@ PowerCellsTest >> testWhenAnotherShipMovesToAHyperJumpWith100ParsecDivisionAnd30
 		                     2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -215,20 +166,6 @@ PowerCellsTest >> testWhenAnotherShipMovesToAHyperJumpWith100ParsecDivisionAnd30
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 6.
 	self assert: (aGame positionOf: 2) equals: 1
-]
-
-{ #category : 'tests' }
-PowerCellsTest >> testWhenHyperSpaceJumpEffectIsAppliedToCellThenCanBeCreated [
-
-	| cell |
-	cell := Cell new
-		        initializeWithType: #hyperSpaceJump
-		        effect:
-		        (HyperSpaceJumpEffect new 
-			         withDesplacementValue: 4
-			         andShieldsSacrificed: 1).
-
-	self assert: cell type equals: #hyperSpaceJump
 ]
 
 { #category : 'tests' }
@@ -263,7 +200,7 @@ PowerCellsTest >> testWhenShipMovesToAAtomicBombCellThenAllShipsReturnToBeguinin
 		                     { 0. 0. 0. 0. 100. 0. 100. 3. 30. 20. 10. 6. 4. 2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -288,7 +225,7 @@ PowerCellsTest >> testWhenShipMovesToABlackHoleCellThenItGoesBack4Spaces [
 		                     2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -310,7 +247,7 @@ PowerCellsTest >> testWhenShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10J
 		                     2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -332,7 +269,7 @@ PowerCellsTest >> testWhenShipMovesToAHyperSpaceJumpCellThenItMovesForward4Space
 		                     2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -355,7 +292,7 @@ PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf4ThenItMovesEveryShipExceptF
 		                     4. 4. 4. 0 }.
 	aBoard := Board
 		          withSize: 50
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -379,7 +316,7 @@ PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf6ThenItMovesEveryShipExceptF
 		                     6. 6. 6. 6. 0 }.
 	aBoard := Board
 		          withSize: 100
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -403,7 +340,7 @@ PowerCellsTest >> testWhenShipMovesToAMoonWalkCellOf6ThenShipWithNegativePositio
 		                     6. 6. 6. 6. 0 }.
 	aBoard := Board
 		          withSize: 50
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -427,7 +364,7 @@ PowerCellsTest >> testWhenShipMovesToNormalCellThenItStaysThere [
 		                     2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -449,7 +386,7 @@ PowerCellsTest >> testWhenShipMovesToNormalInABiggerBoardCellThenItStaysThere [
 		                     2. 5. 7. 5. 6. 3. 4. 2 }.
 	aBoard := Board
 		          withSize: 100
-		          composedOf: (WormHole startingAt: 0 endingAt: 0)
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: aConfigureDiceSet.
 	aGame := Game
 		         playedIn: aBoard
@@ -459,4 +396,22 @@ PowerCellsTest >> testWhenShipMovesToNormalInABiggerBoardCellThenItStaysThere [
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 39
+]
+
+{ #category : 'tests' }
+PowerCellsTest >> testWhenTheProbabilitiesDontSum100ThenCreationFails [
+
+	| aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 2. 2. 2. 2. 5 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 0. 0. 0. 99. 0. 0. 100. 3. 30. 20. 10 }.
+
+	self
+		should: [
+			Board
+				withSize: 100
+				composedOf: (WormHole startingAt: 1 endingAt: 1)
+				andACellConfiguration: aConfigureDiceSet ]
+		raise: Error
+		withMessageText: 'The probabilites dont sum 100.'
 ]

@@ -1,8 +1,9 @@
 Class {
 	#name : 'BlackHoleEffect',
-	#superclass : 'Object',
+	#superclass : 'NoEffect',
 	#instVars : [
-		'displacement'
+		'displacement',
+		'desplacement'
 	],
 	#classInstVars : [
 		'displacement'
@@ -12,13 +13,19 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-BlackHoleEffect >> modify: aSpaceShip orMaybe: allSpaceShips [
+BlackHoleEffect class >> withBackTrack: aDesplacement [
 
-	aSpaceShip updateTemporaryPosition: (aSpaceShip getTemporaryPosition ) + displacement
+	^ self new initializeWith: aDesplacement
 ]
 
 { #category : 'as yet unclassified' }
-BlackHoleEffect >> withDesplacementValue: aPosition [
+BlackHoleEffect >> applyToSpaceShip: aPosition [
 
-	displacement := aPosition
+	^ Position at: aPosition - desplacement withLaps: 0.
+]
+
+{ #category : 'as yet unclassified' }
+BlackHoleEffect >> initializeWith: aDesplacement [
+
+	desplacement := aDesplacement
 ]

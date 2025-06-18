@@ -35,6 +35,15 @@ Board >> adjust: spaceShips positionAnd: totalLaps [
 			(self limitAdjustment: ship position withTotalLaps: totalLaps) ]
 ]
 
+{ #category : 'as yet unclassified' }
+Board >> applyEffecOfPowerUpUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions [
+
+	| cell |
+	gameBoard ifNotEmpty: [
+		cell := gameBoard at: (spaceShipPositions at: aSpaceShip id ) position.
+		cell takeActionOver: aSpaceShip or: spaceShips thatArePlaced: spaceShipPositions ]
+]
+
 { #category : 'accessing' }
 Board >> boardSize [
 
@@ -75,7 +84,7 @@ Board >> initializeWithSize: aBoardSize composedOf: aWormHole andConfiguration: 
 Board >> limitAdjustment: aPosition withTotalLaps: totalLaps [
 
 	aPosition position <= 0 ifTrue: [
-		^ Position at: aPosition position - 1 withLaps: 0 ].
+		^ Position at: ((aPosition position)negated +1) withLaps: 0 ].
 
 	(self the: aPosition hasReached: totalLaps) ifTrue: [
 		^ Position
