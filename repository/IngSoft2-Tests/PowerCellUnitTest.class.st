@@ -69,3 +69,21 @@ PowerCellUnitTest >> testWhenHyperJumpDoesntReceiveTheJumpsInOrderThenCreationFa
 		raise: Error
 		withMessageText: 'The Jump list must be in order.'
 ]
+
+{ #category : 'tests' }
+PowerCellUnitTest >> testWhenHyperSpaceJumpDoesntReceiveADesplacementNotAsIntegerThenCreationFails [
+
+	self
+		should: [ HyperSpaceJumpEffect with: 'a' ]
+		raise: Error
+		withMessageText: 'The desplacement must be 4.'
+]
+
+{ #category : 'tests' }
+PowerCellUnitTest >> testWhenHyperSpaceJumpReceiveADesplacementOtherThan0ThenCreationFails [
+
+	self
+		should: [ HyperSpaceJumpEffect with: 10 ]
+		raise: Error
+		withMessageText: 'The desplacement must be 4.'
+]

@@ -23,7 +23,7 @@ CellPlacement >> addNormalCellAtBeguiningAndEndOfBoard: netCellDistibution [
 CellPlacement >> atomicBombCellsWithPercentage: aPercentage and: aDesplacement [
 
 	| newCells |
-	newCells := (1 to: aPercentage) collect: [ :i |
+	newCells := (1 to: aPercentage) collect: [ :cell |
 		            Cell has:
 			            (AtomicBombEffect with: aDesplacement) ].
 	rawCellDistribution := rawCellDistribution , newCells
@@ -33,7 +33,7 @@ CellPlacement >> atomicBombCellsWithPercentage: aPercentage and: aDesplacement [
 CellPlacement >> blackHoleCellsWithPercentage: aPercentage andDesplacemets: aDesplacement [
 
 	| newCells |
-	newCells := (1 to: aPercentage) collect: [ :i |
+	newCells := (1 to: aPercentage) collect: [ :cell |
 		            Cell has:
 			            (BlackHoleEffect withBackTrack: aDesplacement) ].
 	rawCellDistribution := rawCellDistribution , newCells
@@ -70,8 +70,7 @@ CellPlacement >> generateUniverse: aConfigDice [
 	self blackHoleCellsWithPercentage: (probabilities at: 2) andDesplacemets: 4.
 	self
 		hyperSpaceJumpCellsWithPercantage: (probabilities at: 3)
-		andDesplacements: 4
-		andShieldsLost: -1.
+		andDesplacements: 4.
 	self
 		hyperJumpCellsWithPercentage: (probabilities at: 4)
 		andParsecValue: aConfigDice toss
@@ -87,10 +86,10 @@ CellPlacement >> hyperJumpCellsWithPercentage: aPercentage andParsecValue: aPars
 	amountOfJumps := aConfigDice toss.
 	jumps := OrderedCollection new: amountOfJumps.
 
-	1 to: amountOfJumps do: [ :i | jumps add: aConfigDice toss ].
+	1 to: amountOfJumps do: [ :jump | jumps add: aConfigDice toss ].
 
 
-	newCells := (1 to: aPercentage) collect: [ :i |
+	newCells := (1 to: aPercentage) collect: [ :cell |
 		            Cell has:
 			            (HyperJumpEffect
 				             with: aParsecValue // boardSize 
@@ -99,13 +98,12 @@ CellPlacement >> hyperJumpCellsWithPercentage: aPercentage andParsecValue: aPars
 ]
 
 { #category : 'creation' }
-CellPlacement >> hyperSpaceJumpCellsWithPercantage: aPercentage andDesplacements: aDesplacement andShieldsLost: shieldsSacrified [
+CellPlacement >> hyperSpaceJumpCellsWithPercantage: aPercentage andDesplacements: aDesplacement [ 
 
 	| newCells |
-	newCells := (1 to: aPercentage) collect: [ :i |
+	newCells := (1 to: aPercentage) collect: [ :cell |
 		            Cell has: (HyperSpaceJumpEffect
-				             with: aDesplacement 
-				             and: shieldsSacrified) ].
+				             with: aDesplacement) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 

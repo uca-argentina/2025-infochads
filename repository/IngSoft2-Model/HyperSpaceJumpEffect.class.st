@@ -2,21 +2,27 @@ Class {
 	#name : 'HyperSpaceJumpEffect',
 	#superclass : 'NoEffect',
 	#instVars : [
-		'desplacement',
-		'shieldsTaken'
+		'desplacement'
 	],
 	#classInstVars : [
-		'displacement',
-		'shieldsTaken'
+		'displacement'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'as yet unclassified' }
-HyperSpaceJumpEffect class >> with: aDesplacement and: shieldsSacrified [
+HyperSpaceJumpEffect class >> mustBeFour: aDesplacement [
 
-	^ self new initializeWith: aDesplacement and: shieldsSacrified
+	(aDesplacement isInteger not or: [ aDesplacement ~= 4 ]) ifTrue: [
+		Error signal: 'The desplacement must be 4.' ]
+]
+
+{ #category : 'as yet unclassified' }
+HyperSpaceJumpEffect class >> with: aDesplacement [
+
+	self mustBeFour: aDesplacement.
+	^ self new initializeWith: aDesplacement
 ]
 
 { #category : 'as yet unclassified' }
@@ -32,7 +38,7 @@ HyperSpaceJumpEffect >> damageShield [
 ]
 
 { #category : 'as yet unclassified' }
-HyperSpaceJumpEffect >> initializeWith: aDesplacement and: shieldsSacrified [
+HyperSpaceJumpEffect >> initializeWith: aDesplacement [
 
 	desplacement := aDesplacement.
 ]
