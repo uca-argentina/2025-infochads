@@ -33,3 +33,21 @@ PowerCellUnitTest >> testWhenAtomicBombReceiveADesplacementOtherThan0ThenCreatio
 		raise: Error
 		withMessageText: 'The desplacement must be 0.'
 ]
+
+{ #category : 'tests' }
+PowerCellUnitTest >> testWhenBlackHoleDoesntReceiveADesplacementNotAsIntegerThenCreationFails [
+
+	self
+		should: [ BlackHoleEffect withBackTrack: '10' .]
+		raise: Error
+		withMessageText: 'The desplacement must be 4.'
+]
+
+{ #category : 'tests' }
+PowerCellUnitTest >> testWhenBlackHoleReceiveADesplacementOtherThan4ThenCreationFails [
+
+	self
+		should: [ BlackHoleEffect withBackTrack: 10 ]
+		raise: Error
+		withMessageText: 'The desplacement must be 4.'
+]

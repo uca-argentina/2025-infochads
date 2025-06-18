@@ -12,10 +12,16 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-AtomicBombEffect class >> with: aDesplacement [
+AtomicBombEffect class >> mustBeCero: aDesplacement [
 
 	(aDesplacement isInteger not or: [ aDesplacement ~= 0 ]) ifTrue: [
-		Error signal: 'The desplacement must be 0.' ].
+		Error signal: 'The desplacement must be 0.' ]
+]
+
+{ #category : 'as yet unclassified' }
+AtomicBombEffect class >> with: aDesplacement [
+
+	self mustBeCero: aDesplacement.
 	^ self new initializedWith: aDesplacement
 ]
 
