@@ -28,6 +28,25 @@ PowerCellInteractionTest >> should: anErrorBlock raise: anErrorClass withMessage
 ]
 
 { #category : 'tests' }
+PowerCellInteractionTest >> testWhenABoardWithCellsIsCreatedThenAproximately40PercentOfTheCellsAreNormal [
+
+	| aConfigureDiceSet aBoard effect |
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 40. 20. 20. 8. 2. 10. 100. 3. 30. 20. 10. 6. 4.
+		                     2. 5. 7. 7 }.
+
+	aBoard := Board
+		          withSize: 1000
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: aConfigureDiceSet.
+
+	effect := NoEffect new.
+
+	self assert:
+		((aBoard getPercentageOf: effect) between: 38 and: 42)
+]
+
+{ #category : 'tests' }
 PowerCellInteractionTest >> testWhenAForthShipMovesToAHyperJumpWith100ParsecDivisionAnd30_20_10JumpsThenItMoves30JumpsAndCombatsWithFirstShip [
 
 	| aGame aDiceSet aConfigureDiceSet aBoard |

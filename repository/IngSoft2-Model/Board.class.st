@@ -66,6 +66,15 @@ Board >> checkForWormHole: aPosition [
 	^ Position at: (wormHole moveifWormHole: aPosition position) withLaps: 0.
 ]
 
+{ #category : 'as yet unclassified' }
+Board >> getPercentageOf: anEffect [
+
+	| aux |
+	aux := gameBoard select: [ :cell | cell effect = anEffect ].
+
+	^ (aux size / boardSize )*100
+]
+
 { #category : 'initialization' }
 Board >> initializeWithSize: aBoardSize composedOf: aWormHole andConfiguration: aConfigDiceSet [
 
