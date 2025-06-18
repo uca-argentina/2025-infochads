@@ -51,3 +51,21 @@ PowerCellUnitTest >> testWhenBlackHoleReceiveADesplacementOtherThan4ThenCreation
 		raise: Error
 		withMessageText: 'The desplacement must be 4.'
 ]
+
+{ #category : 'tests' }
+PowerCellUnitTest >> testWhenHyperJumpDoesntReceiveAtLeastOneJumpValueThenCreationFails [
+
+	self
+		should: [ HyperJumpEffect with: 100 andParsec: #( ) ]
+		raise: Error
+		withMessageText: 'The Jump list must have at least one value.'
+]
+
+{ #category : 'tests' }
+PowerCellUnitTest >> testWhenHyperJumpDoesntReceiveTheJumpsInOrderThenCreationFails [
+
+	self
+		should: [ HyperJumpEffect with: 100 andParsec: #(4 5 3) ]
+		raise: Error
+		withMessageText: 'The Jump list must be in order.'
+]
