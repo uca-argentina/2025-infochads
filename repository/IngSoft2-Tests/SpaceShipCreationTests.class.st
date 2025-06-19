@@ -16,37 +16,68 @@ SpaceShipCreationTests >> should: anErrorBlock raise: anErrorClass withMessageTe
 ]
 
 { #category : 'tests' }
+SpaceShipCreationTests >> testWhenAShipDoesntHaveANameThenCreationFails [
+
+	self
+		should: [ SpaceShip with: '' andStartingWith: 3 ]
+		raise: Error
+		withMessageText: 'The ship must be identifiable.'
+]
+
+{ #category : 'tests' }
 SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPositionsAre1 [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: {  }.
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 3
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-					withAmountOfLaps: 1
-					withCellConfigurations: { }.
+		         playedIn: aBoard
+		         by: 3
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
-	self assert: (aGame positionOfSpaceShip: 3) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 1
+	self assert: (aGame positionOf: 3) equals: 1.
+	self assert: (aGame positionOf: 2) equals: 1.
+	self assert: (aGame positionOf: 1) equals: 1
+]
+
+{ #category : 'tests' }
+SpaceShipCreationTests >> testWhenNumberOfShieldsAssignedToTheShipIsNot3ThenCreationFails [
+
+	self
+		should: [ SpaceShip with: 1 andStartingWith: 11 ]
+		raise: Error
+		withMessageText: 'The ship must initialize with 3 shield.'
+]
+
+{ #category : 'tests' }
+SpaceShipCreationTests >> testWhenNumberOfShieldsAssignedToTheShipIsNotAnIntegerThenCreationFails [
+
+	self
+		should: [ SpaceShip with: 1 andStartingWith: '11' ]
+		raise: Error
+		withMessageText: 'The ship must initialize with 3 shield.'
 ]
 
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsAStringThenCreationFails [
 
-	| aDiceSet |
+	| aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: {  }.
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: {  }.
 	self
 		should: [
 			Game
-				withBoardSize: 10
-				withSpaceShips: '3'
-				withDiceSet: aDiceSet
-				withWormHole: {  }
-				withAmountOfLaps: 1
-				withCellConfigurations: {  } ]
+				playedIn: aBoard
+				by: '3'
+				throwing: aDiceSet
+				wonAfter: 1 ]
 		raise: Error
 		withMessageText:
 		'The number of space ships should be a positive integer.'
@@ -55,17 +86,19 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsAStringThenCreationFails [
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
 
-	| aDiceSet |
+	| aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: {  }.
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: {  }.
 	self
 		should: [
 			Game
-				withBoardSize: 10
-				withSpaceShips: 0
-				withDiceSet: aDiceSet
-				withWormHole: {  }
-				withAmountOfLaps: 1
-				withCellConfigurations: {  } ]
+				playedIn: aBoard
+				by: 0
+				throwing: aDiceSet
+				wonAfter: 1 ]
 		raise: Error
 		withMessageText: 'The number of space ships must be at least 1.'
 ]
@@ -73,17 +106,19 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails [
 
-	| aDiceSet |
+	| aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: {  }.
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: {  }.
 	self
 		should: [
 			Game
-				withBoardSize: 10
-				withSpaceShips: -1
-				withDiceSet: aDiceSet
-				withWormHole: {  }
-				withAmountOfLaps: 1
-				withCellConfigurations: {  } ]
+				playedIn: aBoard
+				by: -1
+				throwing: aDiceSet
+				wonAfter: 1 ]
 		raise: Error
 		withMessageText:
 		'The number of space ships should be a positive integer.'
@@ -92,32 +127,36 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails 
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs1 [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: {  }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 1
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-		         withAmountOfLaps: 1
-		         withCellConfigurations: {  }.
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
-	self assert: (aGame positionOfSpaceShip: 1) equals: 1
+	self assert: (aGame positionOf: 1) equals: 1
 ]
 
 { #category : 'tests' }
 SpaceShipCreationTests >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositionsAre1 [
 
-	| aGame aDiceSet |
+	| aGame aDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: {  }.
+	aBoard := Board
+		          withSize: 10
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: {  }.
 	aGame := Game
-		         withBoardSize: 10
-		         withSpaceShips: 2
-		         withDiceSet: aDiceSet
-		         withWormHole: {  }
-		         withAmountOfLaps: 1
-		         withCellConfigurations: {  }.
+		         playedIn: aBoard
+		         by: 2
+		         throwing: aDiceSet
+		         wonAfter: 1.
 
-	self assert: (aGame positionOfSpaceShip: 2) equals: 1.
-	self assert: (aGame positionOfSpaceShip: 1) equals: 1
+	self assert: (aGame positionOf: 2) equals: 1.
+	self assert: (aGame positionOf: 1) equals: 1
 ]

@@ -11,61 +11,42 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Board class >> boardSizeMustBePositiveInteger: aBoardSize [
+Board class >> assertIsPositiveOverZero: aBoardSize [
 
-	aBoardSize isInteger ifFalse: [
+	(aBoardSize isInteger and: [ aBoardSize > 0 ]) ifFalse: [
 		Error signal: 'Board Size must be a positive interger.' ]
 ]
 
 { #category : 'as yet unclassified' }
-Board class >> boardSizeMustBePositiveOverZero: aBoardSize [
+Board class >> withSize: aBoardSize composedOf: aWormHole andACellConfiguration: aConfigDiceSet [
 
-	aBoardSize <= 0 ifTrue: [ Error signal: 'Board Size must be over 0.' ]
-]
-
-{ #category : 'as yet unclassified' }
-Board class >> withSize: aBoardSize andWormHolePosition: aWormHolePosition andCellConfiguration: aConfigDiceSet [
-
-	self boardSizeMustBePositiveInteger: aBoardSize.
-	self boardSizeMustBePositiveOverZero: aBoardSize.
+	self assertIsPositiveOverZero: aBoardSize.
 	^ self new
 		  initializeWithSize: aBoardSize
-		  andWormHolePosition: aWormHolePosition
-		  andCellConfiguration: aConfigDiceSet
+		  composedOf: aWormHole
+		  andConfiguration: aConfigDiceSet
 ]
 
 { #category : 'as yet unclassified' }
-Board >> adjust: spaceShips positionAnd: laps [
+Board >> adjust: spaceShips positionAnd: totalLaps [
 
 	spaceShips do: [ :ship |
-		self boardLimitAdjustment: ship withTotalLaps: laps.
-		ship updatePosition ]
+		ship storeageNewPosition:
+			(self limitAdjustment: ship position withTotalLaps: totalLaps) ]
 ]
 
 { #category : 'as yet unclassified' }
-Board >> boardLimitAdjustment: aSpaceShip withTotalLaps: totalLaps [
-	
-	aSpaceShip getTemporaryPosition <= 0 ifTrue: [
-		aSpaceShip updateTemporaryPosition: 1 ].
-	
-	(aSpaceShip hasReachedMaxProgressFor: totalLaps boardSize: boardSize)
-		ifTrue: [
-			aSpaceShip finishAt: boardSize withLaps: totalLaps.
-			^ self ].
+Board >> applyEffecOfPowerUpUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions [
 
-	(aSpaceShip isBeforeBoardStart: boardSize) ifTrue: [ ^ self ].
-
-	
-
-	aSpaceShip adjustLapAndPositionRelativeTo: boardSize.
-
-	^ self
+	| cell |
+	gameBoard ifNotEmpty: [
+		cell := gameBoard at: (spaceShipPositions at: aSpaceShip id ) position.
+		cell takeActionOver: aSpaceShip or: spaceShips thatArePlaced: spaceShipPositions ]
 ]
 
 { #category : 'accessing' }
 Board >> boardSize [
 
-	boardSize ifNil: [ Error signal: 'Board size not initialized' ].
 	^ boardSize
 ]
 
@@ -73,35 +54,54 @@ Board >> boardSize [
 Board >> checkForPowerUps: aSpaceShip andAllSpaceShips: allSpaceShips [
 
 	| cell |
-	gameBoard ifNotNil: [
-		cell := gameBoard at: aSpaceShip getTemporaryPosition.
+	gameBoard ifNotEmpty: [
+		cell := gameBoard at: aSpaceShip getPosition.
 		cell takeAction: aSpaceShip andOtherSpaceShips: allSpaceShips ].
 
-	self checkForWormHole: aSpaceShip
 ]
 
 { #category : 'as yet unclassified' }
-Board >> checkForWormHole: aSpaceShip [
+Board >> checkForWormHole: aPosition [
 
-	wormHole positions isNil ifTrue: [ ^ self ].
-	aSpaceShip updateTemporaryPosition:
-		(wormHole verifyPosition: aSpaceShip getTemporaryPosition)
+	^ Position at: (wormHole moveifWormHole: aPosition position) withLaps: 0.
 ]
 
 { #category : 'initialization' }
-Board >> initializeWithSize: aBoardSize andWormHolePosition: aWormHolePosition andCellConfiguration: aConfigDiceSet [
+Board >> initializeWithSize: aBoardSize composedOf: aWormHole andConfiguration: aConfigDiceSet [
 
 	boardSize := aBoardSize.
-	gameBoard := CellPlacement new createBoardWithCellConfiguration: aConfigDiceSet andSize: boardSize.
 
-	wormHole := WormHole withGates: aWormHolePosition.
+	gameBoard := CellPlacement new
+		             createBoardWithCellConfiguration: aConfigDiceSet
+		             andSize: boardSize.
+
+	wormHole := aWormHole.
 	wormHole mustBeWithInLimits: aBoardSize.
-	^ self
+
 ]
 
 { #category : 'as yet unclassified' }
-Board >> withWormHole: aWormHole [
+Board >> limitAdjustment: aPosition withTotalLaps: totalLaps [
 
-	wormHole := WormHole withGates: aWormHole.
-	wormHole wormHoleMustBeWithinLimits: boardSize
+	aPosition position <= 0 ifTrue: [
+		^ Position at: ((aPosition position)negated +1) withLaps: 0 ].
+
+	(self the: aPosition hasReached: totalLaps) ifTrue: [
+		^ Position
+			  at: boardSize - aPosition position
+			  withLaps: totalLaps - aPosition lap ].
+
+	aPosition position <= boardSize ifTrue: [
+		^ Position at: 0 withLaps: 0 ].
+
+	^ Position
+		  at: boardSize * (aPosition position // boardSize) negated
+		  withLaps: aPosition position // boardSize
+]
+
+{ #category : 'as yet unclassified' }
+Board >> the: aPosition hasReached: totalLaps [
+
+	^ aPosition position + (aPosition lap * boardSize)
+	  >= (totalLaps * boardSize)
 ]

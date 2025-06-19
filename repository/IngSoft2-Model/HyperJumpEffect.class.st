@@ -1,11 +1,10 @@
 Class {
 	#name : 'HyperJumpEffect',
-	#superclass : 'Object',
+	#superclass : 'NoEffect',
 	#instVars : [
-		'parsecs',
-		'parsecScale',
 		'listOfJumps',
-		'turn'
+		'turn',
+		'parsecsPerCell'
 	],
 	#classInstVars : [
 		'parsecs',
@@ -17,43 +16,49 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-HyperJumpEffect class >> withParsecValue: totalParsecs totalBoardSize: totalDistance andParsecJumps: aListOfJumps [
+HyperJumpEffect class >> mustBeInOrder: jumps [
 
-	parsecs := totalParsecs.
-	parsecScale := totalDistance / totalParsecs.
-	listOfJumps := aListOfJumps
+	| previousJump |
+	previousJump := jumps first + 1.
+
+	(jumps allSatisfy: [ :jump |
+		 previousJump > jump
+			 ifTrue: [
+				 previousJump := jump.
+				 true ]
+			 ifFalse: [ false ] ]) ifFalse: [
+		Error signal: 'The Jump list must be in order.' ]
 ]
 
 { #category : 'as yet unclassified' }
-HyperJumpEffect >> getPositionToMove [
+HyperJumpEffect class >> mustHaveAtleastOne: jumps [
 
-	| actualTurn |
-	turn > listOfJumps size
-		ifTrue: [
-			actualTurn := 1.
-			turn := 1 ]
-		ifFalse: [
-			actualTurn := turn.
-			turn := turn + 1 ].
-	^ listOfJumps at: actualTurn
+	jumps ifEmpty: [
+		Error signal: 'The Jump list must have at least one value.' ]
 ]
 
 { #category : 'as yet unclassified' }
-HyperJumpEffect >> modify: aSpaceShip orMaybe: allSpaceShips [
+HyperJumpEffect class >> with: aParsecValue andParsec: jumps [
 
-	| positionToMove cells |
-	positionToMove := self getPositionToMove.
+	self mustHaveAtleastOne: jumps.
+	self mustBeInOrder: jumps.
+	^self new initializeWith: aParsecValue andParsec: jumps
+]
+
+{ #category : 'as yet unclassified' }
+HyperJumpEffect >> applyToSpaceShip: aPosition [
+
+	| aDisplacement |
+	aDisplacement := listOfJumps removeFirst.
+	listOfJumps add: aDisplacement.
 	
-	cells := (parsecScale*positionToMove rounded).
-	
-	aSpaceShip updateTemporaryPosition: (aSpaceShip getTemporaryPosition + cells)
+	^ Position at: aPosition + (aDisplacement/parsecsPerCell) withLaps: 0
 ]
 
 { #category : 'as yet unclassified' }
-HyperJumpEffect >> withParsecValue: totalParsecs totalBoardSize: totalDistance andParsecJumps: aListOfJumps [
+HyperJumpEffect >> initializeWith: aParsecValue andParsec: jumps [
 
-	parsecs := totalParsecs.
-	parsecScale := totalDistance / totalParsecs.
-	listOfJumps := aListOfJumps.
+	parsecsPerCell := aParsecValue.
+	listOfJumps := jumps.
 	turn := 1.
 ]

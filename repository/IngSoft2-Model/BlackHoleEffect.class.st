@@ -1,8 +1,8 @@
 Class {
 	#name : 'BlackHoleEffect',
-	#superclass : 'Object',
+	#superclass : 'NoEffect',
 	#instVars : [
-		'displacement'
+		'desplacement'
 	],
 	#classInstVars : [
 		'displacement'
@@ -12,13 +12,27 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-BlackHoleEffect >> modify: aSpaceShip orMaybe: allSpaceShips [
+BlackHoleEffect class >> mustBeFour: aDesplacement [
 
-	aSpaceShip updateTemporaryPosition: (aSpaceShip getTemporaryPosition ) + displacement
+	(aDesplacement isInteger not or: [ aDesplacement ~= 4 ]) ifTrue: [
+		Error signal: 'The desplacement must be 4.' ]
 ]
 
 { #category : 'as yet unclassified' }
-BlackHoleEffect >> withDesplacementValue: aPosition [
+BlackHoleEffect class >> withBackTrack: aDesplacement [
 
-	displacement := aPosition
+	self mustBeFour: aDesplacement.
+	^ self new initializeWith: aDesplacement
+]
+
+{ #category : 'as yet unclassified' }
+BlackHoleEffect >> applyToSpaceShip: aPosition [
+
+	^ Position at: aPosition - desplacement withLaps: 0.
+]
+
+{ #category : 'as yet unclassified' }
+BlackHoleEffect >> initializeWith: aDesplacement [
+
+	desplacement := aDesplacement
 ]

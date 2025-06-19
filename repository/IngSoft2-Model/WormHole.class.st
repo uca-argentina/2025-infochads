@@ -2,29 +2,28 @@ Class {
 	#name : 'WormHole',
 	#superclass : 'Object',
 	#instVars : [
-		'wormHolePositions'
+		'entry',
+		'exit'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'as yet unclassified' }
-WormHole class >> withGates: aWormHolePositions [
+{ #category : 'accessing' }
+WormHole class >> startingAt: aPosition endingAt: anotherPosition [
 
-	self wormHoleMustBeAnArray: aWormHolePositions.
-	aWormHolePositions ifNotEmpty: [
-		self wormHoleExitMustBePositiveInteger: aWormHolePositions first.
-		self wormHoleExitMustBePositiveInteger: aWormHolePositions second.
-		self wormHoleExitMustNotBeEntry: aWormHolePositions ].
+	self wormHoleExitMustBePositive: aPosition.
+	self wormHoleExitMustBePositive: anotherPosition.
 
-	^ self new intializeWithGates: aWormHolePositions
+	^ self new intializeStartingAt: aPosition endingAt: anotherPosition.
 ]
 
 { #category : 'as yet unclassified' }
-WormHole class >> wormHoleExitMustBePositiveInteger: aWormHoleExit [
+WormHole class >> wormHoleExitMustBePositive: aWormHoleExit [
 
-	(aWormHoleExit isInteger and: aWormHoleExit > 1) ifFalse: [
-		Error signal: 'WormHole must be a pair of integers.' ]
+	(aWormHoleExit isInteger and: [ aWormHoleExit >= 1 ] ) ifFalse: [
+		Error signal:
+			'WormHole must be a pair of integers.' ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -34,40 +33,69 @@ WormHole class >> wormHoleExitMustNotBeEntry: aWormHole [
 		Error signal: 'The WormHole Entry cannot be the exit.' ]
 ]
 
-{ #category : 'as yet unclassified' }
-WormHole class >> wormHoleMustBeAnArray: aWormHolePositions [
+{ #category : 'accessing' }
+WormHole >> if: aPosition isPlacedAt: oneEntry mustComeOutAt: anotherEntry [
 
-	(aWormHolePositions isKindOf: Array) ifFalse: [
-		Error signal:
-			'The Worm Hole Position Must have at least 2 positions.' ]
+	aPosition = oneEntry ifTrue: [ ^ anotherEntry ].
+	^ aPosition
 ]
 
 { #category : 'as yet unclassified' }
-WormHole >> intializeWithGates: aWormHolePositions [
+WormHole >> intializeStartingAt: aPosition endingAt: anotherPosition [
 
-	wormHolePositions := aWormHolePositions
+	entry := aPosition.
+	exit := anotherPosition.
+	self verifyExistanceOfWormHole ifTrue: [
+		self the: entry cannotBeEqualTo: exit ].
+	 "iF entry = exit = 0 Then is valid BUT the WH doesnt exist"
+	
+]
+
+{ #category : 'as yet unclassified' }
+WormHole >> moveifWormHole: aPosition [
+
+	| auxiliaryPosition |
+	auxiliaryPosition := self
+		                     if: aPosition
+		                     isPlacedAt: entry
+		                     mustComeOutAt: exit.
+	aPosition = entry ifFalse: [
+		auxiliaryPosition := self
+			                     if: auxiliaryPosition
+			                     isPlacedAt: exit
+			                     mustComeOutAt: entry ].
+
+
+	^ auxiliaryPosition
 ]
 
 { #category : 'as yet unclassified' }
 WormHole >> mustBeWithInLimits: aBoardSize [
 
-	(wormHolePositions anySatisfy: [ :hole |
-		 hole >= aBoardSize or: hole <= 1 ]) ifTrue: [
-		Error signal: 'WormHole exit must be within board limits.']
+	self verifyExistanceOfWormHole ifFalse: [ ^ self ].
+
+	self the: entry mustBeInside: aBoardSize.
+	self the: exit mustBeInside: aBoardSize
 ]
 
 { #category : 'as yet unclassified' }
-WormHole >> positions [
+WormHole >> the: aPosition cannotBeEqualTo: anotherPosition [
 
-	^ wormHolePositions
+	aPosition = anotherPosition ifTrue: [
+		Error signal: 'The WormHole Entry cannot be the exit.' ]
 ]
 
 { #category : 'as yet unclassified' }
-WormHole >> verifyPosition: aPosition [
+WormHole >> the: position mustBeInside: aBoardsize [
 
-	wormHolePositions ifNotEmpty: [
-		(wormHolePositions anySatisfy: [ :aHole | aHole = aPosition ])
-			ifTrue: [ ^ (wormHolePositions copyWithout: aPosition) first ] ].
+	(position < aBoardsize and: position >= 1) ifFalse: [
+		Error signal: 'WormHole exit must be within board limits.' ]
+]
 
-	^ aPosition
+{ #category : 'as yet unclassified' }
+WormHole >> verifyExistanceOfWormHole [
+
+	^ (exit = entry and: entry = 1)
+		  ifTrue: [ ^ false ]
+		  ifFalse: [ ^ true ]
 ]

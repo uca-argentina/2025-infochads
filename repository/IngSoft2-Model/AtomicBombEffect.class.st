@@ -1,8 +1,8 @@
 Class {
 	#name : 'AtomicBombEffect',
-	#superclass : 'Object',
+	#superclass : 'NoEffect',
 	#instVars : [
-		'shieldScrificed'
+		'desplacement'
 	],
 	#classInstVars : [
 		'shieldScrificed'
@@ -12,28 +12,39 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-AtomicBombEffect >> deductOneShield: aCollection [ 
-	
-	aCollection do: [ :ship |
-		ship loseShield ]
+AtomicBombEffect class >> mustBeCero: aDesplacement [
+
+	(aDesplacement isInteger not or: [ aDesplacement ~= 0 ]) ifTrue: [
+		Error signal: 'The desplacement must be 0.' ]
 ]
 
 { #category : 'as yet unclassified' }
-AtomicBombEffect >> modify: aSpaceShip orMaybe: allSpaceShips [
+AtomicBombEffect class >> with: aDesplacement [
 
-	self moveBack: allSpaceShips.
-	self deductOneShield: allSpaceShips.
+	self mustBeCero: aDesplacement.
+	^ self new initializedWith: aDesplacement
 ]
 
 { #category : 'as yet unclassified' }
-AtomicBombEffect >> moveBack: allSpaceShips [
+AtomicBombEffect >> applyToAllSpaceShips: aPosition [
 
-	allSpaceShips do: [ :ship |
-		ship updateTemporaryPosition: 1 ]
+	^ Position at: 0 withLaps: 0
 ]
 
 { #category : 'as yet unclassified' }
-AtomicBombEffect >> shieldsSacrificed: aNumberOfShields [
+AtomicBombEffect >> applyToSpaceShip: aPosition [
 
-	shieldScrificed := aNumberOfShields
+	^ Position at: 0 withLaps: 0
+]
+
+{ #category : 'as yet unclassified' }
+AtomicBombEffect >> damageAllShields [
+
+	^ true
+]
+
+{ #category : 'as yet unclassified' }
+AtomicBombEffect >> initializedWith: aDesplacement [
+
+	desplacement := aDesplacement
 ]

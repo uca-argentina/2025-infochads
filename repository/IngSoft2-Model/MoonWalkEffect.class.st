@@ -1,6 +1,6 @@
 Class {
 	#name : 'MoonWalkEffect',
-	#superclass : 'Object',
+	#superclass : 'NoEffect',
 	#instVars : [
 		'desplacement'
 	],
@@ -12,23 +12,27 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-MoonWalkEffect >> modify: aSpaceShip orMaybe: allSpaceShips [
+MoonWalkEffect class >> mustBePositive: aDesplacement [
 
-	| otherShips |
-	otherShips := allSpaceShips select: [ :ship | ship ~= aSpaceShip ].
+	(aDesplacement isInteger not or: [ aDesplacement <= 0]) ifTrue: [
+		Error signal: 'The desplacement must be a posible value.' ]
+]
 
-	otherShips ifNotNil: [ self moveBack: otherShips ]
+{ #category : 'instance creation' }
+MoonWalkEffect class >> with: aDesplacement [
+
+	self mustBePositive: aDesplacement.
+	^ self new initializeWith: aDesplacement
 ]
 
 { #category : 'as yet unclassified' }
-MoonWalkEffect >> moveBack: otherSpaceShips [
+MoonWalkEffect >> applyToAllSpaceShips: aPosition [
 
-	otherSpaceShips do: [ :ship |
-		ship updateTemporaryPosition: (ship getTemporaryPosition + desplacement) ]
+	^ Position at: aPosition - desplacement withLaps: 0
 ]
 
 { #category : 'as yet unclassified' }
-MoonWalkEffect >> withDesplacementValue: aPosition [
+MoonWalkEffect >> initializeWith: aDisplacement [
 
-	desplacement := aPosition
+	desplacement := aDisplacement
 ]

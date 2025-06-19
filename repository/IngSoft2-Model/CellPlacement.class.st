@@ -3,8 +3,7 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'boardSize',
-		'rawCellDistribution',
-		'distribution'
+		'rawCellDistribution'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -14,22 +13,19 @@ Class {
 CellPlacement >> addNormalCellAtBeguiningAndEndOfBoard: netCellDistibution [
 
 	| safeCell |
-	safeCell := Cell new initializeWithType: #normal effect: nil.
+	safeCell := Cell has: NoEffect new.
 	netCellDistibution at: 1 put: safeCell.
 	netCellDistibution at: boardSize put: safeCell.
 	^ netCellDistibution
 ]
 
 { #category : 'creation' }
-CellPlacement >> atomicBombCellsWithPercentage: aPercentage andShieldsSacrificed: aNumberOfShields [
+CellPlacement >> atomicBombCellsWithPercentage: aPercentage and: aDesplacement [
 
 	| newCells |
-	newCells := (1 to: aPercentage) collect: [ :i |
-		            Cell new
-			            initializeWithType: #atomicBomb
-			            effect:
-			            (AtomicBombEffect new shieldsSacrificed:
-				             aNumberOfShields) ].
+	newCells := (1 to: aPercentage) collect: [ :cell |
+		            Cell has:
+			            (AtomicBombEffect with: aDesplacement) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
@@ -37,26 +33,20 @@ CellPlacement >> atomicBombCellsWithPercentage: aPercentage andShieldsSacrificed
 CellPlacement >> blackHoleCellsWithPercentage: aPercentage andDesplacemets: aDesplacement [
 
 	| newCells |
-	newCells := (1 to: aPercentage) collect: [ :i |
-		            Cell new
-			            initializeWithType: #blackhole
-			            effect:
-			            (BlackHoleEffect new withDesplacementValue:
-				             aDesplacement) ].
+	newCells := (1 to: aPercentage) collect: [ :cell |
+		            Cell has:
+			            (BlackHoleEffect withBackTrack: aDesplacement) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
 { #category : 'as yet unclassified' }
 CellPlacement >> createBoardWithCellConfiguration: aConfigDice andSize: aBoardSize [
 
- 
 	boardSize := aBoardSize.
 	rawCellDistribution := OrderedCollection new.
-	aConfigDice isEmpty ifTrue: [ ^ nil ].
+	aConfigDice isEmpty ifTrue: [ ^ rawCellDistribution ].
 	self generateUniverse: aConfigDice.
-	^ self extractSample.
-
-	 
+	^ self extractSample
 ]
 
 { #category : 'as yet unclassified' }
@@ -72,20 +62,21 @@ CellPlacement >> extractSample [
 { #category : 'as yet unclassified' }
 CellPlacement >> generateUniverse: aConfigDice [
 
-	| percentages |
-	percentages := self obtainPercentages: aConfigDice.
-	self normalCellsWithPercentage: (percentages at: 1).
-	self blackHoleCellsWithPercentage: (percentages at: 2) andDesplacemets: -4.
+	| probabilities |
+	probabilities := self obtainProbabilities: aConfigDice.
+	self theProbabilitiesMustSum100: probabilities.
+	
+	self normalCellsWithPercentage: (probabilities at: 1).
+	self blackHoleCellsWithPercentage: (probabilities at: 2) andDesplacemets: 4.
 	self
-		hyperSpaceJumpCellsWithPercantage: (percentages at: 3)
-		andDesplacements: 4
-		andShieldsLost: -1.
+		hyperSpaceJumpCellsWithPercantage: (probabilities at: 3)
+		andDesplacements: 4.
 	self
-		hyperJumpCellsWithPercentage: (percentages at: 4)
+		hyperJumpCellsWithPercentage: (probabilities at: 4)
 		andParsecValue: aConfigDice toss
 		andJumpList: aConfigDice.
-	self atomicBombCellsWithPercentage: (percentages at: 5) andShieldsSacrificed: -1.
-	self moonWalkCellsWithPercentage: (percentages at: 6) andDisplacements: aConfigDice
+	self atomicBombCellsWithPercentage: (probabilities at: 5) and: 0.
+	self moonWalkCellsWithPercentage: (probabilities at: 6) andDisplacements: aConfigDice
 ]
 
 { #category : 'creation' }
@@ -93,50 +84,43 @@ CellPlacement >> hyperJumpCellsWithPercentage: aPercentage andParsecValue: aPars
 
 	| jumps amountOfJumps newCells |
 	amountOfJumps := aConfigDice toss.
-	jumps := Array new: amountOfJumps.
+	jumps := OrderedCollection new: amountOfJumps.
 
-	jumps := (1 to: amountOfJumps) collect: [ :i | aConfigDice toss ].
+	1 to: amountOfJumps do: [ :jump | jumps add: aConfigDice toss ].
 
 
-	newCells := (1 to: aPercentage) collect: [ :i |
-		            Cell new
-			            initializeWithType: #hyperJump
-			            effect: (HyperJumpEffect new
-					             withParsecValue: aParsecValue
-					             totalBoardSize: boardSize
-					             andParsecJumps: jumps) ].
+	newCells := (1 to: aPercentage) collect: [ :cell |
+		            Cell has:
+			            (HyperJumpEffect
+				             with: aParsecValue // boardSize 
+				             andParsec: jumps) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
 { #category : 'creation' }
-CellPlacement >> hyperSpaceJumpCellsWithPercantage: aPercentage andDesplacements: aDesplacement andShieldsLost: aShieldNumber [
+CellPlacement >> hyperSpaceJumpCellsWithPercantage: aPercentage andDesplacements: aDesplacement [ 
 
 	| newCells |
-	newCells := (1 to: aPercentage) collect: [ :i |
-		            Cell new
-			            initializeWithType: #hyperSpaceJump
-			            effect: (HyperSpaceJumpEffect new
-					             withDesplacementValue: aDesplacement
-					             andShieldsSacrificed: aShieldNumber) ].
+	newCells := (1 to: aPercentage) collect: [ :cell |
+		            Cell has: (HyperSpaceJumpEffect
+				             with: aDesplacement) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
 { #category : 'creation' }
 CellPlacement >> moonWalkCellsWithPercentage: aPercentage andDisplacements: aConfigDice [
 
-	| newCells stepBackwards allStepBackwards repeat |
+	| newCells stepBackwards allDisplacements repeat |
 	stepBackwards := self obtainNextDisplacement: aConfigDice.
-	repeat:= boardSize.
-	
-	allStepBackwards := Array streamContents: [ :s |
-		             repeat timesRepeat: [ s nextPutAll: stepBackwards ] ].
-	
-	newCells := (1 to: aPercentage) collect: [ :i |
-		            Cell new
-			            initializeWithType: #moonWalk
-			            effect:
-			            (MoonWalkEffect new withDesplacementValue:
-				             (allStepBackwards at: i) * -1) ].
+	repeat := boardSize.
+
+	allDisplacements := Array streamContents: [ :particular |
+		                    repeat timesRepeat: [
+			                    particular nextPutAll: stepBackwards ] ].
+
+	newCells := (1 to: aPercentage) collect: [ :particular |
+		            Cell has:
+			            (MoonWalkEffect with: (allDisplacements at: particular)) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]
 
@@ -144,7 +128,7 @@ CellPlacement >> moonWalkCellsWithPercentage: aPercentage andDisplacements: aCon
 CellPlacement >> normalCellsWithPercentage: aPercentage [
 
 	1 to: aPercentage do: [ :cell |
-		rawCellDistribution add: (Cell new initializeWithType: #normal effect: nil) ]
+	rawCellDistribution add: (Cell has: NoEffect new) ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -161,7 +145,7 @@ CellPlacement >> obtainNextDisplacement: aConfigDice [
 ]
 
 { #category : 'as yet unclassified' }
-CellPlacement >> obtainPercentages: aConfigureDice [
+CellPlacement >> obtainProbabilities: aConfigureDice [
 
 	^ (1 to: 6) collect: [ :effect | aConfigureDice toss ]
 ]
@@ -171,4 +155,11 @@ CellPlacement >> randomCellPicking [
 
     ^ (1 to: boardSize) collect: [ :cell |
           rawCellDistribution at: ((1 to: 100) atRandom) ]
+]
+
+{ #category : 'as yet unclassified' }
+CellPlacement >> theProbabilitiesMustSum100: percentajes [
+
+	(percentajes sum: [ :proba | proba ]) = 100 ifFalse: [
+		Error signal: 'The probabilites dont sum 100.' ]
 ]

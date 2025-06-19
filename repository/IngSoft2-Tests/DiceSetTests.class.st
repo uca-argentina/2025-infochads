@@ -31,9 +31,9 @@ DiceSetTests >> testWhenARiggedDiceWithNextMovements1And2ThenThoseAreTheNextMove
 DiceSetTests >> testWhenASackOfDicesWithOneD6AndOneD8IsTossedThenResultBetween1And14 [
 
 	| diceSet |
-	diceSet := DiceSet new initializeWith.
-	diceSet add: (Dice withSides: 6).
-	diceSet add: (Dice withSides: 8).
+	diceSet := DiceSet withDices: {
+			           (Dice withSides: 6).
+			           (Dice withSides: 8) }.
 	self assert: (diceSet toss between: 1 and: 14)
 ]
 
@@ -41,8 +41,7 @@ DiceSetTests >> testWhenASackOfDicesWithOneD6AndOneD8IsTossedThenResultBetween1A
 DiceSetTests >> testWhenASackOfDicesWithOneD6IsTossedThenResultBetween1And6 [
 
 	| diceSet |
-	diceSet := DiceSet new initializeWith.
-	diceSet add: (Dice withSides: 6).
+	diceSet := DiceSet withDices: { (Dice withSides: 6) }.
 	self assert: (diceSet toss between: 1 and: 6)
 ]
 
@@ -50,9 +49,10 @@ DiceSetTests >> testWhenASackOfDicesWithOneD6IsTossedThenResultBetween1And6 [
 DiceSetTests >> testWhenASackOfDicesWithTwoD6IsTossedThenResultBetween1And6 [
 
 	| diceSet |
-	diceSet := DiceSet new initializeWith.
-	diceSet add: (Dice withSides: 6).
-	diceSet add: (Dice withSides: 6).
+	diceSet := DiceSet withDices: {
+			           (Dice withSides: 6).
+			           (Dice withSides: 6) }.
+
 	self assert: (diceSet toss between: 1 and: 12)
 ]
 

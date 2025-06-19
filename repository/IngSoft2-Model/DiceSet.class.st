@@ -8,26 +8,20 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'adding' }
-DiceSet >> add: aDice [
+{ #category : 'as yet unclassified' }
+DiceSet class >> withDices: aSackOfDices [
 
-	sackOfDices add: aDice
+	^ self new initializeWith: aSackOfDices
 ]
 
 { #category : 'initialization' }
-DiceSet >> initializeWith [
-
-	sackOfDices := OrderedCollection new
-]
-
-{ #category : 'testing' }
-DiceSet >> isEmpty [
-
-	^ false
+DiceSet >> initializeWith: aSackOfDices [
+	
+	sackOfDices := aSackOfDices.
 ]
 
 { #category : 'as yet unclassified' }
 DiceSet >> toss [
 
-	^ sackOfDices inject: 0 into: [ :result :dice | result + dice roll ]
+	^ sackOfDices sum: [ :dice | dice roll ]
 ]
