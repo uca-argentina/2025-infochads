@@ -52,6 +52,26 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 ]
 
 { #category : 'as yet unclassified' }
+Game >> affectedRoll: aDiceRoll of:aSpaceShip [
+
+	| extraPositionsByEffect |
+	extraPositionsByEffect := aSpaceShip searchForIncrementalEffect.
+	^aDiceRoll + extraPositionsByEffect
+]
+
+{ #category : 'as yet unclassified' }
+Game >> apllyEffect: aCardEffect To: anAffectedShip [
+
+	(anAffectedShip = 0)
+    ifTrue: [ spaceShips do: [:ship | ship apply: aCardEffect ] ]
+    ifFalse: [
+        (anAffectedShip > 0) ifTrue: [
+            (spaceShips at: anAffectedShip) apply: aCardEffect
+        ]
+    ].
+]
+
+{ #category : 'as yet unclassified' }
 Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 
 	| throwSpaceShip1 throwSpaceShip2 |
@@ -157,9 +177,11 @@ Game >> lostBattle: aSpaceShip [
 { #category : 'as yet unclassified' }
 Game >> move: aSpaceShip after: aDiceRoll [
 
+	| aDiceRollWithEffect |
 	(self skippingTurn: aSpaceShip after: aDiceRoll) ifTrue: [ ^ self ].
-
-	self sumTo: aSpaceShip the: (Position at: aDiceRoll withLaps: 0).
+	
+	aDiceRollWithEffect:=self affectedRoll:aDiceRoll of:aSpaceShip.
+	self sumTo: aSpaceShip the: (Position at: aDiceRollWithEffect withLaps: 0).
 
 	self sumTo: aSpaceShip the: (board
 			 limitAdjustment: (spaceShipPositions at: aSpaceShip id)

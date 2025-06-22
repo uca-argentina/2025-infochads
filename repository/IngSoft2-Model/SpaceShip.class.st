@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'shield',
 		'spaceShipID',
-		'loseTurn'
+		'loseTurn',
+		'effects'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -33,6 +34,12 @@ SpaceShip class >> with: anId andStartingWith: aShield [
 	^ self new initializeWithShield: aShield and: anId
 ]
 
+{ #category : 'target resize' }
+SpaceShip >> apply: aCardEffect [ 
+	
+	effects add: aCardEffect.
+]
+
 { #category : 'testing' }
 SpaceShip >> canBattle [
 
@@ -57,6 +64,7 @@ SpaceShip >> initializeWithShield: aNumberOfShields and: aSpaceShipID [
 	spaceShipID := aSpaceShipID.
 	shield := aNumberOfShields.
 	loseTurn := 0.
+	effects:= OrderedCollection new.
 	^ self
 ]
 
@@ -73,6 +81,15 @@ SpaceShip >> rechargableShield: aDiceRoll [
 	(shield = 3 and: aDiceRoll = 0) ifTrue: [
 		Error signal: 
 			'The Shield is already full, it cant be recharged.' ]
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> searchForIncrementalEffect [
+
+	| incrementalEffects |
+	incrementalEffects := effects count: [ :anEffect | anEffect affectsMovement  ].
+
+	^ incrementalEffects
 ]
 
 { #category : 'accessing' }
