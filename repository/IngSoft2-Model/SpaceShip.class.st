@@ -50,7 +50,7 @@ SpaceShip >> canBattle [
 SpaceShip >> getMercenary [
 
 	
-	^ ((effects select: [ :effect | effect isMercenary ]) first) getAlly
+	^ (effects select: [ :effect | effect isMercenary ])  
 ]
 
 { #category : 'getters' }
@@ -62,7 +62,7 @@ SpaceShip >> getShield [
 { #category : 'testing' }
 SpaceShip >> hasMercenary [
 
-	^ (effects select: [ :effect | effect isMercenary ]) notEmpty
+	^ (self getMercenary) notEmpty
 ]
 
 { #category : 'getters' }

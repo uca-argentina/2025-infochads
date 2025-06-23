@@ -74,14 +74,21 @@ Game >> applyEffect: aCardEffect To: anAffectedShip [
 { #category : 'as yet unclassified' }
 Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 
-	| throwSpaceShip1 throwSpaceShip2 winner loser |
+	| throwSpaceShip1 throwSpaceShip2 winner loser throwMercenary2 throwMercenary1 |
 	[
 	throwSpaceShip2 := diceSet toss.
 	throwSpaceShip1 := diceSet toss.
 	throwSpaceShip1 = throwSpaceShip2 ] whileTrue: [  ]. "y no tiene mercenario"
 	(aSpaceShip1 hasMercenary or: aSpaceShip2 hasMercenary) ifTrue: [
-		throwSpaceShip2 := diceSet toss + throwSpaceShip2.
-		throwSpaceShip1 := diceSet toss + throwSpaceShip1 ].
+		throwMercenary2 := 0.
+		(aSpaceShip2 getMercenary) do: [ :mercenary | throwMercenary2 := (throwMercenary2 + diceSet toss)   ].
+		throwMercenary1 := 0.
+		(aSpaceShip1 getMercenary) do: [ :mercenary | throwMercenary1 := (throwMercenary1 + diceSet toss)   ].
+		
+		"throwMercenary2 := (1 to: aSpaceShip2 getMercenary size) collect: [ :aSum | diceSet toss ] . "
+		"throwMercenary1 := (1 to: aSpaceShip1 getMercenary size) collect: [ :aSum | diceSet toss ] sum ."
+		throwSpaceShip2 :=  throwMercenary2 + throwSpaceShip2.
+		throwSpaceShip1 := throwMercenary1 + throwSpaceShip1 ].
 
 	throwSpaceShip1 < throwSpaceShip2
 		ifTrue: [
@@ -92,7 +99,7 @@ Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 			loser := aSpaceShip2 ].
 
 	self lostBattle: loser.
-	loser hasMercenary ifTrue: [ self lostBattle: loser getMercenary ]
+	loser hasMercenary ifTrue: [ (loser getMercenary) do: [ :mercenaryShip | self lostBattle: mercenaryShip getAlly ] ] 
 ]
 
 { #category : 'as yet unclassified' }
