@@ -60,7 +60,7 @@ Game >> affectedRoll: aDiceRoll of:aSpaceShip [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> apllyEffect: aCardEffect To: anAffectedShip [
+Game >> applyEffect: aCardEffect To: anAffectedShip [
 
 	(anAffectedShip = 0)
     ifTrue: [ spaceShips do: [:ship | ship apply: aCardEffect ] ]
@@ -74,14 +74,31 @@ Game >> apllyEffect: aCardEffect To: anAffectedShip [
 { #category : 'as yet unclassified' }
 Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 
-	| throwSpaceShip1 throwSpaceShip2 |
+	| throwSpaceShip1 throwSpaceShip2 winner loser |
 	[
 	throwSpaceShip2 := diceSet toss.
 	throwSpaceShip1 := diceSet toss.
-	throwSpaceShip1 = throwSpaceShip2 ] whileTrue: [  ].
+	throwSpaceShip1 = throwSpaceShip2 ] whileTrue: [  ]. "y no tiene mercenario"
+	(aSpaceShip1 hasMercenary or: aSpaceShip2 hasMercenary) ifTrue: [
+		throwSpaceShip2 := diceSet toss + throwSpaceShip2.
+		throwSpaceShip1 := diceSet toss + throwSpaceShip1 ].
+
 	throwSpaceShip1 < throwSpaceShip2
-		ifTrue: [ self lostBattle: aSpaceShip1 ]
-		ifFalse: [ self lostBattle: aSpaceShip2 ]
+		ifTrue: [
+			winner := aSpaceShip2.
+			loser := aSpaceShip1 ]
+		ifFalse: [
+			winner := aSpaceShip1.
+			loser := aSpaceShip2 ].
+
+	self lostBattle: loser.
+	loser hasMercenary ifTrue: [ self lostBattle: loser getMercenary ]
+]
+
+{ #category : 'as yet unclassified' }
+Game >> chooseMercenary: aMercenarySpaceShip for: aSpaceShip [
+
+	(spaceShips at: aSpaceShip) setMercenary: (spaceShips at: aMercenarySpaceShip).
 ]
 
 { #category : 'whats left of race positions' }

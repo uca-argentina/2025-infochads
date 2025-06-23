@@ -1,5 +1,5 @@
 Class {
-	#name : 'IntstantCard',
+	#name : 'InstantCard',
 	#superclass : 'Card',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'

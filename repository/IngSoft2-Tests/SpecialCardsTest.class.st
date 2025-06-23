@@ -6,6 +6,83 @@ Class {
 }
 
 { #category : 'tests' }
+SpecialCardsTest >> testWhenAShipWithMercenaryLosesBothLoseShield [
+
+	| aGame aDiceSet aBoard mercenaryCard |
+	aDiceSet := RiggedDice new initializeWith: { 5. 5. 1. 2. 4. 6 }. "nave, atacado, mercenario de nave"
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 4
+		         throwing: aDiceSet
+		         wonAfter: 1.
+
+	mercenaryCard := Mercenary new.
+	aGame applyEffect: mercenaryCard To: 1.
+	aGame chooseMercenary: 3 for: 1.
+	aGame applyEffect: mercenaryCard To: 2.
+	aGame chooseMercenary: 4 for: 2.
+	aGame start.
+
+	self assert: (aGame shieldOf: 2) equals: 3.
+	self assert: (aGame shieldOf: 1) equals: 2.
+	self assert: (aGame shieldOf: 3) equals: 2.
+]
+
+{ #category : 'tests' }
+SpecialCardsTest >> testWhenSpaceShip1HasMercenaryCardAndWinsBattleAgainst2 [
+
+	| aGame aDiceSet aBoard mercenaryCard |
+	aDiceSet := RiggedDice new initializeWith: { 5. 5. 1. 2. 4 }. "nave, atacado, mercenario de nave"
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 3
+		         throwing: aDiceSet
+		         wonAfter: 1.
+
+	mercenaryCard := Mercenary new.
+	aGame applyEffect: mercenaryCard To: 1.
+	aGame chooseMercenary: 3 for: 1.
+	aGame start.
+
+	self assert: (aGame shieldOf: 2) equals: 2.
+	self assert: (aGame shieldOf: 1) equals: 3.
+]
+
+{ #category : 'tests' }
+SpecialCardsTest >> testWhenSpaceShip2And1HasMercenaryCardAnd2WinsBattleAgainst1 [
+
+	| aGame aDiceSet aBoard mercenaryCard |
+	aDiceSet := RiggedDice new initializeWith: { 5. 5. 1. 2. 4. 6 }. "nave, atacado, mercenario de nave"
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 4
+		         throwing: aDiceSet
+		         wonAfter: 1.
+
+	mercenaryCard := Mercenary new.
+	aGame applyEffect: mercenaryCard To: 1.
+	aGame chooseMercenary: 3 for: 1.
+	aGame applyEffect: mercenaryCard To: 2.
+	aGame chooseMercenary: 4 for: 2.
+	aGame start.
+
+	self assert: (aGame shieldOf: 2) equals: 3.
+	self assert: (aGame shieldOf: 1) equals: 2.
+]
+
+{ #category : 'tests' }
 SpecialCardsTest >> testWhenSpaceShipHasASpeedCardEffectAppliedThenMovesAnExtraPositionThanShownInDiceRoll [
 
 	| aGame aDiceSet aBoard speedCard |
@@ -21,7 +98,7 @@ SpecialCardsTest >> testWhenSpaceShipHasASpeedCardEffectAppliedThenMovesAnExtraP
 		         wonAfter: 1.
 
 	speedCard := Speed new.
-	aGame apllyEffect: speedCard To: 1.
+	aGame applyEffect: speedCard To: 1.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 3
@@ -43,7 +120,7 @@ SpecialCardsTest >> testWhenSpaceShipHasAnAccelerationCardEffectThenMovesAnExtra
 		         wonAfter: 1.
 
 	accelerationCard := Acceleration new.
-	aGame apllyEffect: accelerationCard To: 0.
+	aGame applyEffect: accelerationCard To: 0.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 3
@@ -65,8 +142,8 @@ SpecialCardsTest >> testWhenSpaceShipHasMoreThan1SpeedEffectThenMovesExtraPositi
 		         wonAfter: 1.
 
 	speedCard := Speed new.
-	aGame apllyEffect: speedCard To: 1.
-	aGame apllyEffect: speedCard To: 1.	
+	aGame applyEffect: speedCard To: 1.
+	aGame applyEffect: speedCard To: 1.	
 	aGame start.
 
 	self assert: (aGame positionOf:1) equals:4

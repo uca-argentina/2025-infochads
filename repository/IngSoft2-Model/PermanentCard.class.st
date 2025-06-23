@@ -10,3 +10,9 @@ PermanentCard >> affectsMovement [
 
 	^ false
 ]
+
+{ #category : 'testing' }
+PermanentCard >> isMercenary [
+
+	^ false
+]

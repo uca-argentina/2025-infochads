@@ -46,10 +46,23 @@ SpaceShip >> canBattle [
 	^ shield > 0 and: loseTurn = 0
 ]
 
+{ #category : 'as yet unclassified' }
+SpaceShip >> getMercenary [
+
+	
+	^ ((effects select: [ :effect | effect isMercenary ]) first) getAlly
+]
+
 { #category : 'getters' }
 SpaceShip >> getShield [
 
 	^ shield
+]
+
+{ #category : 'testing' }
+SpaceShip >> hasMercenary [
+
+	^ (effects select: [ :effect | effect isMercenary ]) notEmpty
 ]
 
 { #category : 'getters' }
@@ -90,6 +103,16 @@ SpaceShip >> searchForIncrementalEffect [
 	incrementalEffects := effects count: [ :anEffect | anEffect affectsMovement  ].
 
 	^ incrementalEffects
+]
+
+{ #category : 'initialization' }
+SpaceShip >> setMercenary: aMercenarySpaceShip [
+
+	effects do: [ :effect |
+		(effect isMercenary and: [ effect hasNoMercenary ]) ifTrue: [
+			effect signContract: aMercenarySpaceShip.
+
+			^ self ] ]
 ]
 
 { #category : 'accessing' }
