@@ -1,12 +1,12 @@
 Class {
-	#name : 'InstantCard',
+	#name : 'Redo',
 	#superclass : 'Card',
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'testing' }
-InstantCard >> isCancellation [
+Redo >> isRedo [
 
-	^ false
+	^ true
 ]

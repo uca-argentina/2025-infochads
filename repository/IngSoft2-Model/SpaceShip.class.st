@@ -35,15 +35,31 @@ SpaceShip class >> with: anId andStartingWith: aShield [
 ]
 
 { #category : 'target resize' }
-SpaceShip >> apply: aCardEffect [ 
-	
-	effects add: aCardEffect.
+SpaceShip >> apply: aCardEffect [
+
+	(self redoCardEffect: aCardEffect) ifTrue: [ ^self ].
+	(self cancellationCardEffect: aCardEffect) ifTrue: [ ^ self ].
+
+	effects add: aCardEffect
 ]
 
 { #category : 'testing' }
 SpaceShip >> canBattle [
 
 	^ shield > 0 and: loseTurn = 0
+]
+
+{ #category : 'target resize' }
+SpaceShip >> cancellationCardEffect: aCardEffect [
+
+	| effectToRemove |
+	aCardEffect isCancellation ifFalse: [ ^ false ].
+	effectToRemove := effects
+		                  detect: [ :each | each = aCardEffect getEffect ]
+		                  ifNone: [ ^ false ].
+
+	effects remove: effectToRemove.
+	^ true
 ]
 
 { #category : 'as yet unclassified' }
@@ -94,6 +110,17 @@ SpaceShip >> rechargableShield: aDiceRoll [
 	(shield = 3 and: aDiceRoll = 0) ifTrue: [
 		Error signal: 
 			'The Shield is already full, it cant be recharged.' ]
+]
+
+{ #category : 'target resize' }
+SpaceShip >> redoCardEffect: aCardEffect [
+
+	aCardEffect isRedo ifTrue: [
+		| lastEffect |
+		lastEffect := effects last copy.
+		effects add: lastEffect.
+		^ true ].
+	^ false
 ]
 
 { #category : 'as yet unclassified' }

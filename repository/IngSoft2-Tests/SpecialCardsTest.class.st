@@ -6,6 +6,33 @@ Class {
 }
 
 { #category : 'tests' }
+SpecialCardsTest >> testWhenACancellationCardIsAppliedThenAShipLosesAnEffect [
+
+	| aGame aDiceSet aBoard  cancellationCard accelerationCard |
+	aDiceSet := RiggedDice new initializeWith: { 1 }. 
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 1.
+
+	
+	cancellationCard := Cancellation new.
+	accelerationCard := Acceleration new.
+	cancellationCard effectTypeToCancel: accelerationCard .
+	aGame applyEffect: accelerationCard To: 0.
+	aGame applyEffect: cancellationCard To: 1.
+	
+	aGame start.
+
+	self assert: (aGame positionOf:1) equals: 2
+]
+
+{ #category : 'tests' }
 SpecialCardsTest >> testWhenAShipWithMercenaryLosesBothLoseShield [
 
 	| aGame aDiceSet aBoard mercenaryCard |
@@ -94,6 +121,56 @@ SpecialCardsTest >> testWhenBothShipsHave2MercenariesInABattleAnd1LosesThenLoses
 	self assert: (aGame shieldOf: 1) equals: 2.
 	self assert: (aGame shieldOf: 3) equals: 2.
 	self assert: (aGame shieldOf: 5) equals: 2.
+]
+
+{ #category : 'tests' }
+SpecialCardsTest >> testWhenShipUses2RedoCardsThatTransformsIntoASpeedCardDueToBeingLastCardUsed [
+
+	| aGame aDiceSet aBoard  speedCard redoCard redoCard1 |
+	aDiceSet := RiggedDice new initializeWith: { 1 }. 
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 1.
+
+	speedCard := Speed new.
+	redoCard := Redo new.
+	redoCard1 := Redo new.
+	aGame applyEffect: speedCard To: 1.
+	aGame applyEffect: redoCard To: 1.	
+	aGame applyEffect: redoCard1 To: 1.	
+	aGame start.
+
+	self assert: (aGame positionOf:1) equals: 5
+]
+
+{ #category : 'tests' }
+SpecialCardsTest >> testWhenShipUsesARedoCardThatTransformsIntoASpeedCardDueToBeingLastCardUsed [
+
+	| aGame aDiceSet aBoard  speedCard redoCard |
+	aDiceSet := RiggedDice new initializeWith: { 1 }. 
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: {  }.
+	aGame := Game
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 1.
+
+	speedCard := Speed new.
+	redoCard := Redo new.
+	aGame applyEffect: speedCard To: 1.
+	aGame applyEffect: redoCard To: 1.	
+	aGame start.
+
+	self assert: (aGame positionOf:1) equals:4
 ]
 
 { #category : 'tests' }
