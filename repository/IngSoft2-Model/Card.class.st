@@ -1,9 +1,27 @@
 Class {
 	#name : 'Card',
 	#superclass : 'Object',
+	#instVars : [
+		'isApplicable'
+	],
+	#classInstVars : [
+		'isApplicable'
+	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
+
+{ #category : 'accessing' }
+Card >> isApplicable [
+
+	^ isApplicable ifNil: [ true ]
+]
+
+{ #category : 'accessing' }
+Card >> isApplicable: aBoolean [
+
+	isApplicable := aBoolean
+]
 
 { #category : 'testing' }
 Card >> isCancellation [

@@ -39,15 +39,10 @@ SpaceShip class >> with: anId andStartingWith: aShield [
 SpaceShip >> apply: aCardEffect [
 
 	((self redoCardEffect: aCardEffect) or:
-		 (self cancellationCardEffect: aCardEffect)) ifTrue: [
-		^true].
+		 (self cancellationCardEffect: aCardEffect)) ifTrue: [ ^ self ].
 
 
-	aCardEffect isPermanent ifTrue: [
-		effects add: aCardEffect.
-		^true]
-	
-	
+	aCardEffect isPermanent ifTrue: [ effects add: aCardEffect ]
 ]
 
 { #category : 'testing' }
@@ -64,6 +59,7 @@ SpaceShip >> cancellationCardEffect: aCardEffect [
 	effectToRemove := effects
 		                  detect: [ :each | each = aCardEffect getEffect ]
 		                  ifNone: [
+			                  aCardEffect isApplicable: false.
 			                  Error signal:
 				                  'There is no Permanent effect active, Cancelleation Card not Used.' ].
 
@@ -150,6 +146,14 @@ SpaceShip >> redoCardEffect: aCardEffect [
 		effects add: (aCardEffect getLastCardEffect).
 		^ true ].
 	^ false
+]
+
+{ #category : 'removing' }
+SpaceShip >> removeCardFromDeck: aCardEffect [
+
+	| aCardToRemove |
+	aCardToRemove:= hand detect:[:aCard | aCard class = aCardEffect class].
+	hand remove:aCardToRemove
 ]
 
 { #category : 'as yet unclassified' }
