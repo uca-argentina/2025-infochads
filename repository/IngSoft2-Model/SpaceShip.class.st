@@ -5,7 +5,8 @@ Class {
 		'shield',
 		'spaceShipID',
 		'loseTurn',
-		'effects'
+		'effects',
+		'hand'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -65,6 +66,12 @@ SpaceShip >> cancellationCardEffect: aCardEffect [
 ]
 
 { #category : 'as yet unclassified' }
+SpaceShip >> drawCard: aCard [
+
+	hand add: aCard
+]
+
+{ #category : 'as yet unclassified' }
 SpaceShip >> getMercenary [
 
 	
@@ -75,6 +82,12 @@ SpaceShip >> getMercenary [
 SpaceShip >> getShield [
 
 	^ shield
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> getShipDeck [
+
+	^ hand
 ]
 
 { #category : 'testing' }
@@ -95,7 +108,8 @@ SpaceShip >> initializeWithShield: aNumberOfShields and: aSpaceShipID [
 	spaceShipID := aSpaceShipID.
 	shield := aNumberOfShields.
 	loseTurn := 0.
-	effects:= OrderedCollection new.
+	effects := OrderedCollection new.
+	hand := OrderedCollection new.
 	^ self
 ]
 

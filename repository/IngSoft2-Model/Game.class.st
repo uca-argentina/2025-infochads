@@ -9,7 +9,8 @@ Class {
 		'laps',
 		'board',
 		'spaceShipPositions',
-		'lastCardEffect'
+		'lastCardEffect',
+		'deck'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -150,6 +151,25 @@ Game >> getRanking [
 	^ (ranking collect: [ :each | each id ]) asArray
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> getShipHands [
+
+	^(spaceShips allSatisfy: [ :ship | ship getShipDeck size = 2 ])
+]
+
+{ #category : 'as yet unclassified' }
+Game >> giveInitialCardsToShips [
+
+	(deck isCollection )
+		ifTrue: [
+			spaceShips do: [ :ship |
+				ship drawCard: deck first.
+				ship drawCard: deck second ] ]
+		ifFalse: [
+			spaceShips do: [ :ship |
+				2 timesRepeat: [ ship drawCard: deck drawRandomCard ] ] ]
+]
+
 { #category : 'initialization' }
 Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceSet wonAfter: aNumberOfLaps [
 
@@ -162,6 +182,8 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	nextSpaceShipToMove := 1.
 	numberOfSpaceShips := aNumberOfSpaceShips.
 	laps := aNumberOfLaps.
+	deck ifNil: [ deck := CardDeck new ].
+	self giveInitialCardsToShips.
 	^ self
 ]
 
@@ -312,4 +334,10 @@ Game >> updateNextShipToMove: spaceShipID [
 	nextSpaceShipToMove := spaceShipID + 1.
 	nextSpaceShipToMove > numberOfSpaceShips ifTrue: [
 		nextSpaceShipToMove := 1 ]
+]
+
+{ #category : 'as yet unclassified' }
+Game >> useTestDeck: aFixedDeck [
+
+	deck := aFixedDeck asOrderedCollection
 ]
