@@ -67,16 +67,6 @@ Board >> boardSize [
 ]
 
 { #category : 'as yet unclassified' }
-Board >> checkForPowerUps: aSpaceShip andAllSpaceShips: allSpaceShips [
-
-	| cell |
-	gameBoard ifNotEmpty: [
-		cell := gameBoard at: aSpaceShip getPosition.
-		cell takeAction: aSpaceShip andOtherSpaceShips: allSpaceShips ].
-
-]
-
-{ #category : 'as yet unclassified' }
 Board >> checkForWormHole: aPosition [
 
 	^ Position at: (wormHole moveifWormHole: aPosition position) withLaps: 0.

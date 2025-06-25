@@ -28,3 +28,9 @@ NoEffect >> damageShield [
 
 	^ false
 ]
+
+{ #category : 'as yet unclassified' }
+NoEffect >> giveCardToShip [
+
+	^ self
+]

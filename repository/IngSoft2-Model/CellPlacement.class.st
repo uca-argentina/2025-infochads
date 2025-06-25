@@ -40,6 +40,13 @@ CellPlacement >> blackHoleCellsWithPercentage: aPercentage andDesplacemets: aDes
 ]
 
 { #category : 'as yet unclassified' }
+CellPlacement >> cardGiverWithPercentage: aPercentage [
+
+	1 to: aPercentage do: [ :cell |
+	rawCellDistribution add: (Cell has: (CardGiverEffect with: CardDeck new)) ]
+]
+
+{ #category : 'as yet unclassified' }
 CellPlacement >> createBoardWithCellConfiguration: aConfigDice andSize: aBoardSize [
 
 	boardSize := aBoardSize.
@@ -76,7 +83,11 @@ CellPlacement >> generateUniverse: aConfigDice [
 		andParsecValue: aConfigDice toss
 		andJumpList: aConfigDice.
 	self atomicBombCellsWithPercentage: (probabilities at: 5) and: 0.
-	self moonWalkCellsWithPercentage: (probabilities at: 6) andDisplacements: aConfigDice
+	self moonWalkCellsWithPercentage: (probabilities at: 6) andDisplacements: aConfigDice.
+		
+	self cardGiverWithPercentage: (probabilities at: 7). 
+
+
 ]
 
 { #category : 'creation' }
@@ -147,7 +158,7 @@ CellPlacement >> obtainNextDisplacement: aConfigDice [
 { #category : 'as yet unclassified' }
 CellPlacement >> obtainProbabilities: aConfigureDice [
 
-	^ (1 to: 6) collect: [ :effect | aConfigureDice toss ]
+	^ (1 to: 7) collect: [ :effect | aConfigureDice toss ]
 ]
 
 { #category : 'as yet unclassified' }

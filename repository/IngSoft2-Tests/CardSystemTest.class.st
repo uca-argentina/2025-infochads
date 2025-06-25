@@ -18,32 +18,20 @@ CardSystemTest >> should: anErrorBlock raise: anErrorClass withMessageText: anEr
 { #category : 'tests' }
 CardSystemTest >> testWhen [
 
-	| aGame aDiceSet aBoard deck |
-	aDiceSet := RiggedDice new initializeWith: { 1 }.
-	aBoard := Board
-		          withSize: 100
-		          composedOf: (WormHole startingAt: 1 endingAt: 1)
-		          andACellConfiguration: {  }.
-
-	deck := { Speed new. Cancellation new }.
-
-
-	aGame := Game
-		         playedIn: aBoard
-		         by: 1
-		         throwing: aDiceSet
-		         wonAfter: 1
-		         withDeck: deck.
-
-	
+	| aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 2. 2. 2. 2. 5 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 40. 20. 20. 8. 2. 10. 10. 100. 3. 30. 20. 10 }.
 
 	self
-		should: [ aGame useCard: Cancellation new from: 1 applyTo: 1 ]
+		should: [
+			Board
+				withSize: 100
+				composedOf: (WormHole startingAt: 1 endingAt: 1)
+				andACellConfiguration: aConfigureDiceSet ]
 		raise: Error
-		withMessageText:
-		'There is no Permanent effect active, Cancelleation Card not Used.'.
-		
-	self assert: (aGame getCardDeckSizeOf: 1) equals: 2.
+		withMessageText: 'The probabilites dont sum 100.'
+
 ]
 
 { #category : 'tests' }
@@ -75,6 +63,31 @@ CardSystemTest >> testWhenACardEffectIsAppliedThenIsRemovedFromShipDeck [
 ]
 
 { #category : 'tests' }
+CardSystemTest >> testWhenAShipLandsOnACardGiverCellThenReceivesACard [
+
+	| aGame aDiceSet aConfigureDiceSet aBoard |
+	aDiceSet := RiggedDice new initializeWith: { 1 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 0. 0. 0. 0. 0. 0. 100. 100. 3. 30. 20. 10 }.
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: aConfigureDiceSet.
+		
+		
+		aGame := Game
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 1
+					withDeck: { }.
+
+	aGame start.
+	self assert: (aGame getCardDeckSizeOf: 1) equals: 3.
+
+]
+
+{ #category : 'tests' }
 CardSystemTest >> testWhenAllSpaceShipsInGameStartWith2CardsOnHand [
 
 	| aGame aDiceSet aBoard |
@@ -95,6 +108,25 @@ CardSystemTest >> testWhenAllSpaceShipsInGameStartWith2CardsOnHand [
 
 
 	self assert: aGame getShipHands
+]
+
+{ #category : 'tests' }
+CardSystemTest >> testWhenCardGiverCellExistsWithItsProbabilitiesThenPreviousProbabilitiesAreNowInvalid [
+
+	| aDiceSet aConfigureDiceSet |
+	aDiceSet := RiggedDice new initializeWith: { 2. 2. 2. 2. 5 }.
+	aConfigureDiceSet := RiggedDice new initializeWith:
+		                     { 40. 20. 20. 8. 2. 10. 10. 100. 3. 30. 20. 10 }.
+
+	self
+		should: [
+			Board
+				withSize: 100
+				composedOf: (WormHole startingAt: 1 endingAt: 1)
+				andACellConfiguration: aConfigureDiceSet ]
+		raise: Error
+		withMessageText: 'The probabilites dont sum 100.'
+
 ]
 
 { #category : 'tests' }
