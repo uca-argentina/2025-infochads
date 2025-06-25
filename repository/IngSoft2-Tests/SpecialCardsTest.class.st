@@ -28,7 +28,8 @@ SpecialCardsTest >> testWhenACancellationCardIsAppliedThenAShipLosesAnEffect [
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	
 	cancellationCard := Cancellation new.
@@ -53,9 +54,10 @@ SpecialCardsTest >> testWhenAShipWithMercenaryLosesBothLoseShield [
 		          andACellConfiguration: {  }.
 	aGame := Game
 		         playedIn: aBoard
-		         by: 4
+		         by: 4 
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	mercenaryCard := Mercenary new.
 	aGame applyEffect: mercenaryCard to: 1.
@@ -82,7 +84,8 @@ SpecialCardsTest >> testWhenASpaceShipHas2MercenariesAndLosesThenBothMercenaries
 		         playedIn: aBoard
 		         by: 5
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	mercenaryCard := Mercenary new.
 	mercenaryCard1 := Mercenary new.
@@ -113,7 +116,8 @@ SpecialCardsTest >> testWhenBothShipsHave2MercenariesInABattleAnd1LosesThenLoses
 		         playedIn: aBoard
 		         by: 6
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	mercenaryCard := Mercenary new.
 	mercenaryCard1 := Mercenary new.
@@ -149,7 +153,8 @@ SpecialCardsTest >> testWhenRepeatCardIsUsedOnSpaceshipAnTheEffectToRepeatIsAtom
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 3.
+		         wonAfter: 3
+					withDeck: { }.
 	repeatCard := Repeat new.
 	aGame start.
 	aGame applyEffect: repeatCard to: 1.
@@ -175,7 +180,8 @@ SpecialCardsTest >> testWhenRepeatCardIsUsedOnSpaceshipAnTheEffectToRepeatIsBlac
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 	repeatCard := Repeat new.
 	aGame start.
 	aGame applyEffect: repeatCard to: 1.
@@ -195,7 +201,8 @@ SpecialCardsTest >> testWhenShipUses2RedoCardsThatTransformsIntoASpeedCardDueToB
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	speedCard := Speed new.
 	redoCard := Redo new.
@@ -221,7 +228,8 @@ SpecialCardsTest >> testWhenShipUsesARedoCardThatTransformsIntoASpeedCardDueToBe
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	speedCard := Speed new.
 	redoCard := Redo new.
@@ -245,7 +253,8 @@ SpecialCardsTest >> testWhenSpaceShip1HasMercenaryCardAndWinsBattleAgainst2 [
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	mercenaryCard := Mercenary new.
 	aGame applyEffect: mercenaryCard to: 1.
@@ -269,7 +278,8 @@ SpecialCardsTest >> testWhenSpaceShip2And1HasMercenaryCardAnd2WinsBattleAgainst1
 		         playedIn: aBoard
 		         by: 4
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	mercenaryCard := Mercenary new.
 	aGame applyEffect: mercenaryCard to: 1.
@@ -295,7 +305,8 @@ SpecialCardsTest >> testWhenSpaceShipHasASpeedCardEffectAppliedThenMovesAnExtraP
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	speedCard := Speed new.
 	aGame applyEffect: speedCard to: 1.
@@ -317,7 +328,8 @@ SpecialCardsTest >> testWhenSpaceShipHasAnAccelerationCardEffectThenMovesAnExtra
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	accelerationCard := Acceleration new.
 	aGame applyEffect: accelerationCard to: 0.
@@ -339,7 +351,8 @@ SpecialCardsTest >> testWhenSpaceShipHasMoreThan1SpeedEffectThenMovesExtraPositi
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	speedCard := Speed new.
 	aGame applyEffect: speedCard to: 1.
@@ -362,8 +375,8 @@ SpecialCardsTest >> testWhenSpaceShipHasNoPermanentEffectActiveTriesUsingCancell
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
-
+		         wonAfter: 1
+					withDeck: { }.
 
 	cancellationCard := Cancellation new.
 	accelerationCard := Acceleration new.

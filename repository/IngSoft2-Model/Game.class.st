@@ -40,7 +40,7 @@ Game class >> numberOfSpaceShipsMustBePositive: aNumberOfSpaceShips [
 ]
 
 { #category : 'as yet unclassified' }
-Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAfter: aNumberOfLaps [
+Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAfter: aNumberOfLaps withDeck: aDeck [
 
 	self numberOfSpaceShipsMustBePositive: aNumberOfSpaceShips.
 	self numberOfSpaceShipsMustBeAtLeastOne: aNumberOfSpaceShips.
@@ -51,6 +51,8 @@ Game class >> playedIn: aBoard by: aNumberOfSpaceShips throwing: aDiceSet wonAft
 		  by: aNumberOfSpaceShips
 		  thorwing: aDiceSet
 		  wonAfter: aNumberOfLaps
+		  withDeck: aDeck 
+		
 ]
 
 { #category : 'as yet unclassified' }
@@ -171,7 +173,7 @@ Game >> giveInitialCardsToShips [
 ]
 
 { #category : 'initialization' }
-Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceSet wonAfter: aNumberOfLaps [
+Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceSet wonAfter: aNumberOfLaps withDeck: aDeck [
 
 	board := aBoard.
 	
@@ -182,7 +184,7 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	nextSpaceShipToMove := 1.
 	numberOfSpaceShips := aNumberOfSpaceShips.
 	laps := aNumberOfLaps.
-	deck ifNil: [ deck := CardDeck new ].
+	deck := ( aDeck asOrderedCollection ifEmpty: [ deck := CardDeck new ])  .
 	self giveInitialCardsToShips.
 	^ self
 ]
@@ -337,7 +339,9 @@ Game >> updateNextShipToMove: spaceShipID [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> useTestDeck: aFixedDeck [
-
-	deck := aFixedDeck asOrderedCollection
+Game >> useCard: aCardEffect from: aShip applyTo: affectedShip [
+	
+	(spaceShips at: aShip) consumeCard: aCardEffect.
+	
+	self applyEffect: aCardEffect to: affectedShip 
 ]

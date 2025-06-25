@@ -38,11 +38,12 @@ PowerCellInteractionTest >> testWhenAForthShipMovesToAHyperJumpWith100ParsecDivi
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: aConfigureDiceSet.
-	aGame := Game
+		aGame := Game
 		         playedIn: aBoard
 		         by: 4
 		         throwing: aDiceSet
-		         wonAfter: 4.
+		         wonAfter: 4
+					withDeck: { }.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 33.
@@ -69,7 +70,8 @@ PowerCellInteractionTest >> testWhenARandomizedBoardThenTheFirstAndLastPositions
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 2.
+		         wonAfter: 2
+					withDeck: { }.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 1.
@@ -92,7 +94,8 @@ PowerCellInteractionTest >> testWhenAShipMovesLandsOnAPowerCellAndMovesDueToItTh
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 2.
+		         wonAfter: 2
+					withDeck: { }.
 
 
 	aGame start.
@@ -115,7 +118,8 @@ PowerCellInteractionTest >> testWhenAShipMovesToAHyperJumpWith50ParsecDivisionAn
 		         playedIn: aBoard
 		         by: 4
 		         throwing: aDiceSet
-		         wonAfter: 2.
+		         wonAfter: 2
+					withDeck: { }.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 21
@@ -137,7 +141,8 @@ PowerCellInteractionTest >> testWhenAThirdShipMovesToAHyperJumpWith100ParsecDivi
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 2.
+		         wonAfter: 2
+					withDeck: { }.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 6.
@@ -161,7 +166,8 @@ PowerCellInteractionTest >> testWhenAnotherShipMovesToAHyperJumpWith100ParsecDiv
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 2.
+		         wonAfter: 2
+					withDeck: { }.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 6.
@@ -185,7 +191,8 @@ PowerCellInteractionTest >> testWhenShipIsMovedByAnEffectToAWormHoleThenIsTPdToA
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 2.
+		         wonAfter: 2
+					withDeck: { }.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 4
@@ -206,7 +213,8 @@ PowerCellInteractionTest >> testWhenShipMovesToAAtomicBombCellThenAllShipsReturn
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 2.
+		         wonAfter: 2
+					withDeck: { }.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 1.
@@ -231,7 +239,8 @@ PowerCellInteractionTest >> testWhenShipMovesToABlackHoleCellThenItGoesBack4Spac
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 17
@@ -253,7 +262,8 @@ PowerCellInteractionTest >> testWhenShipMovesToAHyperJumpWith100ParsecDivisionAn
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 2.
+		         wonAfter: 2
+					withDeck: { }.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 6
@@ -275,7 +285,8 @@ PowerCellInteractionTest >> testWhenShipMovesToAHyperSpaceJumpCellThenItMovesFor
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 2.
+		         wonAfter: 2
+					withDeck: { }.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 35.
@@ -298,7 +309,8 @@ PowerCellInteractionTest >> testWhenShipMovesToAMoonWalkCellOf4ThenItMovesEveryS
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 3.
@@ -322,7 +334,8 @@ PowerCellInteractionTest >> testWhenShipMovesToAMoonWalkCellOf6ThenItMovesEveryS
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 39.
@@ -346,7 +359,8 @@ PowerCellInteractionTest >> testWhenShipMovesToAMoonWalkCellOf6ThenShipWithNegat
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 1.
@@ -370,7 +384,8 @@ PowerCellInteractionTest >> testWhenShipMovesToNormalCellThenItStaysThere [
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 2
@@ -392,7 +407,8 @@ PowerCellInteractionTest >> testWhenShipMovesToNormalInABiggerBoardCellThenItSta
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 39

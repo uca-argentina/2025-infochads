@@ -24,11 +24,12 @@ LoopedBoardTest >> testWhenASpaceShipGetsToTheEndMadeTheMaxLapsFromGameThenIsOve
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
-	aGame := Game
+		aGame := Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -46,11 +47,12 @@ LoopedBoardTest >> testWhenGameStartsAndSpaceShipsHaventMadeALap [
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
-	aGame := Game
+		aGame := Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -67,11 +69,12 @@ LoopedBoardTest >> testWhenShip1MakesALapAndExceedsTheEndOfBoardInFinalLapUsingM
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
-	aGame := Game
+		aGame := Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 2.
+		         wonAfter: 2
+					withDeck: { }.
 
 	aGame start.
 
@@ -89,11 +92,12 @@ LoopedBoardTest >> testWhenShip1MakesALapAndExceedsTheEndOfBoardInFinalLapUsingS
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
-	aGame := Game
+		aGame := Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 2.
+		         wonAfter: 2
+					withDeck: { }.
 
 	aGame start.
 
@@ -111,11 +115,12 @@ LoopedBoardTest >> testWhenShip1MakesALapAndGetToTheEndOfLap2UsingASingleThrowTh
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
-	aGame := Game
+		aGame := Game
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 2.
+		         wonAfter: 2
+					withDeck: { }.
 	aGame start.
 
 	self assert: (aGame lapOf: 1) equals: 2.
@@ -132,11 +137,12 @@ LoopedBoardTest >> testWhenShip1MakesALapAndGetToTheEndOfLap2UsingMultipleThrows
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
-	aGame := Game
+		aGame := Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 2.
+		         wonAfter: 2
+					withDeck: { }.
 
 	aGame start.
 
@@ -154,11 +160,12 @@ LoopedBoardTest >> testWhenSpaceShipMakesALapTheExcessThrowIsUsedToMoveInTheNext
 		          withSize: 11
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
-	aGame := Game
+		aGame := Game
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 2.
+		         wonAfter: 2
+					withDeck: { }.
 
 	aGame start.
 
@@ -177,11 +184,12 @@ LoopedBoardTest >> testWhenTheInputtedLapIsNegativeThenIsInvalid [
 		          andACellConfiguration: {  }.
 	self
 		should: [
-			Game
+			 	Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: -1. ]
+		         wonAfter: -1
+					withDeck: { }. ]
 		raise: Error
 		withMessageText: 'Laps must be a positive integer.'
 ]

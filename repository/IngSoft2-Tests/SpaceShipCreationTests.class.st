@@ -37,7 +37,9 @@ SpaceShipCreationTests >> testWhenMultipleSpaceShipsAreCreatedThenTheInitialPosi
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
+
 
 	self assert: (aGame positionOf: 3) equals: 1.
 	self assert: (aGame positionOf: 2) equals: 1.
@@ -74,10 +76,12 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsAStringThenCreationFails [
 	self
 		should: [
 			Game
-				playedIn: aBoard
-				by: '3'
-				throwing: aDiceSet
-				wonAfter: 1 ]
+		         playedIn: aBoard
+		         by: '3'
+		         throwing: aDiceSet
+		         wonAfter: 1
+					withDeck: { }.
+]
 		raise: Error
 		withMessageText:
 		'The number of space ships should be a positive integer.'
@@ -98,7 +102,8 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsCeroThenCreationFails [
 				playedIn: aBoard
 				by: 0
 				throwing: aDiceSet
-				wonAfter: 1 ]
+				wonAfter: 1
+				withDeck: {  } ]
 		raise: Error
 		withMessageText: 'The number of space ships must be at least 1.'
 ]
@@ -118,7 +123,8 @@ SpaceShipCreationTests >> testWhenNumberOfSpaceShipsIsNegativeThenCreationFails 
 				playedIn: aBoard
 				by: -1
 				throwing: aDiceSet
-				wonAfter: 1 ]
+				wonAfter: 1
+				withDeck: {  } ]
 		raise: Error
 		withMessageText:
 		'The number of space ships should be a positive integer.'
@@ -137,7 +143,9 @@ SpaceShipCreationTests >> testWhenOneSpaceShipIsCreatedThenTheInitialPositionIs1
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
+
 
 	self assert: (aGame positionOf: 1) equals: 1
 ]
@@ -155,7 +163,9 @@ SpaceShipCreationTests >> testWhenTwoSpaceShipsAreCreatedThenTheInitialPositions
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
+
 
 	self assert: (aGame positionOf: 2) equals: 1.
 	self assert: (aGame positionOf: 1) equals: 1

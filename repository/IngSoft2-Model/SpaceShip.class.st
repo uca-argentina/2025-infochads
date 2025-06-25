@@ -66,6 +66,22 @@ SpaceShip >> cancellationCardEffect: aCardEffect [
 ]
 
 { #category : 'as yet unclassified' }
+SpaceShip >> checkForCard: aCardEffect [
+
+	^hand anySatisfy: [ :effect | effect = aCardEffect ].
+	
+	
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> consumeCard: aCardEffect [
+
+	(self checkForCard: aCardEffect) ifFalse: [^self].
+	 
+	hand remove: aCardEffect.
+]
+
+{ #category : 'as yet unclassified' }
 SpaceShip >> drawCard: aCard [
 
 	hand add: aCard
