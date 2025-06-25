@@ -29,6 +29,12 @@ Card >> isRedo [
 	^ false
 ]
 
+{ #category : 'testing' }
+Card >> isRepeat [
+
+	^ false
+]
+
 { #category : 'as yet unclassified' }
 Card >> resolveCardWith: aPreviousCard [
 
