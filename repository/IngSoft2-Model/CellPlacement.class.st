@@ -40,6 +40,18 @@ CellPlacement >> blackHoleCellsWithPercentage: aPercentage andDesplacemets: aDes
 ]
 
 { #category : 'as yet unclassified' }
+CellPlacement >> calculateConversion: aParsecValue and: aLightYear [
+
+	| result |
+	result := aParsecValue + aLightYear.
+
+	(result = aParsecValue or: result = aLightYear) ifTrue: [
+		^ result // boardSize ].
+
+	^ aParsecValue // boardSize
+]
+
+{ #category : 'as yet unclassified' }
 CellPlacement >> cardGiverWithPercentage: aPercentage [
 
 	1 to: aPercentage do: [ :cell |
@@ -81,7 +93,9 @@ CellPlacement >> generateUniverse: aConfigDice [
 	self
 		hyperJumpCellsWithPercentage: (probabilities at: 4)
 		andParsecValue: aConfigDice toss
+		andLightYear: aConfigDice toss
 		andJumpList: aConfigDice.
+		
 	self atomicBombCellsWithPercentage: (probabilities at: 5) and: 0.
 	self moonWalkCellsWithPercentage: (probabilities at: 6) andDisplacements: aConfigDice.
 		
@@ -91,19 +105,20 @@ CellPlacement >> generateUniverse: aConfigDice [
 ]
 
 { #category : 'creation' }
-CellPlacement >> hyperJumpCellsWithPercentage: aPercentage andParsecValue: aParsecValue andJumpList: aConfigDice [
+CellPlacement >> hyperJumpCellsWithPercentage: aPercentage andParsecValue: aParsecValue andLightYear: aLightYear andJumpList: aConfigDice [
 
-	| jumps amountOfJumps newCells |
+	| jumps amountOfJumps newCells conversion |
 	amountOfJumps := aConfigDice toss.
 	jumps := OrderedCollection new: amountOfJumps.
 
 	1 to: amountOfJumps do: [ :jump | jumps add: aConfigDice toss ].
 
+	conversion := self calculateConversion: aParsecValue and: aLightYear. 
 
 	newCells := (1 to: aPercentage) collect: [ :cell |
 		            Cell has:
 			            (HyperJumpEffect
-				             with: aParsecValue // boardSize 
+				             with: conversion 
 				             andParsec: jumps) ].
 	rawCellDistribution := rawCellDistribution , newCells
 ]

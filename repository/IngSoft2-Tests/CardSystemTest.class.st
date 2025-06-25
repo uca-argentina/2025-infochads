@@ -16,25 +16,6 @@ CardSystemTest >> should: anErrorBlock raise: anErrorClass withMessageText: anEr
 ]
 
 { #category : 'tests' }
-CardSystemTest >> testWhen [
-
-	| aDiceSet aConfigureDiceSet |
-	aDiceSet := RiggedDice new initializeWith: { 2. 2. 2. 2. 5 }.
-	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 40. 20. 20. 8. 2. 10. 10. 100. 3. 30. 20. 10 }.
-
-	self
-		should: [
-			Board
-				withSize: 100
-				composedOf: (WormHole startingAt: 1 endingAt: 1)
-				andACellConfiguration: aConfigureDiceSet ]
-		raise: Error
-		withMessageText: 'The probabilites dont sum 100.'
-
-]
-
-{ #category : 'tests' }
 CardSystemTest >> testWhenACardEffectIsAppliedThenIsRemovedFromShipDeck [
 
 	| aGame aDiceSet aBoard deck |

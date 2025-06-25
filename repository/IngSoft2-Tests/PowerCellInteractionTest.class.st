@@ -7,7 +7,7 @@ Class {
 
 { #category : 'as yet unclassified' }
 PowerCellInteractionTest >> readme [
-	"{ %Normal. %BlackHole. %HyperSpaceJump. %HyperJump. %AtomicBomb. %MoonWalk. -> (The sum of the values must be %100)
+	"{ %Normal. %BlackHole. %HyperSpaceJump. %HyperJump. %AtomicBomb. %MoonWalk. %CardGiver -> (The sum of the values must be %100)
 
 	Parsecs. Len Array HyperJump. jump1. jump2. ... jumpN. -> (Jumps are the values in the array)
 	
