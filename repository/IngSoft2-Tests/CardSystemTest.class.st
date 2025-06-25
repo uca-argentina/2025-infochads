@@ -5,6 +5,16 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+CardSystemTest >> should: anErrorBlock raise: anErrorClass withMessageText: anErrorMessage [
+
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+		self assert: error messageText equals: anErrorMessage ]
+]
+
 { #category : 'tests' }
 CardSystemTest >> testWhen [
 
@@ -15,14 +25,39 @@ CardSystemTest >> testWhen [
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
 
-	deck := {Speed new. Redo new}.
+	deck := { Speed new. Cancellation new }.
+
+
+	aGame := Game
+		         playedIn: aBoard
+		         by: 1
+		         throwing: aDiceSet
+		         wonAfter: 1
+		         withDeck: deck.
 
 	
-	"Jugador 1 tiene mazo"
-	"Jugador 1 quiere usar carta de su mazo"
-	"Game chequea que haya carta en su mazo"
-	"Jugador 1 usa carta de su mazo"
-	"Jugador 1 pierde carta de su mazo"
+
+	self
+		should: [ aGame useCard: Cancellation new from: 1 applyTo: 1 ]
+		raise: Error
+		withMessageText:
+		'There is no Permanent effect active, Cancelleation Card not Used.'.
+		
+	self assert: (aGame getCardDeckSizeOf: 1) equals: 2.
+]
+
+{ #category : 'tests' }
+CardSystemTest >> testWhenACardEffectIsAppliedThenIsRemovedFromShipDeck [
+
+	| aGame aDiceSet aBoard deck |
+	aDiceSet := RiggedDice new initializeWith: { 1 }.
+	aBoard := Board
+		          withSize: 100
+		          composedOf: (WormHole startingAt: 1 endingAt: 1)
+		          andACellConfiguration: {  }.
+
+	deck := {Speed new. Redo new}.
+
 	
 	aGame := Game
 		         playedIn: aBoard
@@ -35,8 +70,9 @@ CardSystemTest >> testWhen [
 
 	aGame start.
 
-	"self assert:."
-	self assert: (aGame positionOf: 1) equals: 3.
+	"self assert: (aGame getCardDeckSizeOf: 1) equals: 1.
+	self assert: (aGame positionOf: 1) equals: 3."
+	self assert: true.
 ]
 
 { #category : 'tests' }

@@ -18,8 +18,8 @@ SpecialCardsTest >> should: anErrorBlock raise: anErrorClass withMessageText: an
 { #category : 'tests' }
 SpecialCardsTest >> testWhenACancellationCardIsAppliedThenAShipLosesAnEffect [
 
-	| aGame aDiceSet aBoard  cancellationCard accelerationCard |
-	aDiceSet := RiggedDice new initializeWith: { 1 }. 
+	| aGame aDiceSet aBoard cancellationCard accelerationCard |
+	aDiceSet := RiggedDice new initializeWith: { 1 }.
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
@@ -29,18 +29,18 @@ SpecialCardsTest >> testWhenACancellationCardIsAppliedThenAShipLosesAnEffect [
 		         by: 1
 		         throwing: aDiceSet
 		         wonAfter: 1
-					withDeck: { }.
+		         withDeck: { }.
 
-	
+
 	cancellationCard := Cancellation new.
 	accelerationCard := Acceleration new.
-	cancellationCard effectTypeToCancel: accelerationCard .
+	cancellationCard effectTypeToCancel: accelerationCard.
 	aGame applyEffect: accelerationCard to: 0.
 	aGame applyEffect: cancellationCard to: 1.
-	
+
 	aGame start.
 
-	self assert: (aGame positionOf:1) equals: 2
+	self assert: (aGame positionOf: 1) equals: 2
 ]
 
 { #category : 'tests' }

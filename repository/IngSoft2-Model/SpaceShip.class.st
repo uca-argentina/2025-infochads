@@ -38,10 +38,16 @@ SpaceShip class >> with: anId andStartingWith: aShield [
 { #category : 'target resize' }
 SpaceShip >> apply: aCardEffect [
 
-	(self redoCardEffect: aCardEffect) ifTrue: [ ^ self ].
-	(self cancellationCardEffect: aCardEffect) ifTrue: [ ^ self ].
+	((self redoCardEffect: aCardEffect) or:
+		 (self cancellationCardEffect: aCardEffect)) ifTrue: [
+		^true].
 
-	(aCardEffect isPermanent )ifTrue: [effects add: aCardEffect]
+
+	aCardEffect isPermanent ifTrue: [
+		effects add: aCardEffect.
+		^true]
+	
+	
 ]
 
 { #category : 'testing' }
@@ -67,18 +73,11 @@ SpaceShip >> cancellationCardEffect: aCardEffect [
 
 { #category : 'as yet unclassified' }
 SpaceShip >> checkForCard: aCardEffect [
-
-	^hand anySatisfy: [ :effect | effect = aCardEffect ].
 	
 	
-]
-
-{ #category : 'as yet unclassified' }
-SpaceShip >> consumeCard: aCardEffect [
-
-	(self checkForCard: aCardEffect) ifFalse: [^self].
-	 
-	hand remove: aCardEffect.
+	^hand anySatisfy: [ :effect | effect class = aCardEffect class ].
+	
+	
 ]
 
 { #category : 'as yet unclassified' }
@@ -103,7 +102,7 @@ SpaceShip >> getShield [
 { #category : 'as yet unclassified' }
 SpaceShip >> getShipDeck [
 
-	^ hand
+	^ hand size
 ]
 
 { #category : 'testing' }

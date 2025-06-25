@@ -138,6 +138,12 @@ Game >> create: aNumberOfSpaceShips [
 		spaceShipPositions at: id put: aPosition ]
 ]
 
+{ #category : 'as yet unclassified' }
+Game >> getCardDeckSizeOf: aShip [
+
+	^ (spaceShips at: aShip) getShipDeck 
+]
+
 { #category : 'informationTest' }
 Game >> getRanking [
 
@@ -156,7 +162,7 @@ Game >> getRanking [
 { #category : 'as yet unclassified' }
 Game >> getShipHands [
 
-	^(spaceShips allSatisfy: [ :ship | ship getShipDeck size = 2 ])
+	^(spaceShips allSatisfy: [ :ship | ship getShipDeck = 2 ])
 ]
 
 { #category : 'as yet unclassified' }
@@ -341,7 +347,11 @@ Game >> updateNextShipToMove: spaceShipID [
 { #category : 'as yet unclassified' }
 Game >> useCard: aCardEffect from: aShip applyTo: affectedShip [
 	
-	(spaceShips at: aShip) consumeCard: aCardEffect.
 	
-	self applyEffect: aCardEffect to: affectedShip 
+	((spaceShips at: aShip) checkForCard: aCardEffect) ifFalse: [Error signal: 'Card is not in ship hand'].
+	
+	(self applyEffect: aCardEffect to: affectedShip ) .
+	
+
+
 ]
