@@ -37,10 +37,10 @@ SpaceShip class >> with: anId andStartingWith: aShield [
 { #category : 'target resize' }
 SpaceShip >> apply: aCardEffect [
 
-	(self redoCardEffect: aCardEffect) ifTrue: [ ^self ].
+	(self redoCardEffect: aCardEffect) ifTrue: [ ^ self ].
 	(self cancellationCardEffect: aCardEffect) ifTrue: [ ^ self ].
 
-	effects add: aCardEffect
+	(aCardEffect isPermanent )ifTrue: [effects add: aCardEffect]
 ]
 
 { #category : 'testing' }
@@ -56,7 +56,9 @@ SpaceShip >> cancellationCardEffect: aCardEffect [
 	aCardEffect isCancellation ifFalse: [ ^ false ].
 	effectToRemove := effects
 		                  detect: [ :each | each = aCardEffect getEffect ]
-		                  ifNone: [ ^ false ].
+		                  ifNone: [
+			                  Error signal:
+				                  'There is no Permanent effect active, Cancelleation Card not Used.' ].
 
 	effects remove: effectToRemove.
 	^ true
@@ -116,9 +118,7 @@ SpaceShip >> rechargableShield: aDiceRoll [
 SpaceShip >> redoCardEffect: aCardEffect [
 
 	aCardEffect isRedo ifTrue: [
-		| lastEffect |
-		lastEffect := effects last copy.
-		effects add: lastEffect.
+		effects add: (aCardEffect getLastCardEffect).
 		^ true ].
 	^ false
 ]

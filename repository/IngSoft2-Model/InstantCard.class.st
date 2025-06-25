@@ -10,3 +10,15 @@ InstantCard >> isCancellation [
 
 	^ false
 ]
+
+{ #category : 'testing' }
+InstantCard >> isInstant [
+
+	^ true
+]
+
+{ #category : 'testing' }
+InstantCard >> isRepeat [
+
+	^ false
+]

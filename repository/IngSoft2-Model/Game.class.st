@@ -8,7 +8,8 @@ Class {
 		'numberOfSpaceShips',
 		'laps',
 		'board',
-		'spaceShipPositions'
+		'spaceShipPositions',
+		'lastCardEffect'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -60,16 +61,27 @@ Game >> affectedRoll: aDiceRoll of:aSpaceShip [
 ]
 
 { #category : 'as yet unclassified' }
-Game >> applyEffect: aCardEffect To: anAffectedShip [
+Game >> applyEffect: aCardEffect to: anAffectedShip [
 
-	
-	(anAffectedShip = 0)
-    ifTrue: [ spaceShips do: [:ship | ship apply: aCardEffect ] ]
-    ifFalse: [
-        (anAffectedShip > 0) ifTrue: [
-            (spaceShips at: anAffectedShip) apply: aCardEffect
-        ]
-    ].
+	| effectiveCard targetShips |
+	effectiveCard := aCardEffect resolveCardWith: lastCardEffect.
+
+	aCardEffect isRepeat ifTrue: [
+		board
+			applyLastEffectPowerUpUponA: (spaceShips at: anAffectedShip)
+			andAll: spaceShips
+			andIts: spaceShipPositions ].
+
+	targetShips := anAffectedShip = 0
+		               ifTrue: [ spaceShips ]
+		               ifFalse: [
+		               Array with: (spaceShips at: anAffectedShip) ]. "atributo tipo celda"
+
+	targetShips do: [ :ship | ship apply: effectiveCard ].
+
+	lastCardEffect := aCardEffect isRedo
+		                  ifFalse: [ aCardEffect ]
+		                  ifTrue: [ lastCardEffect ]
 ]
 
 { #category : 'as yet unclassified' }

@@ -16,3 +16,9 @@ PermanentCard >> isMercenary [
 
 	^ false
 ]
+
+{ #category : 'testing' }
+PermanentCard >> isPermanent [
+
+	^ true
+]

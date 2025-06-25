@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'boardSize',
 		'wormHole',
-		'gameBoard'
+		'gameBoard',
+		'lastEffectApplied'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -40,8 +41,23 @@ Board >> applyEffecOfPowerUpUponA: aSpaceShip andAll: spaceShips andIts: spaceSh
 
 	| cell |
 	gameBoard ifNotEmpty: [
-		cell := gameBoard at: (spaceShipPositions at: aSpaceShip id ) position.
-		cell takeActionOver: aSpaceShip or: spaceShips thatArePlaced: spaceShipPositions ]
+		cell := gameBoard at:
+			        (spaceShipPositions at: aSpaceShip id) position.
+		self lastAppliedEffect: cell.
+		cell
+			takeActionOver: aSpaceShip
+			or: spaceShips
+			thatArePlaced: spaceShipPositions ]
+]
+
+{ #category : 'as yet unclassified' }
+Board >> applyLastEffectPowerUpUponA: aSpaceShip andAll: spaceShips andIts: spaceShipPositions [
+
+	gameBoard ifNotEmpty: [
+		lastEffectApplied
+			takeActionOver: aSpaceShip
+			or: spaceShips
+			thatArePlaced: spaceShipPositions ]
 ]
 
 { #category : 'accessing' }
@@ -78,6 +94,12 @@ Board >> initializeWithSize: aBoardSize composedOf: aWormHole andConfiguration: 
 	wormHole := aWormHole.
 	wormHole mustBeWithInLimits: aBoardSize.
 
+]
+
+{ #category : 'accessing' }
+Board >> lastAppliedEffect: aCellEffect [
+
+	lastEffectApplied := aCellEffect
 ]
 
 { #category : 'as yet unclassified' }
