@@ -33,7 +33,7 @@ PowerCellInteractionTest >> testWhenAForthShipMovesToAHyperJumpWith100ParsecDivi
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 2. 2. 2. 2. 5 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 100. 3. 30. 20. 10 }.
+		                     { 0. 0. 0. 100. 0. 0. 0. 100. 0. 3. 30. 20. 10 }.
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
@@ -58,7 +58,7 @@ PowerCellInteractionTest >> testWhenARandomizedBoardThenTheFirstAndLastPositions
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 50. 49 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 40. 20. 20. 8. 2. 10. 0. 100. 3. 30. 20. 10. 6. 4.
+		                     { 40. 20. 20. 8. 2. 10. 0. 100. 0. 3. 30. 20. 10. 6. 4.
 		                     2. 5. 7. 7. 7. 7. 7. 7. 10. 6. 4. 2. 5. 7. 7. 7.
 		                     7. 7. 7 }.
 
@@ -108,7 +108,7 @@ PowerCellInteractionTest >> testWhenAShipMovesToAHyperJumpWith50ParsecDivisionAn
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 40 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 50. 3. 30. 20. 10. 6. 4. 2.
+		                     { 0. 0. 0. 100. 0. 0. 0. 50. 0. 3. 30. 20. 10. 6. 4. 2.
 		                     5. 7 }.
 	aBoard := Board
 		          withSize: 50
@@ -131,7 +131,7 @@ PowerCellInteractionTest >> testWhenAThirdShipMovesToAHyperJumpWith100ParsecDivi
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 40. 40. 40 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 100. 3. 30. 20. 10. 6. 4.
+		                     { 0. 0. 0. 100. 0. 0. 0. 100. 0. 3. 30. 20. 10. 6. 4.
 		                     2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
@@ -156,7 +156,7 @@ PowerCellInteractionTest >> testWhenAnotherShipMovesToAHyperJumpWith100ParsecDiv
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 40. 40 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 100. 3. 30. 20. 10. 6. 4.
+		                     { 0. 0. 0. 100. 0. 0. 0. 100. 0. 3. 30. 20. 10. 6. 4.
 		                     2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
@@ -252,7 +252,7 @@ PowerCellInteractionTest >> testWhenShipMovesToAHyperJumpWith100ParsecDivisionAn
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 40 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 100. 0. 0. 0. 100. 3. 30. 20. 10. 6. 4.
+		                     { 0. 0. 0. 100. 0. 0. 0. 100. 0. 3. 30. 20. 10. 6. 4.
 		                     2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
@@ -299,7 +299,7 @@ PowerCellInteractionTest >> testWhenShipMovesToAMoonWalkCellOf4ThenItMovesEveryS
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 10. 11. 46 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 100. 0. 100. 3. 30. 20. 10. 4. 4.
+		                     { 0. 0. 0. 0. 0. 100. 0. 100. 0. 3. 30. 20. 10. 4. 4.
 		                     4. 4. 4. 0 }.
 	aBoard := Board
 		          withSize: 50
@@ -324,7 +324,7 @@ PowerCellInteractionTest >> testWhenShipMovesToAMoonWalkCellOf6ThenItMovesEveryS
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 50. 60. 70 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 100. 0. 100. 3. 30. 20. 10. 6. 6.
+		                     { 0. 0. 0. 0. 0. 100. 0. 100. 0. 3. 30. 20. 10. 6. 6.
 		                     6. 6. 6. 6. 0 }.
 	aBoard := Board
 		          withSize: 100
@@ -349,7 +349,7 @@ PowerCellInteractionTest >> testWhenShipMovesToAMoonWalkCellOf6ThenShipWithNegat
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 2. 3. 45 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 100. 0. 100. 3. 30. 20. 10. 6. 6.
+		                     { 0. 0. 0. 0. 0. 100. 0. 100. 0. 3. 30. 20. 10. 6. 6.
 		                     6. 6. 6. 6. 0 }.
 	aBoard := Board
 		          withSize: 50

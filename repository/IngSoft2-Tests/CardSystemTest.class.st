@@ -49,7 +49,7 @@ CardSystemTest >> testWhenAShipLandsOnACardGiverCellThenReceivesACard [
 	| aGame aDiceSet aConfigureDiceSet aBoard |
 	aDiceSet := RiggedDice new initializeWith: { 1 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 0. 0. 100. 100. 3. 30. 20. 10 }.
+		                     { 0. 0. 0. 0. 0. 0. 100. 100. 0. 3. 30. 20. 10 }.
 	aBoard := Board
 		          withSize: 100
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)

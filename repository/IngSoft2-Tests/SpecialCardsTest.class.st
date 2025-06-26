@@ -143,7 +143,7 @@ SpecialCardsTest >> testWhenRepeatCardIsUsedOnSpaceshipAnTheEffectToRepeatIsAtom
 	| aGame aDiceSet aBoard aConfigureDiceSet repeatCard |
 	aDiceSet := RiggedDice new initializeWith: { 50. 10. }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 0. 0. 0. 100. 0. 0. 100. 3. 30. 20. 10. 6. 4.
+		                     { 0. 0. 0. 0. 100. 0. 0. 100. 0. 3. 30. 20. 10. 6. 4.
 		                     2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
@@ -170,7 +170,7 @@ SpecialCardsTest >> testWhenRepeatCardIsUsedOnSpaceshipAnTheEffectToRepeatIsBlac
 	| aGame aDiceSet aBoard aConfigureDiceSet repeatCard |
 	aDiceSet := RiggedDice new initializeWith: { 20 }.
 	aConfigureDiceSet := RiggedDice new initializeWith:
-		                     { 0. 100. 0. 0. 0. 0. 0. 100. 3. 30. 20. 10. 6. 4.
+		                     { 0. 100. 0. 0. 0. 0. 0. 100. 0. 3. 30. 20. 10. 6. 4.
 		                     2. 5. 7 }.
 	aBoard := Board
 		          withSize: 50
