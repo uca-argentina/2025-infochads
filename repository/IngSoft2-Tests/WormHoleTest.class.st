@@ -28,7 +28,8 @@ WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnFirstWormHoleThenTeleportsToSec
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -49,7 +50,8 @@ WormHoleTest >> testWhenASpaceShipPlaysAndLandsOnSecondWormHoleThenTeleportsToFi
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 

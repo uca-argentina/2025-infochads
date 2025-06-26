@@ -18,7 +18,8 @@ WinningConditionTest >> testWhenARoundHasPassedAndSpaceShip1WinsTheGameIsOver [
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -38,7 +39,8 @@ WinningConditionTest >> testWhenAfterARoundSpaceShip1WinsGameIsOverThenInformsSp
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -60,7 +62,8 @@ WinningConditionTest >> testWhenDiceRollIsHigherThanBoardSizeThenSpaceShipMovesT
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -80,7 +83,8 @@ WinningConditionTest >> testWhenSpaceShip1HasMovedToTheEndOfThenGameIsOver [
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 	self assert: aGame isOver.
@@ -100,7 +104,8 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndGameIsntOverThenGameContinues 
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -120,7 +125,8 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsGameThenInformsS
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -141,7 +147,8 @@ WinningConditionTest >> testWhenSpaceShip1PlaysAndSpaceShip2WinsThenGameIsOver [
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -161,7 +168,8 @@ WinningConditionTest >> testWhenSpaceShip1WinsAndInformsSpaceShip1_2And3Position
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -184,7 +192,8 @@ WinningConditionTest >> testWhenSpaceShip3WinsGameIsOverThenInformsSpaceShip1And
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 

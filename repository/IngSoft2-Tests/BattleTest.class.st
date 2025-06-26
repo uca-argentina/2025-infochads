@@ -30,7 +30,8 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -52,7 +53,8 @@ BattleTest >> testWhenShip1AndShip2Enconter3TimesAndShip2WinsThenShip1NowLooses2
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 2.
@@ -72,7 +74,8 @@ BattleTest >> testWhenShip1AndShip2EnconterAfterOneRoundAndShip1WinsThenShip2Ret
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -89,11 +92,12 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsAndShip2Loses1ShieldThenS
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
-	aGame := Game
+		aGame := Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -109,11 +113,12 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2NowHas2Shields [
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
-	aGame := Game
+		aGame := Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -130,11 +135,12 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip1WinsThenShip2ReturnsToStart [
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
-	aGame := Game
+		aGame := Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -151,11 +157,12 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip1ReturnsToStart [
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
-	aGame := Game
+		aGame := Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -172,11 +179,12 @@ BattleTest >> testWhenShip1AndShip2EnconterAndShip2WinsThenShip2NowHas2Shields [
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
-	aGame := Game
+		aGame := Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -193,11 +201,12 @@ BattleTest >> testWhenShip1AndShip2EnconterAndTheyTossTheSameNumberThenTheyTossT
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
-	aGame := Game
+		aGame := Game
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -214,11 +223,12 @@ BattleTest >> testWhenShip1AndShip3EnconterAndShip1WinsThenShip3ReturnsToStart [
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
-	aGame := Game
+		aGame := Game
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -236,11 +246,12 @@ BattleTest >> testWhenShip1Has3ShieldsThenShip1CantSkipTurns [
 		          withSize: 10
 		          composedOf: (WormHole startingAt: 1 endingAt: 1)
 		          andACellConfiguration: {  }.
-	aGame := Game
+		aGame := Game
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	self
 		should: [ aGame start ]

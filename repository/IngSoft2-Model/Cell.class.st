@@ -55,6 +55,13 @@ Cell >> effect [
 	^ effect 
 ]
 
+{ #category : 'as yet unclassified' }
+Cell >> giveCardToShip: aSpaceShip [
+
+	aSpaceShip drawCard: (effect giveCardToShip).
+					  
+]
+
 { #category : 'initialization' }
 Cell >> initializeWithA: anEffect [
 
@@ -65,7 +72,7 @@ Cell >> initializeWithA: anEffect [
 Cell >> takeActionOver: aSpaceShip or: spaceShips thatArePlaced: spaceShipPositions [
 
 	self affectOnly: aSpaceShip thatIsPlacedIn: spaceShipPositions.
-
+	self giveCardToShip: aSpaceShip.
 	self
 		dontAffect: aSpaceShip
 		butInstedAffectAll: spaceShips
