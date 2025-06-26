@@ -29,7 +29,8 @@ TurnsTests >> testWhenSpaceShip1IsTheOnlyPlayerThenCanPlayAlone [
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 10
 ]
@@ -47,7 +48,8 @@ TurnsTests >> testWhenSpaceShip1IsToPlayAndSpaceShip1PlaysThenIsValid [
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 3
 ]
@@ -65,7 +67,8 @@ TurnsTests >> testWhenSpaceShip2IsToPlayAndSpaceShip2PlaysThenIsValid [
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 	aGame start.
 	self assert: (aGame positionOf: 1) equals: 3.
 	self assert: (aGame positionOf: 2) equals: 4
@@ -84,7 +87,8 @@ TurnsTests >> testWhenSpaceShip3IsToPlayAndSpaceShip3PlaysThenIsValid [
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 2.
@@ -105,7 +109,8 @@ TurnsTests >> testWhenTheFirstRoundIsPlayedThenSpaceShip1IsToPlayThenIsValid [
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 5.

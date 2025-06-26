@@ -29,7 +29,9 @@ SpaceShipMovementTests >> testWhenARiggedDiceToss6ThenShipMovesTo7 [
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
+
 
 	aGame start.
 
@@ -49,7 +51,8 @@ SpaceShipMovementTests >> testWhenDiceRolls5ThenMovesSpaceShipToPosition6 [
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -69,7 +72,8 @@ SpaceShipMovementTests >> testWhenRiggedDiceToss1_2ThenShip1MovesTo4 [
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -89,7 +93,8 @@ SpaceShipMovementTests >> testWhenRiggedDiceToss1_2_3ThenShip1MovesTo7 [
 		         playedIn: aBoard
 		         by: 1
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 	aGame start.
 
 	self assert: (aGame positionOf: 1) equals: 7

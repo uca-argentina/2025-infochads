@@ -4,7 +4,9 @@ Class {
 	#instVars : [
 		'shield',
 		'spaceShipID',
-		'loseTurn'
+		'loseTurn',
+		'effects',
+		'hand'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -33,16 +35,76 @@ SpaceShip class >> with: anId andStartingWith: aShield [
 	^ self new initializeWithShield: aShield and: anId
 ]
 
+{ #category : 'target resize' }
+SpaceShip >> apply: aCardEffect [
+
+	((self redoCardEffect: aCardEffect) or:
+		 (self cancellationCardEffect: aCardEffect)) ifTrue: [ ^ self ].
+
+
+	aCardEffect isPermanent ifTrue: [ effects add: aCardEffect ]
+]
+
 { #category : 'testing' }
 SpaceShip >> canBattle [
 
 	^ shield > 0 and: loseTurn = 0
 ]
 
+{ #category : 'target resize' }
+SpaceShip >> cancellationCardEffect: aCardEffect [
+
+	| effectToRemove |
+	aCardEffect isCancellation ifFalse: [ ^ false ].
+	effectToRemove := effects
+		                  detect: [ :each | each = aCardEffect getEffect ]
+		                  ifNone: [
+			                  aCardEffect isApplicable: false.
+			                  Error signal:
+				                  'There is no Permanent effect active, Cancelleation Card not Used.' ].
+
+	effects remove: effectToRemove.
+	^ true
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> checkForCard: aCardEffect [
+	
+	
+	^hand anySatisfy: [ :effect | effect class = aCardEffect class ].
+	
+	
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> drawCard: aCard [
+
+	hand add: aCard
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> getMercenary [
+
+	
+	^ (effects select: [ :effect | effect isMercenary ])  
+]
+
 { #category : 'getters' }
 SpaceShip >> getShield [
 
 	^ shield
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> getShipDeck [
+
+	^ hand size
+]
+
+{ #category : 'testing' }
+SpaceShip >> hasMercenary [
+
+	^ (self getMercenary) notEmpty
 ]
 
 { #category : 'getters' }
@@ -57,6 +119,8 @@ SpaceShip >> initializeWithShield: aNumberOfShields and: aSpaceShipID [
 	spaceShipID := aSpaceShipID.
 	shield := aNumberOfShields.
 	loseTurn := 0.
+	effects := OrderedCollection new.
+	hand := OrderedCollection new.
 	^ self
 ]
 
@@ -73,6 +137,42 @@ SpaceShip >> rechargableShield: aDiceRoll [
 	(shield = 3 and: aDiceRoll = 0) ifTrue: [
 		Error signal: 
 			'The Shield is already full, it cant be recharged.' ]
+]
+
+{ #category : 'target resize' }
+SpaceShip >> redoCardEffect: aCardEffect [
+
+	aCardEffect isRedo ifTrue: [
+		effects add: (aCardEffect getLastCardEffect).
+		^ true ].
+	^ false
+]
+
+{ #category : 'removing' }
+SpaceShip >> removeCardFromDeck: aCardEffect [
+
+	| aCardToRemove |
+	aCardToRemove:= hand detect:[:aCard | aCard class = aCardEffect class].
+	hand remove:aCardToRemove
+]
+
+{ #category : 'as yet unclassified' }
+SpaceShip >> searchForIncrementalEffect [
+
+	| incrementalEffects |
+	incrementalEffects := effects count: [ :anEffect | anEffect affectsMovement  ].
+
+	^ incrementalEffects
+]
+
+{ #category : 'initialization' }
+SpaceShip >> setMercenary: aMercenarySpaceShip [
+
+	effects do: [ :effect |
+		(effect isMercenary and: [ effect hasNoMercenary ]) ifTrue: [
+			effect signContract: aMercenarySpaceShip.
+
+			^ self ] ]
 ]
 
 { #category : 'accessing' }

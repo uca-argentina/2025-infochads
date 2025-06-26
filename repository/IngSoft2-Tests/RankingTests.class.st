@@ -18,7 +18,8 @@ RankingTests >> testWhenGameIsNotOverThereIsNoRanking [
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
 
 	aGame start.
 
@@ -38,7 +39,9 @@ RankingTests >> testWhenGameIsOverAndShip1WinsAndShip2IsSecond [
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
+
 
 	aGame start.
 
@@ -59,7 +62,9 @@ RankingTests >> testWhenGameIsOverAndShip1WinsAndShip3IsSecondAndShip2IsThird [
 		         playedIn: aBoard
 		         by: 3
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
+
 
 	aGame start.
 
@@ -80,7 +85,9 @@ RankingTests >> testWhenGameIsOverAndSpaceShip2Wins [
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
+
 
 	aGame start.
 
@@ -101,7 +108,9 @@ RankingTests >> testWhenGameIsOverAndWinnerIsShip1 [
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
+
 
 	aGame start.
 
@@ -122,7 +131,9 @@ RankingTests >> testWhenGameIsOverInformsSpaceShipsPositionAndWhichLap [
 		         playedIn: aBoard
 		         by: 2
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
+
 
 	aGame start.
 
@@ -146,7 +157,9 @@ RankingTests >> testWhenGameThereAre4ShipsTheRankingShowsAllTheShips [
 		         playedIn: aBoard
 		         by: 4
 		         throwing: aDiceSet
-		         wonAfter: 1.
+		         wonAfter: 1
+					withDeck: { }.
+
 
 	aGame start.
 
