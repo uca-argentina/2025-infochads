@@ -24,6 +24,12 @@ Card >> isApplicable: aBoolean [
 ]
 
 { #category : 'testing' }
+Card >> isBlankCard [
+
+	^ false
+]
+
+{ #category : 'testing' }
 Card >> isCancellation [
 
 	^ false

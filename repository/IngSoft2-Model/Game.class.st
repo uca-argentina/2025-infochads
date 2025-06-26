@@ -64,6 +64,15 @@ Game >> affectedRoll: aDiceRoll of:aSpaceShip [
 ]
 
 { #category : 'as yet unclassified' }
+Game >> applyBattleResultWithLoser: aLoser [
+
+	self lostBattle: aLoser.
+	aLoser hasMercenary ifTrue: [
+		aLoser getMercenary do: [ :mercenaryShip |
+			self lostBattle: mercenaryShip getAlly ] ]
+]
+
+{ #category : 'as yet unclassified' }
 Game >> applyEffect: aCardEffect to: anAffectedShip [
 
 	| effectiveCard targetShips |
@@ -93,19 +102,20 @@ Game >> applyRepeat: anAffectedShip to: aCardEffect [
 { #category : 'as yet unclassified' }
 Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 
-	| throwSpaceShip1 throwSpaceShip2 winner loser throwMercenary2 throwMercenary1 |
+	| throwSpaceShip1 throwSpaceShip2 winner loser  throwMercenary2 throwMercenary1|
 	[
 	throwSpaceShip2 := diceSet toss.
 	throwSpaceShip1 := diceSet toss.
-	throwSpaceShip1 = throwSpaceShip2 ] whileTrue: [  ]. 
+	throwSpaceShip1 = throwSpaceShip2 ] whileTrue: [  ].
+
 	(aSpaceShip1 hasMercenary or: aSpaceShip2 hasMercenary) ifTrue: [
-		throwMercenary2 := 0.
-		(aSpaceShip2 getMercenary) do: [ :mercenary | throwMercenary2 := (throwMercenary2 + diceSet toss)   ].
-		throwMercenary1 := 0.
-		(aSpaceShip1 getMercenary) do: [ :mercenary | throwMercenary1 := (throwMercenary1 + diceSet toss)   ].
+		throwMercenary2 := self mercenaryThrowsFor: aSpaceShip2 .
+		throwMercenary1 := self mercenaryThrowsFor: aSpaceShip1.
 		
 		throwSpaceShip2 :=  throwMercenary2 + throwSpaceShip2.
 		throwSpaceShip1 := throwMercenary1 + throwSpaceShip1 ].
+
+	
 
 	throwSpaceShip1 < throwSpaceShip2
 		ifTrue: [
@@ -115,8 +125,7 @@ Game >> battleBetween: aSpaceShip1 and: aSpaceShip2 [
 			winner := aSpaceShip1.
 			loser := aSpaceShip2 ].
 
-	self lostBattle: loser.
-	loser hasMercenary ifTrue: [ (loser getMercenary) do: [ :mercenaryShip | self lostBattle: mercenaryShip getAlly ] ] 
+	self applyBattleResultWithLoser: loser
 ]
 
 { #category : 'as yet unclassified' }
@@ -179,11 +188,10 @@ Game >> getTarget: anAffectedShip [
 { #category : 'as yet unclassified' }
 Game >> giveInitialCardsToShips [
 
-	(deck isCollection )
+	deck isCollection
 		ifTrue: [
 			spaceShips do: [ :ship |
-				ship drawCard: deck first.
-				ship drawCard: deck second ] ]
+				deck do: [ :card | ship drawCard: card class new ] ] ]
 		ifFalse: [
 			spaceShips do: [ :ship |
 				2 timesRepeat: [ ship drawCard: deck drawRandomCard ] ] ]
@@ -201,6 +209,7 @@ Game >> initializeWithBoardSize: aBoard by: aNumberOfSpaceShips thorwing: aDiceS
 	nextSpaceShipToMove := 1.
 	numberOfSpaceShips := aNumberOfSpaceShips.
 	laps := aNumberOfLaps.
+	lastCardEffect := BlankCard new.
 	deck := ( aDeck asOrderedCollection ifEmpty: [ deck := CardDeck new ])  .
 	self giveInitialCardsToShips.
 	^ self
@@ -248,6 +257,16 @@ Game >> lostBattle: aSpaceShip [
 					  at: (spaceShipPositions at: aSpaceShip id) position negated + 1
 					  withLaps: 0)).
 	aSpaceShip loseShield
+]
+
+{ #category : 'as yet unclassified' }
+Game >> mercenaryThrowsFor: aSpaceShip [
+
+	| totalThrow |
+	totalThrow := 0.
+	aSpaceShip getMercenary do: [ :mercenary |
+		totalThrow := totalThrow + diceSet toss ].
+	^ totalThrow
 ]
 
 { #category : 'as yet unclassified' }
@@ -378,7 +397,7 @@ Game >> useCard: aCardEffect from: aShip applyTo: affectedShip [
 { #category : 'as yet unclassified' }
 Game >> validateRedo: aCardEffect [
 
-	(lastCardEffect isNil and: aCardEffect isRedo) ifFalse: [ ^ self ].
+	(lastCardEffect isBlankCard and: aCardEffect isRedo) ifFalse: [ ^ self ].
 	aCardEffect isApplicable: false.
 	Error signal:
 		'Redo Card not Used. No Card Effect Has Been Used Before Redo.'
